@@ -1,0 +1,85 @@
+#!/bin/bash
+
+echo Corriendo proceso invonio...
+echo ===========================================================
+
+# Constantes
+MAX_REMITO=99999999
+MIN_REMITO=00000000
+CANT_DIGITOS_REMITO=8
+CANT_DIGITOS_FECHA=8
+
+# Almaceno la fecha actual
+aaaa=`date +%Y`
+mm=`date +%m`
+dd=`date +%d`
+echo Fecha actual: $aaaa$mm$dd
+echo  ------------------------------------------------------- 
+
+for path_archivo in Prueba/grupo/arribos/*
+do
+	error_remito=0
+	archivo=`basename $path_archivo`
+	echo El nombre del archivo es: $archivo
+	
+	#Verifico el formato del nombre del archivo
+	#TODO: FALTA VERIFICAR QUE SEAN DIGITOS, provisoria la verificacion
+	remito=${archivo%.*}
+	fecha=${archivo#*.}
+	if [ ${#remito} -eq $CANT_DIGITOS_REMITO ] && [ ${#fecha} -eq $CANT_DIGITOS_FECHA ]
+	then		
+		# Verifico el remito
+		echo El numero del remito es: $remito
+		if [ $remito -ge $MAX_REMITO ] || [ "$remito" -le $MIN_REMITO ] || [  ]
+		then
+			error_remito=1
+			echo El remito se encuentra fuera de los limites
+		fi
+		# Verifico la fecha
+		# Formato fecha aaaammdd
+		error_fecha=0
+		anio=${fecha:0:4}
+		mes=${fecha:4:2}
+		dia=${fecha:6:2}
+		echo La fecha es: $fecha
+		echo año: $anio
+		echo mes: $mes
+		echo dia: $dia
+		if [ $anio -gt $aaaa ]
+		then
+			error_fecha=1
+			echo La fecha es mayor a la actual [año mayor al actual]
+		else
+			if [ $anio -eq $aaaa ] &&  [ $mes -gt $mm ]
+			then
+				error_fecha=1
+				echo La fecha es mayor a la actual [igual año, mes mayor al actual]
+			else
+				if [ $anio -eq $aaaa ] &&  [ $mes -eq $mm ] && [ $dia -gt $dd ]
+				then
+					error_fecha=1
+					echo La fecha es mayor a la actual [igual año y mes, dia mayor al actual]
+				fi		
+			fi
+		fi		
+
+		# Si existe algun error en el nombre del archivo lo muevo a la carpera /grupo/rechazados,
+		# sino /grupo/aceptados
+		if [ $error_remito -eq "1" ] || [ $error_fecha -eq "1" ]
+		then
+			#mv Prueba/grupo/arribos/$archivo Prueba/grupo/rechazados
+			echo El archivo se coloco en la carpeta de rechazados
+		else
+			#mv Prueba/grupo/arribos/$archivo Prueba/grupo/aceptados	
+			echo El archivo se coloco en la carpeta de aceptados		
+		fi
+	else
+		echo El formato del nombre del archivo es invalido
+	fi
+
+echo  ------------------------------------------------------- 
+done
+
+echo ===========================================================
+echo Fin proceso invonio...
+
