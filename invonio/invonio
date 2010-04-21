@@ -6,8 +6,6 @@ echo ===========================================================
 # Constantes
 MAX_REMITO=99999999
 MIN_REMITO=00000000
-CANT_DIGITOS_REMITO=8
-CANT_DIGITOS_FECHA=8
 
 # Almaceno la fecha actual
 aaaa=`date +%Y`
@@ -18,16 +16,15 @@ echo  -------------------------------------------------------
 
 for path_archivo in Prueba/grupo/arribos/*
 do
-	error_remito=0
 	archivo=`basename $path_archivo`
 	echo El nombre del archivo es: $archivo
 	
 	#Verifico el formato del nombre del archivo
-	#TODO: FALTA VERIFICAR QUE SEAN DIGITOS, provisoria la verificacion
-	remito=${archivo%.*}
-	fecha=${archivo#*.}
-	if [ ${#remito} -eq $CANT_DIGITOS_REMITO ] && [ ${#fecha} -eq $CANT_DIGITOS_FECHA ]
-	then		
+	echo $archivo | grep "[0-9]\{8\}\.[0-9]\{8\}" -q
+	if [ $? = 0 ]
+	then	
+		error_remito=0	
+		remito=${archivo%.*}
 		# Verifico el remito
 		echo El numero del remito es: $remito
 		if [ $remito -ge $MAX_REMITO ] || [ "$remito" -le $MIN_REMITO ] || [  ]
@@ -38,13 +35,11 @@ do
 		# Verifico la fecha
 		# Formato fecha aaaammdd
 		error_fecha=0
+		fecha=${archivo#*.}
 		anio=${fecha:0:4}
 		mes=${fecha:4:2}
 		dia=${fecha:6:2}
 		echo La fecha es: $fecha
-		echo año: $anio
-		echo mes: $mes
-		echo dia: $dia
 		if [ $anio -gt $aaaa ]
 		then
 			error_fecha=1
