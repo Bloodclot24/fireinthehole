@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Salidas: 1 : Error de ambiente no inicializado
+
 # Constantes
 MAX_REMITO=99999999
 MIN_REMITO=00000000
@@ -13,6 +15,13 @@ function handler_sigterm(){
 
 # Catcher
 trap "handler_sigterm" SIGTERM
+
+#Si NO esta inicializado el ambiente
+if [ -z $SISTEMA_INICIALIZADO ]
+then
+    echo Error: El ambiente no fue inicializado
+    exit 1
+fi
 
 # ++ Programa INVONIO ++ #
 echo Corriendo proceso $$ invonio...
