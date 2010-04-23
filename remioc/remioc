@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Codigos de error:
+#                   0 - Ok
+#                   1 - No esta inicializado el ambiente
+
+#Ver si existo otro remioc corriendo
+
+#Ver si esta inicializado el entorno
+if [ -z $SISTEMA_INICIALIZADO ]
+then
+    echo "No esta inicializado el ambiente."
+    exit 1
+fi
+
+
+#Ver si invreci está corriendo
+
+#Inicializar el log
+Glog "$0" "Inicio de $0: $@" I
+
+#Si es orden de compra
+#local OC=
+if [ -r "$OC" ]
+then
+    grep "^[0-9]\{6\};[0-9]\{8\};[0-9]\{11\};ABIERTA;.*" "$OC"
+    if [ $? -eq 0 ]
+    then
+	Glog "$0" "Conciliación de la orden de compra ${OC##*.}." W
+    else
+	Glog "$0" "Lo orden de compra $OC, no está abierta." W
+    fi
+    
+else
+    Glog "$0" "La orden de compra $OC no existe." E
+fi
+
+
+#Si es un remito
+
+

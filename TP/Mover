@@ -5,20 +5,18 @@
 #           2 - Archivo inexistente
 #           3 - Directorio inexistente
 
+
+
 DUP="dup"
 ESCRIBIR_LOG=0
-#NOMBRE_LOG=`glog "$0"`
 
-#verifica la existencia de un archivo. Si no existe, muestra un error
-#y sale.
-verificar_existencia_de_archivo(){
-}
 
 funcion_Mover(){
 #Primero verificamos que la cantidad de parametros sea como minimo 2 (dos)
     if [ $# -le 1 ]
     then
 	echo "Error: el comando necesita al menos 2 (dos) parametros"
+	Glog "$0" "Error: el comando necesita al menos 2 (dos) parametros" "E"
     #mostrar_invocacion()
 	return 1
     fi
@@ -35,6 +33,7 @@ funcion_Mover(){
     if [ ! -e "$1" ]
     then
 	echo "Error: El archivo $1 no existe."
+	Glog "$0" "Error: El archivo $1 no existe." "E"
 	return 2
     fi
 
@@ -42,6 +41,8 @@ funcion_Mover(){
     if [ "$1" = "$2" ]
     then
 	echo "Origen y destino son iguales"
+	Glog "$0" "Origen y destino son iguales" "I"
+
 	return 0
     fi
 
@@ -58,6 +59,7 @@ funcion_Mover(){
 	if [ "$directorio" = "$2" ]
 	then
 	    echo "Origen y destino son iguales"
+	    Glog "$0" "Origen y destino son iguales" "I"
 	    return 0
 	fi
     fi
@@ -68,6 +70,8 @@ funcion_Mover(){
     if [ ! -d  "$directorio" ]
     then
 	echo "Error: El directorio $2 no existe."
+	Glog "$0" "Error: El directorio $2 no existe." "E"
+
 	return 3
     fi
 

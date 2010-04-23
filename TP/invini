@@ -1,8 +1,5 @@
 #!/bin/bash
 grupo=`pwd`
-
-
-
-#. Glog
-
+SISTEMA_INICIALIZADO="OK"
+. Glog
 . Mover
