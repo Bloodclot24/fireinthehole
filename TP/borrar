@@ -1,0 +1,13 @@
+#!/bin/bash
+cd /home/guido/aceptados
+rm -rf *
+echo Borrando aceptados...
+cd "$grupo/rechazados"
+rm -rf *
+echo Borrando rechazados...
+cd /home/guido/yarecibidos
+rm -rf *
+echo Borrando yarecibidos...
+
+echo FIN xD
+
