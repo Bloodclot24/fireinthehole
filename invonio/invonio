@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Salidas: 1 : Error de ambiente no inicializado
+# Salidas: 1 : Error de ambiente no inicializado
 
 # Constantes
 MAX_REMITO=99999999
@@ -151,7 +151,21 @@ do
 	  # Si hay una señal de SIGTERM, interrumpo el loop
 	  if [ $terminar -eq 1 ]; then break; fi
 
-  echo  ------------------------------------------------------- 
+	  echo  -------------------------------------------------------
+	  
+	  for $archivo in Prueba/grupo/recibidos/*
+	  do
+		  if [-f "$archivo"]
+		  then
+			# Ejecutar invreci
+			# Validar que no este corriendo ya el invreci siempre q haya archivos en recibidos
+			# e invreci no este corriendo.
+
+			# Si invreci se ejecuto correctamente, mostrar el PID de invreci
+
+			# Sino, Mostrar el mensaje de error explicativo.
+		  fi
+	 done
   done
 done
 
