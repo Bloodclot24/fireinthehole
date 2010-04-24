@@ -18,9 +18,9 @@ mkdir -p $grupo/comandos/log
 
 #Copio los scripts al lugar correcto
 
-for i in invini Mover Glog remioc
+for i in invini modulo_mover modulo_glog remioc
 do
-    cp $i comandos/$i
+    cp $i $grupo/comandos/$i
 done
 
 #generacion de archivos de prueba
