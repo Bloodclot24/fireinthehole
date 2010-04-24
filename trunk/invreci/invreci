@@ -1,0 +1,107 @@
+#!/bin/bash
+
+# ver si existe otro invreci y si esta inicializado el ambiente. usar pgrep -f
+# Inicializar el log grabando inicio de invreci y la cantidad de archivos a procesar
+
+rechazarRegistro(){
+
+	echo $1 >> $grupo/rechazados/$2.rech
+
+}
+
+#Devuelve 0 si el registro es valido.
+#	  1 si es rechazado por orden de compra cerrada
+#	  2 si es rechazado por orden de compra inexistente
+#	  3 si es rechazado por numero de CUIT invalido
+validarRegistro(){
+
+	registroAValidar=$1
+	nombreArchivo=$2
+	ordendecompra=` echo $registroAValidar | cut -d ';' -f 1`
+	cuitProveedor=` echo $registroAValidar | cut -d ';' -f 9`
+	echo "Se procesa la orden de compra # $ordendecompra"
+	
+	for archivoOrdenCompra in "$grupo/oc/*"
+	do
+		registroOrdenDeCompra=`grep "^$ordendecompra" $archivoOrdenCompra` #Esto devuelve una lista o nada.
+		if [ "$registroOrdenDeCompra" != "" ] 
+		then
+			echo "La orden de compra $ordendecompra  existe"
+			if [  "`echo $registroOrdenDeCompra | cut -d ';' -f 4`" = "CERRADO" ]
+			then
+				echo la orden de compra $ordendecompra se rechaza por estar cerrado					
+				rechazarRegistro "$registroAValidar" "$nombreArchivo"
+				cantidadRegistrosRechazadosPorOCompCerrada=$(( $cantidadRegistrosRechazadosPorOCompCerrada + 1))
+				return 1
+
+			elif [ $cuitProveedor != `echo $registroOrdenDeCompra | cut -d ';' -f 3` ] 
+			then
+				echo la orden de compra $ordendecompra se rechaza por CUIT invalido
+				rechazarRegistro "$registroAValidar" "$nombreArchivo"
+				cantidadRegistrosRechazadosPorOtrosMotivos=$(($cantidadRegistrosRechazadosPorOtrosMotivos + 1))
+				return 3
+			else
+				#Validacion correcta
+				return 0
+			fi		
+		fi
+	done
+
+	echo "La orden de compra $ordendecompra no existe, el registro perteneciente al remito $nombreArchivo se rechazara"
+	rechazarRegistro "$registroAValidar" "$nombreArchivo" 
+	cantidadRegistrosRechazadosPorOCompInexistente=$(($cantidadRegistrosRechazadosPorOCompInexistente +1))
+	return 2
+
+}
+
+#ESto tiene que volar!
+grupo="./carpetagrupal"
+
+#Comienzo :
+cantidadRegistrosLeidos=0
+cantidadRegistrosAceptados=0
+cantidadRegistrosRechazadosPorOCompCerrada=0
+cantidadRegistrosRechazadosPorOCompInexistente=0
+cantidadRegistrosRechazadosPorOtrosMotivos=0
+
+for i in "$grupo/recibidos/*"
+do  
+	# grabar en log el nombre del archivo a procesar
+	archivo=`basename $i`
+	if [ `find $grupo/yarecibidos -maxdepth 1 -type f -name $archivo` ]
+	then 
+	#TODO ver esto: grabar en el archivo de log y deberiamos usar la funcion mover.
+		echo "Archivo duplicado"
+		mv $i $grupo/rechazados/
+
+	else
+	#Rechazar un registro porque el formato es invalido!
+        variable=`grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};
+	.\{11\};.\{11\};.\{11\};$" $i | tee -a $grupo/rechazados/${archivo}.rech`  
+	
+        cantidadRegistrosRechazadosPorOtrosMotivos=`wc -l $grupo/rechazados/${archivo}.rech | cut -d ' ' -f 1`
+	cantidadRegistrosLeidos=$cantidadRegistrosRechazadosPorOtrosMotivos
+
+	echo "Las lineas invalidas del archivo $archivo son : $variable"
+     	for registro in `grep "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\};$" $i`
+	do
+		cantidadRegistrosLeidos=$(($cantidadRegistrosLeidos + 1))
+		validarRegistro "$registro" "$archivo"
+		
+
+		if [ "$?" -eq 0 ]
+		then 
+			numeroremito=${archivo%%.*}
+			fecha=${archivo##*.}
+			numeroordencompra=` echo $registro | cut -d ';' -f 1`
+			cantidadRegistrosAceptados=$(($cantidadRegistrosAceptados + 1))
+			echo $registro > $grupo/aceptados/${numeroremito}.${numeroordencompra}.aproc
+
+ 			sed -i "s/^[^;]*;/${fecha}/" $grupo/aceptados/${numeroremito}.${numeroordencompra}.aproc;
+		fi 
+	done
+		mv $i $grupo/yarecibidos/ #DEberiamos usar mover!
+	fi
+
+	echo $cantidadRegistrosLeidos , $cantidadRegistrosAceptados , $cantidadRegistrosRechazadosPorOCompCerrada , $cantidadRegistrosRechazadosPorOCompInexistente , $cantidadRegistrosRechazadosPorOtrosMotivos
+done
