@@ -1,0 +1,158 @@
+#!/bin/bash
+
+# Codigos de error:
+#                   0 - Ok
+#                   1 - No esta inicializado el ambiente
+
+local RDISPONIBLES=""
+local RELEGIDOS=""
+local OCDETS=""
+
+#busca todos los remitos que tienen el numero de orden de compra
+#especificado
+buscarRemitos(){
+    # $1 -> numero de OC
+    RDISPONIBLES="$grupo/aceptados/*.$1.aproc"
+    #TODO: verificar la expansion
+    for i in "$RDISPONIBLES"
+    do
+	Glog "$0" "Remito disponible: $i" I	
+    done
+
+}
+
+#Da al usuario la posibilidad de elegir de entre todos los remitos,
+#cuáles quiere procesar
+elegirRemitos(){
+    #TODO: MENU
+    RELEGIDOS=$RDISPONIBLES
+    RDISPONIBLES=""
+
+    for i in "$RELEGIDOS"
+    do
+	Glog "$0" "Remito elegido: $i" I	
+    done
+}
+
+#Busca las descripciones de orden de compra que tienen el numero de
+#orden de compra dado
+buscarOCDet(){
+    # $1 -> numero de OC
+    for i in "$grupo/oc/ocdet.*"
+    do
+	grep "^$1;[0-9]*;[0-9]*;[0-9]*;[0-9]*;ABIERTO;[^;];[^;];\?$"
+	if [ $0 -eq 0 ]
+	then
+	    OCDETS="$OCDETS $i"
+	fi
+    done
+}
+
+#Procesa cada detalle de orden de compra utilizando los remitos
+#elegidos
+procesarOrden(){
+    for i in $OCDETS
+    do
+        #Obtengo el codigo de producto y la cantidad remanente
+	local CODPROD=   `sed "s/^[0-9]\{6\};[0-9]*;\([0-9]*\);[0-9]*;[0-9]*;[^;]*;[^;]*;[^;]*;\?$/\1/" $i`
+	local CREMANENTE=`sed "s/^[0-9]\{6\};[0-9]*;[0-9]*;\([0-9]*\);[0-9]*;[^;]*;[^;]*;[^;]*;\?$/\1/" $i`
+	
+	for j in $RELEGIDOS
+	do
+	    grep "^[0-9]\{6\};$CODPROD;" $j
+	    if [ $? -eq 0 ]
+	    then
+	    #Obtengo la cantidad a entregar
+		local CENTREGAR=`sed "s/^[0-9]\{6\};[0-9]\{10\};\([0-9]*\);[0-9]*;[0-9]*;[0-9]\{8\};[0-9]\{11\};[0-9]\{11\};[0-9]\{11\};[0-9]\{11\}/\1/" $j`
+
+		if [ $CENTREGAR -eq $CREMANENTE ]
+		then
+		    #Guardo el nuevo registro, con remanente 0 y cerrado
+		    #sed "s/^\([0-9]\{6\};[0-9]*;[0-9]*;[0-9]*\);[0-9]*;[^;]*;\([^;]*;[^;]*;\?\)$/\1;0;CERRADO;\2/" $i > $i
+		    CREMANENTE=0
+		    mv $j ${j%.*}.proc
+		    break
+
+		elif [ $CENTREGAR -lt $CREMANENTE ]
+		then
+		    local NUEVOREMANENTE=$(( $CREMANENTE - $CENTREGAR ))
+		    #Guardo el nuevo registro, con el remanente calculado
+		    #sed "s/^\([0-9]\{6\};[0-9]*;[0-9]*;[0-9]*\);[0-9]*;\([^;]*;[^;]*;[^;]*;\?\)$/\1;$NUEVOREMANENTE;\2/" $i > $i
+		    CREMANENTE=$NUEVOREMANENTE
+		    mv $j ${j%.*}.proc
+
+		else #[ $CENTREGAR -gt $CREMANENTE ] TODO: encargarse de
+		#los remanentes. Se puede pasar a algun archivo
+		#auxiliar (para no modificar el remito original),con
+		#lo que habría que tambien mover el remito para no
+		#volver a procesarlo. Al final, si no se proceso el
+		#auxiliar, se produce un error. Si lo procesamos,
+		#volvemos a mover el remito a su estado original
+		#(cambiando tambien .aproc por .proc) y eliminamos el
+		#auxiliar.
+		fi
+	    fi
+	done
+	#Llegué al final, ya procesé todos los remitos para esta orden
+	#de compra. Escribo los resultados al nuevo archivo de orden
+	#de compra.
+    done
+}
+
+#Ver si existo otro remioc corriendo
+
+#Ver si esta inicializado el entorno
+if [ -z $SISTEMA_INICIALIZADO ]
+then
+    echo "No esta inicializado el ambiente."
+    exit 1
+fi
+
+
+#Ver si invreci está corriendo
+
+#Inicializar el log
+Glog "$0" "Inicio de $0: $@" I
+
+#Si es orden de compra
+#local OC=
+if [ -r "$OC" ]
+then
+    #Verifico que este abierta
+    grep "^[0-9]\{6\};[0-9]\{8\};[0-9]\{11\};ABIERTA;.*" "$OC"
+    if [ $? -eq 0 ]
+    then
+
+	#Obtengo el numero de orden de compra
+	local NUMERO=`sed "s/^\([0-9]\{6\}\);.*$/\1/" $OC`
+	
+	Glog "$0" "Conciliación de la orden de compra $NUMERO." I	
+	
+
+	#Busco los remitos que se corresponden
+	buscarRemitos "$NUMERO"
+	
+	#Dejo al usuario elegir los remitos a procesar
+	elegirRemitos
+
+	#Busco las descripciones de orden de compra que coinciden con
+	#la orden de compra
+	buscarOCDet "$NUMERO"
+
+	#Procesa cada detalle de orden de compra utilizando los
+	#remitos elegidos
+	procesarOrden
+	
+    else
+	#Esta cerrada
+	Glog "$0" "Lo orden de compra $OC, no está abierta." W
+    fi
+    
+else
+    Glog "$0" "La orden de compra $OC no existe." E
+fi
+
+
+#Si es un remito
+
+
