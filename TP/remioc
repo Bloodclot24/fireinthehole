@@ -14,7 +14,7 @@ buscarRemitos(){
     # $1 -> numero de OC
     RDISPONIBLES="$grupo/aceptados/*.$1.aproc"
     #TODO: verificar la expansion
-    for i in "$RDISPONIBLES"
+    for i in $RDISPONIBLES
     do
 	Glog "$0" "Remito disponible: $i" I	
     done
@@ -28,7 +28,7 @@ elegirRemitos(){
     RELEGIDOS=$RDISPONIBLES
     RDISPONIBLES=""
 
-    for i in "$RELEGIDOS"
+    for i in $RELEGIDOS
     do
 	Glog "$0" "Remito elegido: $i" I	
     done
@@ -37,11 +37,12 @@ elegirRemitos(){
 #Busca las descripciones de orden de compra que tienen el numero de
 #orden de compra dado
 buscarOCDet(){
+    sleep 10s
     # $1 -> numero de OC
-    for i in "$grupo/oc/ocdet.*"
+    for i in $grupo/oc/ocdet.*
     do
-	grep "^$1;[0-9]*;[0-9]*;[0-9]*;[0-9]*;ABIERTO;[^;];[^;];\?$"
-	if [ $0 -eq 0 ]
+	grep "^$1;[0-9]*;[0-9]*;[0-9]*;[0-9]*;ABIERTO;.*" $i
+	if [ $? -eq 0 ]
 	then
 	    OCDETS="$OCDETS $i"
 	fi
@@ -54,8 +55,8 @@ procesarOrden(){
     for i in $OCDETS
     do
         #Obtengo el codigo de producto y la cantidad remanente
-	local CODPROD=   `sed "s/^[0-9]\{6\};[0-9]*;\([0-9]*\);[0-9]*;[0-9]*;[^;]*;[^;]*;[^;]*;\?$/\1/" $i`
-	local CREMANENTE=`sed "s/^[0-9]\{6\};[0-9]*;[0-9]*;\([0-9]*\);[0-9]*;[^;]*;[^;]*;[^;]*;\?$/\1/" $i`
+	local CODPROD=`sed "s/^[0-9]\{6\};[0-9]*;\([0-9]*\);.*/\1/" $i`
+	local CREMANENTE=`sed "s/^[0-9]\{6\};[0-9]*;[0-9]*;\([0-9]*\);.*/\1/" $i`
 	
 	for j in $RELEGIDOS
 	do
@@ -63,22 +64,20 @@ procesarOrden(){
 	    if [ $? -eq 0 ]
 	    then
 	    #Obtengo la cantidad a entregar
-		local CENTREGAR=`sed "s/^[0-9]\{6\};[0-9]\{10\};\([0-9]*\);[0-9]*;[0-9]*;[0-9]\{8\};[0-9]\{11\};[0-9]\{11\};[0-9]\{11\};[0-9]\{11\}/\1/" $j`
+		local CENTREGAR=`sed "s/^[0-9]\{6\};[0-9]\{10\};\([0-9]*\);.*/\1/" $j`
 
 		if [ $CENTREGAR -eq $CREMANENTE ]
 		then
-		    #Guardo el nuevo registro, con remanente 0 y cerrado
-		    #sed "s/^\([0-9]\{6\};[0-9]*;[0-9]*;[0-9]*\);[0-9]*;[^;]*;\([^;]*;[^;]*;\?\)$/\1;0;CERRADO;\2/" $i > $i
+		    #Nuevo remanente es 0, marco el remito como procesado
+		    #sed "s/^\([0-9]\{6\};[0-9]*;[0-9]*;[0-9]*\);[0-9]*;[^;]*;\(.*\)/\1;0;CERRADO;\2/" $i > $i
 		    CREMANENTE=0
 		    mv $j ${j%.*}.proc
 		    break
 
 		elif [ $CENTREGAR -lt $CREMANENTE ]
 		then
-		    local NUEVOREMANENTE=$(( $CREMANENTE - $CENTREGAR ))
-		    #Guardo el nuevo registro, con el remanente calculado
-		    #sed "s/^\([0-9]\{6\};[0-9]*;[0-9]*;[0-9]*\);[0-9]*;\([^;]*;[^;]*;[^;]*;\?\)$/\1;$NUEVOREMANENTE;\2/" $i > $i
-		    CREMANENTE=$NUEVOREMANENTE
+		    #Calculo el nuevo remanente y marco el remito como procesado
+		    CREMANENTE=$(( $CREMANENTE - $CENTREGAR ))
 		    mv $j ${j%.*}.proc
 
 		else #[ $CENTREGAR -gt $CREMANENTE ] TODO: encargarse de
@@ -116,7 +115,7 @@ fi
 Glog "$0" "Inicio de $0: $@" I
 
 #Si es orden de compra
-#local OC=
+OC=$grupo/$1
 if [ -r "$OC" ]
 then
     #Verifico que este abierta
@@ -125,7 +124,7 @@ then
     then
 
 	#Obtengo el numero de orden de compra
-	local NUMERO=`sed "s/^\([0-9]\{6\}\);.*$/\1/" $OC`
+	NUMERO=`sed "s/^\([0-9]\{6\}\);.*/\1/" $OC`
 	
 	Glog "$0" "Conciliación de la orden de compra $NUMERO." I	
 	
