@@ -11,7 +11,7 @@ DUP="dup"
 ESCRIBIR_LOG=0
 
 
-funcion_Mover(){
+Mover(){
 #Primero verificamos que la cantidad de parametros sea como minimo 2 (dos)
     if [ $# -le 1 ]
     then
@@ -116,3 +116,5 @@ funcion_Mover(){
 
     return 0
 }
+
+export -f Mover

@@ -4,9 +4,9 @@
 #                   0 - Ok
 #                   1 - No esta inicializado el ambiente
 
-local RDISPONIBLES=""
-local RELEGIDOS=""
-local OCDETS=""
+RDISPONIBLES=""
+RELEGIDOS=""
+OCDETS=""
 
 #busca todos los remitos que tienen el numero de orden de compra
 #especificado
@@ -90,6 +90,7 @@ procesarOrden(){
 		#volvemos a mover el remito a su estado original
 		#(cambiando tambien .aproc por .proc) y eliminamos el
 		#auxiliar.
+		    echo "otro caso"
 		fi
 	    fi
 	done
