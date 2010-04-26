@@ -29,10 +29,17 @@ done
 ##############  ORDENES DE COMPRA  ##########################
 #############################################################
 
+#primeros 3 son de lucas
+#3 en adelante grupo invreci. NO TOCAR
+
 cat <<EOF > $grupo/oc/ocgob.01
 000000;20100101;00000000001;ABIERTA;LuCaS;01/01/2010 15:20:00
 000001;20100102;00000000002;ABIERTA;VeRoNiCa;03/01/2010 08:15:01
 000002;20100205;00000000003;ABIERTA;LuCiA;07/03/2010 03:33:33
+123456;20100210;30324567891;CERRADA;Matias;07/03/2010 03:38:35
+123456;20100210;30324567820;ABIERTA;Matias;07/03/2010 03:38:35
+123460;20100210;30324567891;ABIERTA;Matias;07/03/2010 03:38:35
+123461;20100210;30324567891;ABIERTA;Matias;07/03/2010 03:38:35
 EOF
 
 
@@ -65,4 +72,26 @@ EOF
 
 cat <<EOF > $grupo/aceptados/00000003.000001.aproc
 20100103;0000000003;1;3;01347.1;20100103;Algun lugar;Desconocido;00000000001;Aseguradora
+EOF
+
+#############################################################
+##############  REMITOS RECIBIDOS  ##########################
+#############################################################
+
+#1 Orden cerrada
+#2 CUIT invalido
+#3 Orden de compra inexistente
+#4 formato inadecuado de registro
+#5 Procesar bien
+#6 Procesar bien
+#7 Cuit invalido, orden cerrada, formato inadecuado, orden de compra inexiste.
+
+cat <<EOF > $grupo/recibidos/1.20100426
+123456;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+123457;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+123458;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+1234;HHHHabcd;15;30;10.5201015;CapitalFed.;TODOMUNDOSA324567891;Estafadores
+123460;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+123461;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+123462;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafad
 EOF
