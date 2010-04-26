@@ -41,12 +41,11 @@ echo  -------------------------------------------------------
 terminar=0
 while [ $terminar -eq 0 ]
 
-	sleep $TIEMPO
-
-
 do 
   for path_archivo in $grupo/arribos/*
   do
+		if [ -f "$path_archivo" ] 
+then	  
 	  #echo $path_archivo
 	  #archivo=`basename $path_archivo`
 	  archivo=${path_archivo##*/}
@@ -54,6 +53,9 @@ do
 	  
 	  #Verifico el formato del nombre del archivo
 	  echo $archivo | grep "^[0-9]\{8\}\.[0-9]\{8\}$" -q
+	  
+ #     if [ $archivo = "*" ] ; then break ; fi
+	 
 	  if [ $? = 0 ]
 	  then	
 		  error_remito=0	
@@ -137,20 +139,20 @@ do
 		  # sino /grupo/aceptados
 		  if [ $error_remito -eq "1" ] || [ $error_fecha -eq "1" ]
 		  then
-			  Mover "$grupo/arribos/$archivo" $grupo/rechazados
+			  mv "$grupo/arribos/$archivo" $grupo/rechazados
 			  echo El archivo se coloco en la carpeta de rechazados
 		  else
-			  Mover "$grupo/arribos/$archivo" $grupo/recibidos	
+			  mv "$grupo/arribos/$archivo" $grupo/recibidos	
 			  echo El archivo se coloco en la carpeta de recibidos		
 		  fi
 	  else
-		  if [ -f "$archivo" ]
-		  then
-		      Mover "$grupo/arribos/$archivo" $grupo/rechazados
+#		  if [ -f "$archivo" ]
+#		  then
+		      mv "$grupo/arribos/$archivo" $grupo/rechazados
 		      echo El formato del nombre del archivo es invalido
-		  else
-		      echo No es un archivo!!!!!!!	      
-		  fi
+#		  else
+#		      echo No es un archivo!!!!!!!	      
+#		  fi
 	  fi
 
 	  # Si hay una señal de SIGTERM, interrumpo el loop
@@ -163,15 +165,25 @@ do
 			# Ejecutar invreci
 			# Validar que no este corriendo ya el invreci siempre q haya archivos en recibidos
 			# e invreci no este corriendo.
-			#invreci  
-			
-			# Si invreci se ejecuto correctamente, mostrar el PID de invreci
+			#invreci
+
+			# TODO Ver si va dentro o fuera del for
+		# Si invreci se ejecuto correctamente, mostrar el PID de invreci
 
 			# Sino, Mostrar el mensaje de error explicativo.
 #		  fi
 #	 done
+fi
   done
-
+./invreci  
+			if [ $? = 0 ]
+			then 
+				echo El PID del proceso invreci es: $!
+			elif [ $? = 1 ]
+			then
+				echo Error: ya se esta ejecutando el comando invreci en este momento
+			fi  
+  sleep $TIEMPO
 
 done
 

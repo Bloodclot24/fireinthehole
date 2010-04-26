@@ -108,7 +108,7 @@ do
 
 	Glog invreci "Archivo a procesar: <$archivo>" i
 
-	if [ `find $grupo/yarecibidos -maxdepth 1 -type f -name $archivo` ]
+	if [ -e $grupo/yarecibidos/$archivo ]
 	then 
 		
 		Glog invreci "Remito Duplicado: <$archivo>" w
@@ -155,4 +155,5 @@ done
 Glog invreci "Fin de Invreci" i
 
 # Elimino el archivo lock oculto
-rm -f $LOCK_INVRECI_CORRIENDO > /dev/null 2> /dev/null	
+rm -f $LOCK_INVRECI_CORRIENDO > /dev/null 2> /dev/null
+echo se borra el archivo lock invreci	
