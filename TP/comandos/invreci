@@ -46,6 +46,13 @@ validarRegistro(){
 	ordendecompra=` echo $registroAValidar | cut -d ';' -f 1`
 	cuitProveedor=` echo $registroAValidar | cut -d ';' -f 9`
 	echo "Se procesa la orden de compra # $ordendecompra"
+
+	archivosAProcesar2=`ls $grupo/oc/ -1 | wc -l`
+	if [ $archivosAProcesar2 -eq 0 ]
+	then
+		Glog invreci "No existen archivos de orden de compra para procesar, se suspende la ejecucion de invreci" e
+		exit 1
+	fi
 	
 	for archivoOrdenCompra in "$grupo/oc/*"
 	do
@@ -54,7 +61,8 @@ validarRegistro(){
 		then
 			if [  "`echo $registroOrdenDeCompra | cut -d ';' -f 4`" = "CERRADO" ]
 			then
-				echo la orden de compra $ordendecompra se rechaza por estar cerrado					
+				echo la orden de compra $ordendecompra se rechaza por estar cerrado	
+				Glog invreci "La orden de compra $ordendecompra se esta cerrada, se rechaza el registro $registroAValidar"	e			
 				rechazarRegistro "$registroAValidar" "$nombreArchivo"
 				cantidadRegistrosRechazadosPorOCompCerrada=$(( $cantidadRegistrosRechazadosPorOCompCerrada + 1))
 				return 1
@@ -62,6 +70,7 @@ validarRegistro(){
 			elif [ $cuitProveedor != `echo $registroOrdenDeCompra | cut -d ';' -f 3` ] 
 			then
 				echo la orden de compra $ordendecompra se rechaza por CUIT invalido
+				Glog invreci "La orden de compra $ordendecompra tiene un CUIT invalido, se rechaza el registro $registroAValidar"	e
 				rechazarRegistro "$registroAValidar" "$nombreArchivo"
 				cantidadRegistrosRechazadosPorOtrosMotivos=$(($cantidadRegistrosRechazadosPorOtrosMotivos + 1))
 				return 3
@@ -73,6 +82,7 @@ validarRegistro(){
 	done
 
 	echo "La orden de compra $ordendecompra no existe, el registro perteneciente al remito $nombreArchivo se rechazara"
+	Glog invreci "La orden de compra #$ordendecompra no existe, se rechaza el registro $registroAValidar"	e
 	rechazarRegistro "$registroAValidar" "$nombreArchivo" 
 	cantidadRegistrosRechazadosPorOCompInexistente=$(($cantidadRegistrosRechazadosPorOCompInexistente +1))
 	return 2
@@ -83,7 +93,7 @@ validarRegistro(){
 #Comienzo :
 #Guardo en el log "Inicio de Invreci: <cantidad de archivos a procesar>
 
-archivosAProcesar=`ls -1 | wc -l`
+archivosAProcesar=`ls $grupo/recibidos/ -1 | wc -l`
 Glog invreci "Inicio de Invreci: Archivos a procesar : <$archivosAProcesar> " i
 if [ $archivosAProcesar -eq 0 ]
 then
