@@ -2,7 +2,7 @@
 
 . invini
 rm -fr $grupo/arribos/*
-for archivo in $grupo/Pruebas/arribos/Prueba\ Individual\ Invonio/*
+for archivo in $grupo/arribos/Prueba\ Individual\ Invonio/*
 do	
   if [ -e "$archivo" ]  
   then
@@ -10,4 +10,4 @@ do
   fi
 done
 echo Ejecutando Pruebas Del Comando Invonio... Aguarde Por Favor...
-. comandos/invonio
+. invonio
