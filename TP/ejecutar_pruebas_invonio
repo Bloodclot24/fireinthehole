@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rm -f "$grupo/arribos/*"
+mv "$grupo/Pruebas/arribos/Prueba Individual Invonio" "$grupo/arribos"
+echo Ejecutando Pruebas Del Comando Invonio... Aguarde Por Favor...
+. comandos/invini
+. comandos/invonio
