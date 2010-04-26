@@ -1,7 +1,6 @@
 #!/bin/bash
 
 . invini
-rm -fr $grupo/arribos/*
 for archivo in $grupo/arribos/Prueba\ Individual\ Invonio/*
 do	
   if [ -e "$archivo" ]  
@@ -9,5 +8,6 @@ do
     cp "$archivo" "$grupo/arribos/"
   fi
 done
+rm -fr $grupo/arribos/Prueba\ Individual\ Invonio
 echo Ejecutando Pruebas Del Comando Invonio... Aguarde Por Favor...
 . invonio
