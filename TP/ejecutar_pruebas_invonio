@@ -1,7 +1,13 @@
 #!/bin/bash
 
-rm -f "$grupo/arribos/*"
-mv "$grupo/Pruebas/arribos/Prueba Individual Invonio/*" "$grupo/arribos/"
+. invini
+rm -fr $grupo/arribos/*
+for archivo in $grupo/Pruebas/arribos/Prueba\ Individual\ Invonio/*
+do	
+  if [ -e "$archivo" ]  
+  then
+    cp "$archivo" "$grupo/arribos/"
+  fi
+done
 echo Ejecutando Pruebas Del Comando Invonio... Aguarde Por Favor...
-. comandos/invini
 . comandos/invonio
