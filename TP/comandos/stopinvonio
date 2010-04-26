@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Constantes
+LOCK_INVONIO_CORRIENDO=.lock_invonio_corriendo
+
+# Verifica que exista un proceso invonio corriendo
+if [ -e  $LOCK_INVONIO_CORRIENDO ]
+then
+	LINE_PID=`grep "PID=" "$LOCK_INVONIO_CORRIENDO"` 
+	PID=${LINE_PID:4}
+	kill -15 $PID
+	echo El proceso invonio $PID se detuvo.
+else
+	echo No existe ningun proceso invonio corriendo.
+fi
+
