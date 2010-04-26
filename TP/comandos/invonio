@@ -40,7 +40,7 @@ echo  -------------------------------------------------------
 terminar=0
 while [ $terminar -eq 0 ]
 do 
-  for path_archivo in Prueba/grupo/arribos/*
+  for path_archivo in $grupo/arribos/*
   do
 	  #echo $path_archivo
 	  #archivo=`basename $path_archivo`
@@ -132,16 +132,16 @@ do
 		  # sino /grupo/aceptados
 		  if [ $error_remito -eq "1" ] || [ $error_fecha -eq "1" ]
 		  then
-			  mv "Prueba/grupo/arribos/$archivo" Prueba/grupo/rechazados
+			  Mover "$grupo/arribos/$archivo" $grupo/rechazados
 			  echo El archivo se coloco en la carpeta de rechazados
 		  else
-			  mv "Prueba/grupo/arribos/$archivo" Prueba/grupo/recibidos	
+			  Mover "$grupo/arribos/$archivo" $grupo/recibidos	
 			  echo El archivo se coloco en la carpeta de recibidos		
 		  fi
 	  else
 		  if [ -f "$archivo" ]
 		  then
-		      mv "Prueba/grupo/arribos/$archivo" Prueba/grupo/rechazados
+		      Mover "$grupo/arribos/$archivo" $grupo/rechazados
 		      echo El formato del nombre del archivo es invalido
 		  else
 		      echo No es un archivo!!!!!!!	      
@@ -153,14 +153,14 @@ do
 
 	  echo  -------------------------------------------------------
 	  
-	  for $archivo in Prueba/grupo/recibidos/*
+	  for $archivo in $grupo/recibidos/*
 	  do
 		  if [-f "$archivo"]
 		  then
 			# Ejecutar invreci
 			# Validar que no este corriendo ya el invreci siempre q haya archivos en recibidos
 			# e invreci no este corriendo.
-
+			invreci  
 			# Si invreci se ejecuto correctamente, mostrar el PID de invreci
 
 			# Sino, Mostrar el mensaje de error explicativo.
