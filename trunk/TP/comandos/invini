@@ -1,0 +1,5 @@
+#!/bin/bash
+export grupo=`pwd`/..
+export SISTEMA_INICIALIZADO="OK"
+. $grupo/comandos/modulo_glog
+. $grupo/comandos/modulo_mover

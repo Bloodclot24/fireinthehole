@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Constantes
+LOCK_INVONIO_CORRIENDO=.lock_invonio_corriendo
+
+# Verifico que no exista un proceso invonio corriendo
+if [ ! -e $LOCK_INVONIO_CORRIENDO ]
+then
+	./invonio&
+else
+	echo Ya existe un proceso invonio corriendo.	
+fi
+
