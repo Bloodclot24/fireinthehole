@@ -17,7 +17,7 @@ sub buscarRemitos{
     my $NUMERO = shift(@_);
 
     opendir(DIR, "$grupo/aceptados/");
-    my @RDISPONIBLES = grep(/.*\.$NUMERO\.aproc/,readdir(DIR));
+    my @RDISPONIBLES = grep(/.*\.$NUMERO\.aproc$/,readdir(DIR));
     closedir(DIR);
     
     foreach (@RDISPONIBLES) {
@@ -31,9 +31,37 @@ sub buscarRemitos{
 #cuáles quiere procesar
 sub elegirRemitos(){
     #TODO: MENU
-    my @RELEGIDOS=@_;
+
+    print "lista: @_\n";
+
+    print "CANTIDAD: $#_\n";
+
+    return () if ($#_+1 == 0);
+
+    my $FILAS;
+    my %ARCHIVOS;
+    foreach (@_){
+	print "linea: $_\n";
+	(my $CODIGO) = $_ =~ /(.*)\..+\.aproc$/;
+	$FILAS .= "$CODIGO $_ dummy ";
+	$ARCHIVOS{$CODIGO} = $_;
+    }
+
+    my $ELEGIDOS=`dialog  --checklist \"Lista de remitos\"  24 50 12 $FILAS --stdout 2>/dev/null`;
+
+    return () if $? != 0;
+
+    print "Elegidos: $ELEGIDOS\n";
+
+    (my @TEMPORAL) = $ELEGIDOS =~ /"([^"]*)"/g;
+    my @RELEGIDOS;
+
+    foreach (@TEMPORAL){
+	push(@RELEGIDOS, $ARCHIVOS{$_});
+    }
 
     foreach (@RELEGIDOS) {
+	
 	`Glog "$0" "Remito elegido: $_" I`;
     }
     return @RELEGIDOS
@@ -74,7 +102,7 @@ sub procesarOrden{
     my %PRODUCTOS = ();
     for my $origen (@REMITOS){
 	print "archivo $origen\n";
-	open(archivo, '<', "aceptados/$origen") or die $!;
+	open(archivo, '<', "$grupo/aceptados/$origen") or die $!;
 	while(<archivo>){
 	    my $CODPROD = $_;
 	    ($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
@@ -92,7 +120,7 @@ sub procesarOrden{
 	(my $destino) = $origen =~ /^(.*)\.aproc$/;
 	$destino .= ".proc";
 	print "renombro: aceptados/$origen a aceptados/$destino\n";
-	rename "aceptados/$origen", "aceptados/$destino";
+	rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino";
     }
 
     #ahora, genero un nuevo OCDET y voy procesando los productos
@@ -161,7 +189,7 @@ $NUMERO=$PARAMETRO;
 if(length($PARAMETRO) == 6){
     $OC="$grupo/oc/ocgob.$ULTIMO";
 }
-else if (length($PARAMETRO) == 8){
+elsif(length($PARAMETRO) == 8){
     $REMITO= `ls $grupo/aceptados/$NUMERO.*`;
     if( $? != 0 ){
 	$REMITO = "";
@@ -202,7 +230,7 @@ if( $OC ){
 	`Glog "$0" "Lo orden de compra $OC, no está abierta." W`;
     }
 }
-else if($REMITO){
+elsif($REMITO){
 
 }
 else{
