@@ -34,29 +34,50 @@ elegirRemitos(){
     done
 }
 
-#Busca las descripciones de orden de compra que tienen el numero de
-#orden de compra dado
-buscarOCDet(){
-    sleep 10s
-    # $1 -> numero de OC
-    for i in $grupo/oc/ocdet.*
+#Busca el ultimo archivo de ordenes de compra global
+buscarOC(){
+    local INICIAL=1
+    for i in $grupo/oc/ocgob.*
     do
-	grep "^$1;[0-9]*;[0-9]*;[0-9]*;[0-9]*;ABIERTO;.*" $i
-	if [ $? -eq 0 ]
+	if [ -e $i ]
 	then
-	    OCDETS="$OCDETS $i"
+	    local NUMERO=${i##*.}
+	    if [ NUMERO -ge INICIAL ]
+	    then
+		INICIAL=$NUMERO
+	    fi
 	fi
     done
+    return $NUMERO
+}
+
+
+#Busca el ultimo archivo de descripcion de ordenes de compra
+buscarOCDet(){
+    local INICIAL=1
+    for i in $grupo/oc/ocdet.*
+    do
+	if [ -e $i ]
+	then
+	    local NUMERO=${i##*.}
+	    if [ NUMERO -ge INICIAL ]
+	    then
+		INICIAL=$NUMERO
+	    fi
+	fi
+    done
+    return $NUMERO
 }
 
 #Procesa cada detalle de orden de compra utilizando los remitos
 #elegidos
 procesarOrden(){
-    for i in $OCDETS
-    do
+    buscarOCDet
+    local NUMERO=$?
+    local OCDET=$grupo/oc/ocdet.
         #Obtengo el codigo de producto y la cantidad remanente
-	local CODPROD=`sed "s/^[0-9]\{6\};[0-9]*;\([0-9]*\);.*/\1/" $i`
-	local CREMANENTE=`sed "s/^[0-9]\{6\};[0-9]*;[0-9]*;\([0-9]*\);.*/\1/" $i`
+	local CODPROD=`sed "s/^[0-9]\{6\};[0-9]*;\([0-9]*\);.*/\1/" $OCDET`
+	local CREMANENTE=`sed "s/^[0-9]\{6\};[0-9]*;[0-9]*;\([0-9]*\);.*/\1/" $OCDET`
 	
 	for j in $RELEGIDOS
 	do
@@ -114,20 +135,23 @@ fi
 #Inicializar el log
 Glog "$0" "Inicio de $0: $@" I
 
+if [ `echo -n $1 | wc -c` -eq 6 ]
+then
+    NUMERO=$1
+    buscarOC
+    ULTIMO=$?
+    OC=$grupo/oc/$NUMERO.ULTIMO
+fi
+
 #Si es orden de compra
-OC=$grupo/$1
-if [ -r "$OC" ]
+if ! [ -z "$OC" ]
 then
     #Verifico que este abierta
-    grep "^[0-9]\{6\};[0-9]\{8\};[0-9]\{11\};ABIERTA;.*" "$OC"
+    grep "^$NUMERO;[0-9]\{8\};[0-9]\{11\};ABIERTA;.*" "$OC"
     if [ $? -eq 0 ]
     then
 
-	#Obtengo el numero de orden de compra
-	NUMERO=`sed "s/^\([0-9]\{6\}\);.*/\1/" $OC`
-	
 	Glog "$0" "Conciliación de la orden de compra $NUMERO." I	
-	
 
 	#Busco los remitos que se corresponden
 	buscarRemitos "$NUMERO"

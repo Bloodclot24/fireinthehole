@@ -29,15 +29,9 @@ done
 ##############  ORDENES DE COMPRA  ##########################
 #############################################################
 
-cat <<EOF > $grupo/oc/ocgob.00
-000000;20100101;00000000001;ABIERTA;LuCaS;01/01/2010 15:20:00
-EOF
-
 cat <<EOF > $grupo/oc/ocgob.01
+000000;20100101;00000000001;ABIERTA;LuCaS;01/01/2010 15:20:00
 000001;20100102;00000000002;ABIERTA;VeRoNiCa;03/01/2010 08:15:01
-EOF
-
-cat <<EOF > $grupo/oc/ocgob.02
 000002;20100205;00000000003;ABIERTA;LuCiA;07/03/2010 03:33:33
 EOF
 
@@ -46,27 +40,12 @@ EOF
 #######  DESCRIPCIONES DE  ORDENES DE COMPRA  ###############
 #############################################################
 
-cat <<EOF > $grupo/oc/ocdet.00
-000000;1;0000000001;2;2;ABIERTO;LuCaS;01/01/2010 15:20:00
-EOF
-
 cat <<EOF > $grupo/oc/ocdet.01
+000000;1;0000000001;2;2;ABIERTO;LuCaS;01/01/2010 15:20:00
 000000;2;0000000002;4;4;ABIERTO;LuCaS;01/01/2010 15:20:00
-EOF
-
-cat <<EOF > $grupo/oc/ocdet.02
 000001;1;0000000003;5;5;ABIERTO;VeRoNiCa;03/01/2010 08:15:01
-EOF
-
-cat <<EOF > $grupo/oc/ocdet.03
 000002;1;0000000001;4;4;ABIERTO;LuCiA;07/03/2010 03:33:33
-EOF
-
-cat <<EOF > $grupo/oc/ocdet.04
 000002;2;0000000005;1;1;ABIERTO;LuCiA;07/03/2010 03:33:33
-EOF
-
-cat <<EOF > $grupo/oc/ocdet.05
 000002;3;0000000002;3;3;ABIERTO;LuCiA;07/03/2010 03:33:33
 EOF
 
@@ -75,13 +54,15 @@ EOF
 #############################################################
 
 cat <<EOF > $grupo/aceptados/00000001.000000.aproc
-000000;0000000001;2;10;12345.6;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
+20100101;0000000001;2;10;12345.6;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
+20100101;0000000002;3;7;98452.12;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
+20100101;0000000002;1;2;01236.21;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
 EOF
 
-cat <<EOF > $grupo/aceptados/00000002.000000.aproc
-000000;0000000002;3;7;98452.12;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
+cat <<EOF > $grupo/aceptados/00000002.000001.aproc
+20100103;0000000003;4;7;12345.6;20100103;Algun lugar;Desconocido;00000000001;Aseguradora
 EOF
 
-cat <<EOF > $grupo/aceptados/00000003.000000.aproc
-000000;0000000002;1;2;01236.2;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
+cat <<EOF > $grupo/aceptados/00000003.000001.aproc
+20100103;0000000003;1;3;01347.1;20100103;Algun lugar;Desconocido;00000000001;Aseguradora
 EOF
