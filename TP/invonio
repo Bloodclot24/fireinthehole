@@ -6,7 +6,7 @@
 MAX_REMITO=99999999
 MIN_REMITO=00000000
 LOCK_INVONIO_CORRIENDO=.lock_invonio_corriendo
-TIEMPO=50
+TIEMPO=2
 
 # Funciones
 function handler_sigterm(){
@@ -50,7 +50,7 @@ do
 	  #echo $path_archivo
 	  #archivo=`basename $path_archivo`
 	  archivo=${path_archivo##*/}
-	  #echo El nombre del archivo es: $archivo
+	  echo El nombre del archivo es: $archivo
 	  
 	  #Verifico el formato del nombre del archivo
 	  echo $archivo | grep "^[0-9]\{8\}\.[0-9]\{8\}$" -q
