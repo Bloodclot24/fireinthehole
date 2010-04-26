@@ -1,0 +1,12 @@
+
+* Mover
+
+** Archivo origen
+   El comando admite un directorio como primer parámetro.
+
+** Archivos duplicados
+   - Si el segundo parámetro es un directorio, verificamos que el
+     archivo indicado en el parámetro 1 no resida en ese directorio. Si
+     está en el mismo directorio no lo consideramos como archivo
+     duplicado, sino que se trata del mismo archivo.
+   
