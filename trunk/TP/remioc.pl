@@ -64,12 +64,85 @@ sub buscarUltimaOC(){
 sub procesarOrden{
     
     my $OCDET = shift(@_);
+    my $NUMEROORDEN = shift(@_);
     my @REMITOS = @_;
 
     print "Orden: $OCDET\n";
     print "REMITOS: @REMITOS\n";
 
-    
+    # extraigo la información de todos los productos de los remitos
+    my %PRODUCTOS = ();
+    for my $origen (@REMITOS){
+	print "archivo $origen\n";
+	open(archivo, '<', "aceptados/$origen") or die $!;
+	while(<archivo>){
+	    my $CODPROD = $_;
+	    ($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
+	    print "linea: $_\n";
+	    my $CANTIDAD = $_;
+	    ($CANTIDAD) = $CANTIDAD =~ /^[^;]*;[^;]*;([^;]*);/;
+
+	    $PRODUCTOS{$CODPROD} += $CANTIDAD;
+	}
+	for my $clave (keys %PRODUCTOS){
+	    print "CODPROD: $clave -> $PRODUCTOS{$clave}\n";
+	}
+	
+	close archivo;
+	(my $destino) = $origen =~ /^(.*)\.aproc$/;
+	$destino .= ".proc";
+	print "renombro: aceptados/$origen a aceptados/$destino\n";
+	rename "aceptados/$origen", "aceptados/$destino";
+    }
+
+    #ahora, genero un nuevo OCDET y voy procesando los productos
+
+    (my $OCDET2) = $OCDET =~ /^(.*)\..*$/;
+    (my $NUMERO) = $OCDET =~ /^.*\.(.*)$/;
+    $NUMERO++;
+    $OCDET2 .= ".$NUMERO";
+    open archivo, '<', $OCDET or die $!;
+    open archivo2, '>', $OCDET2 or die $!;
+
+    while(my $linea = <archivo>){
+	if( $linea =~ "^$NUMEROORDEN;"){
+	    #la linea es parte de la orden de compra que me interesa
+	    print "linea anterior: $linea\n";
+	    (my $CODPROD, my $REMANENTE) = $linea =~ "^[^;]*;[^;]*;([^;]*);([^;]*);";
+	    print "COD.PROD: $CODPROD, REMANENTE:$REMANENTE\n";
+
+	    my $ESTADO = "ABIERTO";
+	    if($REMANENTE <= $PRODUCTOS{$CODPROD}){
+		$PRODUCTOS{$CODPROD} -= $REMANENTE;
+		$REMANENTE=0;
+		$ESTADO = "CERRADO";
+	    }
+	    else{
+		$REMANENTE -= $PRODUCTOS{$CODPROD};
+		$PRODUCTOS{$CODPROD} = 0;
+	    }
+
+	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;(.*)$/$1;$REMANENTE;$2;$ESTADO;$3/;
+
+	    print "linea modificada: $linea\n";
+	    print archivo2 $linea;
+	}
+	else{
+	    #la linea no me interesa, la guardo sin modificarla
+	    print archivo2 $linea;
+	}
+    }
+
+    close archivo;
+    close archivo2;
+
+    for my $clave (keys %PRODUCTOS){
+	print "CODPROD: $clave -> $PRODUCTOS{$clave}\n";
+	if($PRODUCTOS{$clave} > 0){
+	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $clave\n";
+	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $clave, cuando se quería conciliar la orden de compra $NUMEROORDEN." "E"`;
+	}
+    }
 
 }
 
@@ -77,17 +150,25 @@ sub procesarOrden{
 `Glog "$0" "Inicio de $0: @ARGV" I`;
 
 my $PARAMETRO = "$ARGV[0]";
-#por si tiene espacios en blanco
-$PARAMETRO =~ s/^\s+//;
-$PARAMETRO =~ s/\s+$//;
 my $NUMERO;
 my $OC;
 my $ULTIMO;
+my $REMITO;
+
+$ULTIMO=&buscarUltimaOC("ocgob");
+$NUMERO=$PARAMETRO;
 
 if(length($PARAMETRO) == 6){
-    $NUMERO=$PARAMETRO;
-    $ULTIMO=&buscarUltimaOC("ocgob");
     $OC="$grupo/oc/ocgob.$ULTIMO";
+}
+else if (length($PARAMETRO) == 8){
+    $REMITO= `ls $grupo/aceptados/$NUMERO.*`;
+    if( $? != 0 ){
+	$REMITO = "";
+    }
+	
+    chomp $REMITO;
+
 }
 
 print "Orden de compra: $OC\n";
@@ -114,12 +195,15 @@ if( $OC ){
 
 	#Procesa cada detalle de orden de compra utilizando los
 	#remitos elegidos
-	&procesarOrden($OCDET, @RELEGIDOS);
+	&procesarOrden($OCDET, $NUMERO, @RELEGIDOS);
     }
     else{
 	#Esta cerrada
 	`Glog "$0" "Lo orden de compra $OC, no está abierta." W`;
     }
+}
+else if($REMITO){
+
 }
 else{
     `Glog "$0" "La orden de compra $OC no existe." E`;
