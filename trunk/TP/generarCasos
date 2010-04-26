@@ -19,7 +19,7 @@ mkdir -p $grupo/comandos/log
 
 #Copio los scripts al lugar correcto
 
-for i in invini modulo_mover modulo_glog remioc
+for i in invini modulo_mover modulo_glog remioc invonio
 do
     cp $i $grupo/comandos/$i
 done
