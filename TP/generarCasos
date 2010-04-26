@@ -9,6 +9,7 @@ rm -rf $grupo
 #Creo la estructura de directorios
 
 mkdir -p $grupo/arribos
+mkdir -p $grupo/arribos/"Prueba Individual Invonio"
 mkdir -p $grupo/oc
 mkdir -p $grupo/recibidos
 mkdir -p $grupo/rechazados
@@ -47,6 +48,63 @@ cat <<EOF > $grupo/oc/ocdet.01
 000002;1;0000000001;4;4;ABIERTO;LuCiA;07/03/2010 03:33:33
 000002;2;0000000005;1;1;ABIERTO;LuCiA;07/03/2010 03:33:33
 000002;3;0000000002;3;3;ABIERTO;LuCiA;07/03/2010 03:33:33
+EOF
+
+#############################################################
+##########  REMITOS - Pruebas Individuales Invonio  #########
+#############################################################
+
+##Correctas
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/11111111.19860919
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/22222222.19870706
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/33333333.19871014
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/44444444.19871024
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/55555555.19871205
+EOF
+
+#Incorrectas
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/11.20100123
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/"12345678 20020721"
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/12222221.20101224
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/13434341.20100525
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/74187438.20200202
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/9999999999999999999.20050821
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/90487548.20060721000000000
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/abcdefgh.20031104
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/83273892.zzzzzzzz
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/74187839z18100503
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/88888888-20100229
+EOF
+
+cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/77777777-20080230
 EOF
 
 #############################################################
