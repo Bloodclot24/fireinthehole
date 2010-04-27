@@ -8,6 +8,8 @@ MIN_REMITO=00000000
 LOCK_INVONIO_CORRIENDO=.lock_invonio_corriendo
 TIEMPO=2
 
+primera=1
+
 # Funciones
 function handler_sigterm(){
 	echo ++ Señal SIGTERM ++
@@ -183,14 +185,32 @@ fi
 	# Ejecutar invreci
 	# Validar que no este corriendo ya el invreci siempre q haya archivos en recibidos
 	# e invreci no este corriendo.
-	./invreci&
+	if [ ! -z $primera  ]
+	then
+	      ./invreci&
+	      $PIDINVRECI=$!
+	      $primera=0
+	fi
+
+	ps -eo pid | grep "$PIDINVRECI" -q 
+	if [ $? -ne "0" ]
+	then 
+	      ./invreci&
+	      $PIDINVRECI=$!
+	      echo El PID del comando invreci es: $PIDINVRECI
+	else
+	      echo Error: ya se esta ejecutando el comando invreci en este momento
+	fi
 	# Si se ejecuto correctamente, muestro el PID de invreci
-	echo El PID del comando invreci es: $!
-		
+	#echo El PID del comando invreci es: $!
+	#$PIDINVRECI=$!
+	
+	# grep devuelve 0 si encontro las lineas, y 1 en otro caso.
+        #ps -eo pid | grep $PIDINVRECI -q	
 			
 	# Sino, si invreci termino con el codigo de error que indica que ya se encontraba
 	# ejecutandose, muestro el error correspondiente.
-	echo Error: ya se esta ejecutando el comando invreci en este momento
+	#echo Error: ya se esta ejecutando el comando invreci en este momento
 	# Si invreci se ejecuto correctamente, mostrar el PID de invreci
 	# Sino, Mostrar el mensaje de error explicativo.
       fi
