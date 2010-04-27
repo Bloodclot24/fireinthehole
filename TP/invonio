@@ -175,14 +175,27 @@ then
 #	 done
 fi
   done
-./invreci  
-			if [ $? = 0 ]
-			then 
-				echo El PID del proceso invreci es: $!
-			elif [ $? = 1 ]
-			then
-				echo Error: ya se esta ejecutando el comando invreci en este momento
-			fi  
+
+  for archivo in $grupo/recibidos/*
+  do
+      if [ -f "$archivo" ]
+      then
+	# Ejecutar invreci
+	# Validar que no este corriendo ya el invreci siempre q haya archivos en recibidos
+	# e invreci no este corriendo.
+	./invreci&
+	# Si se ejecuto correctamente, muestro el PID de invreci
+	echo El PID del comando invreci es: $!
+		
+			
+	# Sino, si invreci termino con el codigo de error que indica que ya se encontraba
+	# ejecutandose, muestro el error correspondiente.
+	echo Error: ya se esta ejecutando el comando invreci en este momento
+	# Si invreci se ejecuto correctamente, mostrar el PID de invreci
+	# Sino, Mostrar el mensaje de error explicativo.
+      fi
+  done
+
   sleep $TIEMPO
 
 done

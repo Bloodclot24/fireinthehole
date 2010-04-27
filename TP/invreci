@@ -104,7 +104,7 @@ fi
 for i in "$grupo/recibidos/*"
 do  
 
-	archivo=`basename $i`
+	archivo=`basename "$i"`
 
 	Glog invreci "Archivo a procesar: <$archivo>" i
 
