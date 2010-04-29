@@ -110,6 +110,7 @@ sub procesarOrden{
     }
 
     #ahora, genero un nuevo OCDET y voy procesando los productos
+    #TODO: cerrar ordenes en OCGOB
 
     (my $OCDET2) = $OCDET =~ /^(.*)\..*$/;
     (my $NUMERO) = $OCDET =~ /^.*\.(.*)$/;
@@ -172,14 +173,16 @@ if(length($PARAMETRO) == 6){
     $OC="$grupo/oc/ocgob.$ULTIMO";
 }
 elsif(length($PARAMETRO) == 8){
-    $REMITO= `ls $grupo/aceptados/$NUMERO.*`;
-    if( $? != 0 ){
-	$REMITO = "";
+
+    my $archivo = <$grupo/aceptados/$NUMERO.*.aproc>;
+
+    if( -e $archivo ){
+	($NUMERO) = $archivo =~ /$NUMERO\.([0-9]{6})\.aproc$/;
     }
 	
     chomp $REMITO;
-
 }
+$OC="$grupo/oc/ocgob.$ULTIMO";
 
 #Si es orden de compra
 if( $OC ){
