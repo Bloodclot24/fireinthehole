@@ -102,9 +102,9 @@ Mover(){
 	    echo "actual = $actual"
 	    if [ "$actual" != "*" ] 
 	    then
-		if [ $actual -ge $numero ]
+		if [ $((10#$actual)) -ge $((10#$numero)) ]
 		then
-		    numero=$(( $actual + 1 ))
+		    numero=$(( 10#$actual + 1 ))
 		fi
 	    fi
 	done
