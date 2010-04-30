@@ -38,9 +38,13 @@ sub elegirRemitos(){
     my %ARCHIVOS;
     foreach (@_){
 	(my $CODIGO) = $_ =~ /(.*)\..+\.aproc$/;
-	$FILAS .= "$CODIGO $_ dummy ";
-	$ARCHIVOS{$CODIGO} = $_;
+	if($CODIGO){
+	    $FILAS .= "$CODIGO $_ dummy ";
+	    $ARCHIVOS{$CODIGO} = $_;
+	}
     }
+
+    print "dialog  --checklist \"Lista de remitos\"  24 50 12 $FILAS --stdout 2>/dev/null\n";
 
     my $ELEGIDOS=`dialog  --checklist \"Lista de remitos\"  24 50 12 $FILAS --stdout 2>/dev/null`;
 
@@ -83,77 +87,85 @@ sub buscarUltimaOC(){
 sub procesarOrden{
     
     my $OCDET = shift(@_);
-    my $NUMEROORDEN = shift(@_);
-    my @REMITOS = @_;
+    my (@NUMEROORDEN) = @{$_[0]};
+    my (@REMITOS) = @{$_[1]};
 
-    # extraigo la información de todos los productos de los remitos
-    my %PRODUCTOS = ();
-    for my $origen (@REMITOS){
-	open(archivo, '<', "$grupo/aceptados/$origen") or die $!;
-	while(<archivo>){
-	    my $CODPROD = $_;
-	    ($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
-	    my $CANTIDAD = $_;
-	    ($CANTIDAD) = $CANTIDAD =~ /^[^;]*;[^;]*;([^;]*);/;
 
-	    $PRODUCTOS{$CODPROD} += $CANTIDAD;
-	}
+    print "Descripcion: $OCDET\n";
+    print "NUMEROs de orden: @NUMEROORDEN\n";
+    print "NIMEROs de remito: @REMITOS\n";
+    
+    return 0;
 	
-	close archivo;
-	(my $destino) = $origen =~ /^(.*)\.aproc$/;
-	$destino .= ".proc";
-	`Glog $0 "Renombrando aceptados/$origen a aceptados/$destino" I`;
-	if (! rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino"){
-	    `Glog $0 "No se puede renombrar aceptados/$origen a aceptados/$destino" SE`;
-	    return -1;
-	}
-    }
 
-    #ahora, genero un nuevo OCDET y voy procesando los productos
-    #TODO: cerrar ordenes en OCGOB
+    # # extraigo la información de todos los productos de los remitos
+    # my %PRODUCTOS = ();
+    # for my $origen (@REMITOS){
+    # 	open(archivo, '<', "$grupo/aceptados/$origen") or die $!;
+    # 	while(<archivo>){
+    # 	    my $CODPROD = $_;
+    # 	    ($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
+    # 	    my $CANTIDAD = $_;
+    # 	    ($CANTIDAD) = $CANTIDAD =~ /^[^;]*;[^;]*;([^;]*);/;
 
-    (my $OCDET2) = $OCDET =~ /^(.*)\..*$/;
-    (my $NUMERO) = $OCDET =~ /^.*\.(.*)$/;
-    $NUMERO++;
-    $OCDET2 .= ".$NUMERO";
-    open archivo, '<', $OCDET or die $!;
-    open archivo2, '>', $OCDET2 or die $!;
+    # 	    $PRODUCTOS{$CODPROD} += $CANTIDAD;
+    # 	}
+	
+    # 	close archivo;
+    # 	(my $destino) = $origen =~ /^(.*)\.aproc$/;
+    # 	$destino .= ".proc";
+    # 	`Glog $0 "Renombrando aceptados/$origen a aceptados/$destino" I`;
+    # 	if (! rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino"){
+    # 	    `Glog $0 "No se puede renombrar aceptados/$origen a aceptados/$destino" SE`;
+    # 	    return -1;
+    # 	}
+    # }
 
-    while(my $linea = <archivo>){
-	if( $linea =~ "^$NUMEROORDEN;"){
-	    #la linea es parte de la orden de compra que me interesa
-	    (my $CODPROD, my $REMANENTE) = $linea =~ "^[^;]*;[^;]*;([^;]*);([^;]*);";
+    # #ahora, genero un nuevo OCDET y voy procesando los productos
+    # #TODO: cerrar ordenes en OCGOB
 
-	    my $ESTADO = "ABIERTO";
-	    if($REMANENTE <= $PRODUCTOS{$CODPROD}){
-		$PRODUCTOS{$CODPROD} -= $REMANENTE;
-		$REMANENTE=0;
-		$ESTADO = "CERRADO";
-	    }
-	    else{
-		$REMANENTE -= $PRODUCTOS{$CODPROD};
-		$PRODUCTOS{$CODPROD} = 0;
-	    }
+    # (my $OCDET2) = $OCDET =~ /^(.*)\..*$/;
+    # (my $NUMERO) = $OCDET =~ /^.*\.(.*)$/;
+    # $NUMERO++;
+    # $OCDET2 .= ".$NUMERO";
+    # open archivo, '<', $OCDET or die $!;
+    # open archivo2, '>', $OCDET2 or die $!;
 
-	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;(.*)$/$1;$REMANENTE;$2;$ESTADO;$3/;
+    # while(my $linea = <archivo>){
+    # 	if( $linea =~ "^$NUMEROORDEN;"){
+    # 	    #la linea es parte de la orden de compra que me interesa
+    # 	    (my $CODPROD, my $REMANENTE) = $linea =~ "^[^;]*;[^;]*;([^;]*);([^;]*);";
 
-	    print archivo2 $linea;
-	}
-	else{
-	    #la linea no me interesa, la guardo sin modificarla
-	    print archivo2 $linea;
-	}
-    }
+    # 	    my $ESTADO = "ABIERTO";
+    # 	    if($REMANENTE <= $PRODUCTOS{$CODPROD}){
+    # 		$PRODUCTOS{$CODPROD} -= $REMANENTE;
+    # 		$REMANENTE=0;
+    # 		$ESTADO = "CERRADO";
+    # 	    }
+    # 	    else{
+    # 		$REMANENTE -= $PRODUCTOS{$CODPROD};
+    # 		$PRODUCTOS{$CODPROD} = 0;
+    # 	    }
 
-    close archivo;
-    close archivo2;
+    # 	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;(.*)$/$1;$REMANENTE;$2;$ESTADO;$3/;
 
-    for my $clave (keys %PRODUCTOS){
-	if($PRODUCTOS{$clave} > 0){
-	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $clave\n";
-	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $clave, cuando se quería conciliar la orden de compra $NUMEROORDEN." "E"`;
-	}
-    }
+    # 	    print archivo2 $linea;
+    # 	}
+    # 	else{
+    # 	    #la linea no me interesa, la guardo sin modificarla
+    # 	    print archivo2 $linea;
+    # 	}
+    # }
+
+    # close archivo;
+    # close archivo2;
+
+    # for my $clave (keys %PRODUCTOS){
+    # 	if($PRODUCTOS{$clave} > 0){
+    # 	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $clave\n";
+    # 	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $clave, cuando se quería conciliar la orden de compra $NUMEROORDEN." "E"`;
+    # 	}
+    # }
 
 }
 
@@ -162,74 +174,118 @@ sub procesarOrden{
 
 my $PARAMETRO = "$ARGV[0]";
 my $NUMERO;
-my $OC;
+my @OC;
+my $OCDET;
+my $OCGOB;
 my $ULTIMO;
-my $REMITO;
+my @REMITOS;
 
 $ULTIMO=&buscarUltimaOC("ocgob");
 $NUMERO=$PARAMETRO;
 
-if(length($PARAMETRO) == 6){
-    $OC="$grupo/oc/ocgob.$ULTIMO";
-}
-elsif(length($PARAMETRO) == 8){
+#Por cada parametro, miro si tiene 6 u 8 caracteres. Si tiene 6, me
+#guardo el numero como una orden de compra a procesar. Si tiene 8, lo
+#tomo como un numero de remito y busco si existe. Si existe, me guardo
+#el numero de remito y el numero de orden de compra asociada.
 
-    my $archivo = <$grupo/aceptados/$NUMERO.*.aproc>;
+foreach $PARAMETRO (@ARGV){
+    print "Parametro: $PARAMETRO\n";
 
-    if( -e $archivo ){
-	($NUMERO) = $archivo =~ /$NUMERO\.([0-9]{6})\.aproc$/;
+    if(length($PARAMETRO) == 6){
+	push (@OC, $PARAMETRO);
     }
-	
-    chomp $REMITO;
+    elsif(length($PARAMETRO) == 8){
+
+	my $archivo = <$grupo/aceptados/$NUMERO.*.aproc>;
+
+	if( -e $archivo ){
+	    ($NUMERO) = $archivo =~ /$NUMERO\.([0-9]{6})\.aproc$/;
+	    push (@OC, $NUMERO);
+	}
+
+	push(@REMITOS , "$grupo/aceptados/$archivo");
+    }
+    else{
+	print "Error: '$PARAMETRO', no identifica una orden de compra o remito.\n";
+	exit -1;
+    }
 }
-$OC="$grupo/oc/ocgob.$ULTIMO";
+
+$OCGOB="$grupo/oc/ocgob.$ULTIMO";
 
 #Si es orden de compra
-if( $OC ){
-    #Verifico que este abierta
-    `grep "^$NUMERO;[0-9]\\{8\\};[0-9]\\{11\\};ABIERTA;.*" "$OC"`;
-    if( $? == 0 ){
+if( $OCGOB && @OC ){
+    #Verifico que esté abierta
 
-	`Glog "$0" "Conciliación de la orden de compra $NUMERO." I`;
+    my @aux=@OC;
+    @OC = ();
+    #verifico que las ordenes de compra elegidas esten abiertas.
+    foreach (@aux){
+	`grep "^$_;[0-9]\\{8\\};[0-9]\\{11\\};ABIERTA;.*" "$OCGOB"`;
+	if( $? == 0 ){
+	    push(@OC, $_);
+	}
+	else{
+	    print "Error: La orden de compra $_, no está abierta.\n";
+	    `Glog "$0" "La orden de compra $_, no está abierta." E`;
+	}
+    }
 
-	#Busco los remitos que se corresponden
-	my @RDISPONIBLES = &buscarRemitos("$NUMERO");
+    if(!@OC){
+	print "Todas las ordenes de compra especificadas estan cerradas.\n";
+	`Glog "$0" "Todas las ordenes de compra especificadas estan cerradas." I`;
+	exit -2;
+    }
+
+    foreach (@OC){
+	#Busco los remitos que se corresponden a cada orden de compra
+	my @RDISPONIBLES = &buscarRemitos($_);
 	if( ! @RDISPONIBLES){
 	    print "No hay remitos disponibles para la orden de compra $NUMERO\n";
 	    `Glog "$0" "No hay remitos disponibles para la orden de compra $NUMERO." I`;
-	    exit 1;
 	}
-	
-	#Dejo al usuario elegir los remitos a procesar
-	my @RELEGIDOS = &elegirRemitos(@RDISPONIBLES);
-	
-	if( ! @RELEGIDOS){
-	    exit 2;
+	else{
+	    push(@REMITOS, @RDISPONIBLES);
 	}
-
-	#Busco el ultimo archivo de descripción de ordenes de compra
-	$ULTIMO = &buscarUltimaOC("ocdet");
-	my $OCDET = "$grupo/oc/ocdet.$ULTIMO";
-	
-	if( ! $OCDET ){
-	    print "Error: No se encontro el archivo de descripción de ordenes de compra.";
-	    `Glog "$0" "No se encontro el archivo de descripción de ordenes de compra." SE`;
-	    exit 3;
-	}
-
-	#Procesa cada detalle de orden de compra utilizando los
-	#remitos elegidos
-	&procesarOrden($OCDET, $NUMERO, @RELEGIDOS);
     }
-    else{
-	#Esta cerrada
-	print "Error: La orden de compra $OC, no está abierta.";
-	`Glog "$0" "La orden de compra $OC, no está abierta." E`;
-    }
-}
-elsif($REMITO){
 
+    my %auxiliar;
+    @auxiliar{@REMITOS} = ();
+
+    @REMITOS = keys %auxiliar;
+
+    if( ! @REMITOS ) {
+	print "No hay remitos disponibles para las ordenes de compra solicitadas (@OC).\n";
+	`Glog "$0" "No hay remitos disponibles para las ordenes de compra solicitadas (@OC)." I`;
+	exit -3;
+    }
+
+    `Glog "$0" "Conciliación de la orden de compra @OC." I`;
+
+    #Dejo al usuario elegir los remitos a procesar
+    @REMITOS = &elegirRemitos(@REMITOS);
+
+
+    if( ! @REMITOS){
+	print "No se eligió ningun remito.\n";
+	exit -4;
+    }
+
+    #Busco el ultimo archivo de descripción de ordenes de compra
+    $ULTIMO = &buscarUltimaOC("ocdet");
+    my $OCDET = "$grupo/oc/ocdet.$ULTIMO";
+	
+    if( ! $OCDET ){
+	print "Error: No se encontro el archivo de descripción de ordenes de compra.";
+	`Glog "$0" "No se encontro el archivo de descripción de ordenes de compra." SE`;
+	exit -5;
+    }
+
+    #Procesa cada detalle de orden de compra utilizando los
+    #remitos elegidos
+    &procesarOrden($OCDET, \@OC, \@REMITOS);
 }
 else{
-    `Glog "$0" "La orden de compra $OC no existe." E`;
+    print "Error: No existe el archivo global de ordenes de compra.\n";
+    `Glog "$0" "La orden de compra ??????????? no existe." E`;
 }
