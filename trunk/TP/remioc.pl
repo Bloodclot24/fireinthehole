@@ -44,8 +44,6 @@ sub elegirRemitos(){
 	}
     }
 
-    print "dialog  --checklist \"Lista de remitos\"  24 50 12 $FILAS --stdout 2>/dev/null\n";
-
     my $ELEGIDOS=`dialog  --checklist \"Lista de remitos\"  24 50 12 $FILAS --stdout 2>/dev/null`;
 
     return () if $? != 0;
@@ -91,81 +89,89 @@ sub procesarOrden{
     my (@REMITOS) = @{$_[1]};
 
 
-    print "Descripcion: $OCDET\n";
-    print "NUMEROs de orden: @NUMEROORDEN\n";
-    print "NIMEROs de remito: @REMITOS\n";
+    my %ORDENES;
+    @ORDENES{@NUMEROORDEN} = ();
     
-    return 0;
+    
+    # extraigo la información de todos los productos de los remitos
+    my %PRODUCTOS = ();
+    for my $origen (@REMITOS){
+    	open(archivo, '<', "$grupo/aceptados/$origen") or die $!;
+    	while(<archivo>){
+    	    my $CODPROD = $_;
+    	    ($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
+    	    my $CANTIDAD = $_;
+    	    ($CANTIDAD) = $CANTIDAD =~ /^[^;]*;[^;]*;([^;]*);/;
+
+	    #para el hash, uso la clave: NumeroOrdenDeCompra+CodigoProducto
+	    (my $CLAVE) = $origen =~ /^[^.]*\.([^.]*)\..*$/;
+	    $CLAVE .= $CODPROD;
+    	    $PRODUCTOS{$CLAVE} += $CANTIDAD;
+    	}
 	
+    	close archivo;
+    	(my $destino) = $origen =~ /^(.*)\.aproc$/;
+    	$destino .= ".proc";
+    	`Glog $0 "Renombrando aceptados/$origen a aceptados/$destino" I`;
+    	if (! rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino"){
+    	    `Glog $0 "No se puede renombrar aceptados/$origen a aceptados/$destino" SE`;
+    	    return -1;
+    	}
+    }
 
-    # # extraigo la información de todos los productos de los remitos
-    # my %PRODUCTOS = ();
-    # for my $origen (@REMITOS){
-    # 	open(archivo, '<', "$grupo/aceptados/$origen") or die $!;
-    # 	while(<archivo>){
-    # 	    my $CODPROD = $_;
-    # 	    ($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
-    # 	    my $CANTIDAD = $_;
-    # 	    ($CANTIDAD) = $CANTIDAD =~ /^[^;]*;[^;]*;([^;]*);/;
+    #ahora, genero un nuevo OCDET y voy procesando los productos
+    #TODO: cerrar ordenes en OCGOB
 
-    # 	    $PRODUCTOS{$CODPROD} += $CANTIDAD;
-    # 	}
+    (my $OCDET2) = $OCDET =~ /^(.*)\..*$/;
+    (my $NUMERO) = $OCDET =~ /^.*\.(.*)$/;
+    $NUMERO++;
+    $OCDET2 .= ".$NUMERO";
+    open archivo, '<', $OCDET or die $!;
+    open archivo2, '>', $OCDET2 or die $!;
+
+    while(my $linea = <archivo>){
 	
-    # 	close archivo;
-    # 	(my $destino) = $origen =~ /^(.*)\.aproc$/;
-    # 	$destino .= ".proc";
-    # 	`Glog $0 "Renombrando aceptados/$origen a aceptados/$destino" I`;
-    # 	if (! rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino"){
-    # 	    `Glog $0 "No se puede renombrar aceptados/$origen a aceptados/$destino" SE`;
-    # 	    return -1;
-    # 	}
-    # }
+	(my $CODIGOORDEN) = $linea =~ "^([^;]*);";
+	
+    	if( exists $ORDENES{$CODIGOORDEN} ){
+    	    #la linea es parte de la orden de compra que me interesa (alguna)
+    	    (my $CODPROD, my $REMANENTE) = $linea =~ "^[^;]*;[^;]*;([^;]*);([^;]*);";
 
-    # #ahora, genero un nuevo OCDET y voy procesando los productos
-    # #TODO: cerrar ordenes en OCGOB
+	    my $CLAVE = $CODIGOORDEN;
+	    $CLAVE .= $CODPROD;
 
-    # (my $OCDET2) = $OCDET =~ /^(.*)\..*$/;
-    # (my $NUMERO) = $OCDET =~ /^.*\.(.*)$/;
-    # $NUMERO++;
-    # $OCDET2 .= ".$NUMERO";
-    # open archivo, '<', $OCDET or die $!;
-    # open archivo2, '>', $OCDET2 or die $!;
+    	    my $ESTADO = "ABIERTO";
+    	    if($REMANENTE <= $PRODUCTOS{$CLAVE}){
+    		$PRODUCTOS{$CLAVE} -= $REMANENTE;
+    		$REMANENTE=0;
+    		$ESTADO = "CERRADO";
+    	    }
+    	    else{
+    		$REMANENTE -= $PRODUCTOS{$CLAVE};
+    		$PRODUCTOS{$CLAVE} = 0;
+    	    }
 
-    # while(my $linea = <archivo>){
-    # 	if( $linea =~ "^$NUMEROORDEN;"){
-    # 	    #la linea es parte de la orden de compra que me interesa
-    # 	    (my $CODPROD, my $REMANENTE) = $linea =~ "^[^;]*;[^;]*;([^;]*);([^;]*);";
+    	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;(.*)$/$1;$REMANENTE;$2;$ESTADO;$3/;
 
-    # 	    my $ESTADO = "ABIERTO";
-    # 	    if($REMANENTE <= $PRODUCTOS{$CODPROD}){
-    # 		$PRODUCTOS{$CODPROD} -= $REMANENTE;
-    # 		$REMANENTE=0;
-    # 		$ESTADO = "CERRADO";
-    # 	    }
-    # 	    else{
-    # 		$REMANENTE -= $PRODUCTOS{$CODPROD};
-    # 		$PRODUCTOS{$CODPROD} = 0;
-    # 	    }
+    	    print archivo2 $linea;
+    	}
+    	else{
+    	    #la linea no me interesa, la guardo sin modificarla
+    	    print archivo2 $linea;
+    	}
+    }
 
-    # 	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;(.*)$/$1;$REMANENTE;$2;$ESTADO;$3/;
+    close archivo;
+    close archivo2;
 
-    # 	    print archivo2 $linea;
-    # 	}
-    # 	else{
-    # 	    #la linea no me interesa, la guardo sin modificarla
-    # 	    print archivo2 $linea;
-    # 	}
-    # }
-
-    # close archivo;
-    # close archivo2;
-
-    # for my $clave (keys %PRODUCTOS){
-    # 	if($PRODUCTOS{$clave} > 0){
-    # 	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $clave\n";
-    # 	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $clave, cuando se quería conciliar la orden de compra $NUMEROORDEN." "E"`;
-    # 	}
-    # }
+    for my $clave (keys %PRODUCTOS){
+    	if($PRODUCTOS{$clave} > 0){
+	    (my $CODIGOORDEN) = $clave =~ /^....../;
+	    (my $CODIGOPROD) = $clave =~ /..........$/;
+    	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, en la orden de compra $CODIGOORDEN\n";
+    	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, cuando se intentaba conciliar la orden de compra $CODIGOORDEN" "E"`;
+    	}
+    }
 
 }
 
@@ -189,7 +195,6 @@ $NUMERO=$PARAMETRO;
 #el numero de remito y el numero de orden de compra asociada.
 
 foreach $PARAMETRO (@ARGV){
-    print "Parametro: $PARAMETRO\n";
 
     if(length($PARAMETRO) == 6){
 	push (@OC, $PARAMETRO);
