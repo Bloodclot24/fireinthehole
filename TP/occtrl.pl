@@ -1,6 +1,16 @@
 #!/bin/env perl 
 
+use strict;
 use Switch;
+
+my $SISTEMA_INICIALIZADO = $ENV{'SISTEMA_INICIALIZADO'};
+my $grupo = $ENV{'grupo'};
+
+if(!$SISTEMA_INICIALIZADO){
+    print "El sistema no esta inicializado.\n";
+    exit 1;
+}
+
 
 sub buscarUltimaOC(){
     #$_[0] -> ocgob o ocdet
