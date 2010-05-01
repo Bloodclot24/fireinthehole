@@ -17,7 +17,7 @@ then
     exit 1
 fi
 
-# Verifico que no exista un proceso invonio corriendo
+# Verifico que no exista un proceso invreci corriendo
 if [ -e $LOCK_INVRECI_CORRIENDO ]
 then
 	echo Ya existe un proceso invreci corriendo, se termina la ejecucion.
