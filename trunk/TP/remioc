@@ -141,7 +141,7 @@ sub procesarOrden{
 	
     	if( exists $ORDENES{$CODIGOORDEN} ){
     	    #la linea es parte de la orden de compra que me interesa (alguna)
-    	    (my $CODPROD, my $REMANENTE) = $linea =~ "^[^;]*;[^;]*;([^;]*);([^;]*);";
+    	    (my $CODPROD, my $REMANENTE) = $linea =~ "^[^;]*;[^;]*;([^;]*);[^;]*;([^;]*);";
 
 	    my $CLAVE = $CODIGOORDEN;
 	    $CLAVE .= $CODPROD;
@@ -160,7 +160,7 @@ sub procesarOrden{
 	    my $usuario=`/bin/bash -c getUsuario`;
 	    my $fecha=`/bin/bash -c getFechaYHora`;
 	    
-    	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;.*$/$1;$REMANENTE;$2;$ESTADO;$usuario;$fecha/;
+    	    $linea =~ s/^([^;]*;[^;]*;[^;]*;[^;]*);[^;]*;[^;]*;.*$/$1;$REMANENTE;$ESTADO;$usuario;$fecha/;
 	    
     	    print archivo2 $linea;
     	}
