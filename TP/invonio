@@ -188,15 +188,15 @@ fi
 	if [ ! -z $primera  ]
 	then
 	      ./invreci&
-	      $PIDINVRECI=$!
-	      $primera=0
+	      PIDINVRECI=$!
+	      primera=0
 	fi
 
 	ps -eo pid | grep "$PIDINVRECI" -q 
 	if [ $? -ne "0" ]
 	then 
 	      ./invreci&
-	      $PIDINVRECI=$!
+	      PIDINVRECI=$!
 	      echo El PID del comando invreci es: $PIDINVRECI
 	else
 	      echo Error: ya se esta ejecutando el comando invreci en este momento
