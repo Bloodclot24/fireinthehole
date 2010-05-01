@@ -292,5 +292,5 @@ if( $OCGOB && @OC ){
 }
 else{
     print "Error: No existe el archivo global de ordenes de compra.\n";
-    `Glog "$0" "La orden de compra ??????????? no existe." E`;
+    `Glog "$0" "No existe el archivo global de ordenes de compra." E`;
 }

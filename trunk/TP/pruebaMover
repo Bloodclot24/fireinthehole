@@ -1,0 +1,20 @@
+#!/bin/bash
+
+directorio=PruebaMover
+archivo=prueba
+
+mkdir -p $directorio/movido
+
+. modulo_mover
+
+cd $directorio
+
+grupo=`pwd`
+
+i=0
+while [ $i -lt 30 ]
+do
+    touch $archivo
+    Mover "$archivo" "movido/$archivo"
+    i=$(( $i + 1 ))
+done
