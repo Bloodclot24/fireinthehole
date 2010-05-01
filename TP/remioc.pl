@@ -10,6 +10,7 @@ if(!$SISTEMA_INICIALIZADO){
     exit 1;
 }
 
+
 #busca todos los remitos que tienen el numero de orden de compra
 #especificado
 sub buscarRemitos{
@@ -91,7 +92,7 @@ sub procesarOrden{
 
     my %ORDENES;
     @ORDENES{@NUMEROORDEN} = ();
-    
+
     
     # extraigo la información de todos los productos de los remitos
     my %PRODUCTOS = ();
@@ -156,9 +157,11 @@ sub procesarOrden{
     		$PRODUCTOS{$CLAVE} = 0;
 		delete $DEBOCERRAR{$CODIGOORDEN};
     	    }
-
-    	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;(.*)$/$1;$REMANENTE;$2;$ESTADO;$3/;
-
+	    my $usuario=`/bin/bash -c getUsuario`;
+	    my $fecha=`/bin/bash -c getFechaYHora`;
+	    
+    	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;.*$/$1;$REMANENTE;$2;$ESTADO;$usuario;$fecha/;
+	    
     	    print archivo2 $linea;
     	}
     	else{
@@ -195,15 +198,16 @@ sub procesarOrden{
 	while(my $linea = <archivo>){
 	    (my $CODIGOORDEN) = $linea =~ "^([^;]*);";
 	    
-	    print "linea: $linea\nCodigo: $CODIGOORDEN\n";
 	    if( exists $DEBOCERRAR{$CODIGOORDEN}){
-		print "Existe\n";
 		#me interesa esta linea. La cierro
-		$linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;(.*)$/$1;CERRADO;$2/;
+		
+		my $usuario=`/bin/bash -c getUsuario`;
+		my $fecha=`/bin/bash -c getFechaYHora`;
+
+		$linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;.*$/$1;CERRADO;$usuario;$fecha/;
 		print archivo2 $linea;
 	    }
 	    else{
-		print "No Existe\n";
 		#no me interesa la linea, la dejo como está.
 		print archivo2 $linea;
 	    }

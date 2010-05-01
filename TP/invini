@@ -1,5 +1,20 @@
 #!/bin/bash
 export grupo=`pwd`/..
 export SISTEMA_INICIALIZADO="OK"
+
+getFechaYHora(){
+    echo -n `date +"%Y/%m/%d %H:%M:%S"`
+    return $?
+}
+
+getUsuario(){
+    echo -n `id -un`
+    return $?
+}
+
+export -f getFechaYHora
+export -f getUsuario
+
 . $grupo/comandos/modulo_glog
 . $grupo/comandos/modulo_mover
+
