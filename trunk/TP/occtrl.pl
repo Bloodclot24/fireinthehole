@@ -38,9 +38,9 @@ open (ARCHIVO,'<',"$grupo/oc/ocgob.$NUMEROARCHIVO");
 
 
 
-#Formato programa -all -salida
-#        programa -range mrangominimo rangomaximo -salida
-#	 programa -single numero -salida	
+#Formato programa -salida -all 
+#        programa -salida -range mrangominimo rangomaximo
+#	 programa -salida -single numero	
 
 #Parseo de parametros
 my $ARGC = @ARGV;
@@ -80,7 +80,7 @@ while (my $LINEA = <ARCHIVO>){
     if ( $NUMEROOC >= $RANGOMINIMO && $NUMEROOC <= $RANGOMAXIMO ) { 
 	$TOTAL=0;
 	$REMANENTE=0;
-	my $CUMPLIMIENTO=0;
+	my $CUMPLIMIENTO=100;
 	my $PENDIENTE=0;
 	if ($ESTADO eq "ABIERTA") {
 	    #Obtener las sumas totales de las cantidades de la orden de compra detallada.
