@@ -6,12 +6,10 @@
 #           3 - Directorio inexistente
 
 
-
-DUP="dup"
-ESCRIBIR_LOG=0
-
-
 Mover(){
+    local DUP="dup"
+    local ESCRIBIR_LOG=0
+
 #Primero verificamos que la cantidad de parametros sea como minimo 2 (dos)
     if [ $# -le 1 ]
     then
@@ -49,7 +47,7 @@ Mover(){
 #idem, pero para el caso que el segundo parámetro sea un directorio
     if [ -d "$2" ] 
     then
-	directorio=`dirname "$1"`
+	local directorio=`dirname "$1"`
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if [ "$directorio" = "." ]
 	then
@@ -75,7 +73,7 @@ Mover(){
 	return 3
     fi
 
-    archivo="${2##*/}"
+    local archivo="${2##*/}"
 
     if [ "$archivo" = "" ]
     then
@@ -93,12 +91,13 @@ Mover(){
 	    mkdir "$directorio/$DUP"
 	fi
 	
-	numero=0
+	local numero=0
+	local i=0
 	for i in "$directorio/$DUP/$archivo".*
 	do
 	    echo "archivo: $i"
 
-	    actual="${i##*.}"
+	    local actual="${i##*.}"
 	    echo "actual = $actual"
 	    if [ "$actual" != "*" ] 
 	    then
