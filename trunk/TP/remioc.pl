@@ -65,7 +65,7 @@ sub elegirRemitos(){
 #Busca el ultimo archivo de ordenes de compra 
 sub buscarUltimaOC(){
     #$_[0] -> ocgob o ocdet
-    my $INICIAL=1;
+    my $INICIAL=01;
     my $NUMERO;
     my @CANDIDATOS = <$grupo/oc/$_[0].*>;
 
@@ -121,11 +121,16 @@ sub procesarOrden{
 
     #ahora, genero un nuevo OCDET y voy procesando los productos
     #TODO: cerrar ordenes en OCGOB
+    my %DEBOCERRAR;
+    @DEBOCERRAR{@NUMEROORDEN} = ();
 
     (my $OCDET2) = $OCDET =~ /^(.*)\..*$/;
     (my $NUMERO) = $OCDET =~ /^.*\.(.*)$/;
+
     $NUMERO++;
+    $NUMERO = sprintf "%.2i",($NUMERO);
     $OCDET2 .= ".$NUMERO";
+
     open archivo, '<', $OCDET or die $!;
     open archivo2, '>', $OCDET2 or die $!;
 
@@ -149,6 +154,7 @@ sub procesarOrden{
     	    else{
     		$REMANENTE -= $PRODUCTOS{$CLAVE};
     		$PRODUCTOS{$CLAVE} = 0;
+		delete $DEBOCERRAR{$CODIGOORDEN};
     	    }
 
     	    $linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;([^;]*);[^;]*;(.*)$/$1;$REMANENTE;$2;$ESTADO;$3/;
@@ -171,6 +177,41 @@ sub procesarOrden{
     	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, en la orden de compra $CODIGOORDEN\n";
     	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, cuando se intentaba conciliar la orden de compra $CODIGOORDEN" "E"`;
     	}
+    }
+
+    #Me fijo si tengo que cerrar alguna orden de compra en el global
+    my @claves = keys %DEBOCERRAR;
+    if( @claves > 0 ){
+
+	my $NUMERO = &buscarUltimaOC("ocgob");
+	my $OCGOB = "$grupo/oc/ocgob.$NUMERO";
+	$NUMERO++;
+	$NUMERO = sprintf "%.2i",($NUMERO);
+	my $OCGOB2 = "$grupo/oc/ocgob.$NUMERO";
+	
+	open archivo, '<', $OCGOB or die $!;
+	open archivo2, '>', $OCGOB2 or die $!;
+
+	while(my $linea = <archivo>){
+	    (my $CODIGOORDEN) = $linea =~ "^([^;]*);";
+	    
+	    print "linea: $linea\nCodigo: $CODIGOORDEN\n";
+	    if( exists $DEBOCERRAR{$CODIGOORDEN}){
+		print "Existe\n";
+		#me interesa esta linea. La cierro
+		$linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;(.*)$/$1;CERRADO;$2/;
+		print archivo2 $linea;
+	    }
+	    else{
+		print "No Existe\n";
+		#no me interesa la linea, la dejo como está.
+		print archivo2 $linea;
+	    }
+	    
+	}
+	
+	close archivo;
+	close archivo2;
     }
 
 }
