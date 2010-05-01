@@ -54,7 +54,7 @@ if ($ARGC != 0){
     switch ($ARGV[0]) {
 	case -f { open (ARCHIVOSALIDA , '>>', "$ARGV[1]"); $ARCH = 1; $PROXIMOARG = 2 ;}
 	case -std { $STD = 1; $PROXIMOARG = 1;}
-	case -b { $STD = 1; $ARCH = 1 ; my $NOMBREARCHIVO = $ARGV[1] ; $PROXIMOARG = 2;}
+	case -b { $STD = 1; $ARCH = 1 ; open (ARCHIVOSALIDA , '>>', "$ARGV[1]") ; $PROXIMOARG = 2;}
 	else  {  $STD = 1; $PROXIMOARG = 0;}
     }
 
