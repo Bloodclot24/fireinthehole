@@ -31,7 +31,7 @@ Glog(){
 
     mkdir -p "$DIRECTORIO"
 
-    local FECHA=`date +"%Y/%m/%d %H:%M:%S"`
+    local FECHA=`getFechaYHora`
     echo "$FECHA <$TIPO> $2" >> "$NOMBRE_LOG"
 
     return 0
