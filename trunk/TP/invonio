@@ -5,7 +5,7 @@
 # Constantes
 MAX_REMITO=99999999
 MIN_REMITO=00000000
-LOCK_INVONIO_CORRIENDO=.lock_invonio_corriendo
+LOCK_INVONIO_CORRIENDO=".lock_invonio_corriendo"
 TIEMPO=2
 
 primera=1
