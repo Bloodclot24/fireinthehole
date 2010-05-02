@@ -12,8 +12,57 @@ getUsuario(){
     return $?
 }
 
+bloquearProceso(){
+    if [ $# -ne 1 ]
+    then
+	return -1;
+    fi
+    mkdir -p "$grupo/locks"
+
+    local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
+
+    if [ -e "$ARCHIVO_LOCK"]
+    then
+	return -2;
+    fi
+
+    # Creo un archivo lock oculto con el numero de pid del proceso
+    echo PID=$$ > "$ARCHIVO_LOCK"
+    
+    return 0
+}
+
+desbloquearProceso(){
+    if [ $# -ne 1 ]
+    then
+	return -1;
+    fi
+    local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
+
+    rm -rf "$ARCHIVO_LOCK" > /dev/null
+    return $?
+}
+
+estaCorriendo(){
+    if [ $# -ne 1 ]
+    then
+	return -1;
+    fi
+    local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
+    
+    if [ -e "$ARCHIVO_LOCK"]
+    then
+	return 0;
+    fi
+
+    return -2;
+}
+
 export -f getFechaYHora
 export -f getUsuario
+export -f bloquearProceso
+export -f desbloquearProceso
+export -f estaCorriendo
 
 . $grupo/comandos/modulo_glog
 . $grupo/comandos/modulo_mover
