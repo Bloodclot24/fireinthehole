@@ -21,7 +21,7 @@ bloquearProceso(){
 
     local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
 
-    if [ -e "$ARCHIVO_LOCK"]
+    if [ -e "$ARCHIVO_LOCK" ]
     then
 	return -2;
     fi
@@ -50,7 +50,7 @@ estaCorriendo(){
     fi
     local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
     
-    if [ -e "$ARCHIVO_LOCK"]
+    if [ -e "$ARCHIVO_LOCK" ]
     then
 	return 0;
     fi
@@ -58,12 +58,13 @@ estaCorriendo(){
     return -2;
 }
 
+
 export -f getFechaYHora
 export -f getUsuario
 export -f bloquearProceso
 export -f desbloquearProceso
 export -f estaCorriendo
 
-. $grupo/comandos/modulo_glog
-. $grupo/comandos/modulo_mover
+. "$grupo"/comandos/modulo_glog
+. "$grupo"/comandos/modulo_mover
 

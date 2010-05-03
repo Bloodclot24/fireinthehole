@@ -30,6 +30,17 @@ sub buscarUltimaOC(){
     return $NUMERO;
 }
 
+#============================================================
+#Si el proceso ya se encuentra corriendo suspender la ejecucion
+if ( estaCorriendo occtrl = 0 ){
+	print "Ya se encuentra corriendo un proceso occtrl.\n";
+        exit 1;
+ 
+}
+
+bloquearProceso occtrl;
+#=============================================================
+
 my $NUMEROARCHIVO = &buscarUltimaOC("ocgob");
 my $TOTAL = 0;
 my $REMANENTE = 0;
@@ -129,3 +140,8 @@ while (my $LINEA = <ARCHIVO>){
 }
 close ARCHIVO;
 close ARCHIVOSALIDA if ($ARCH);
+
+#==============================================================
+#Desbloquear proceso.
+desbloquearProceso occtrl;
+#=============================================================
