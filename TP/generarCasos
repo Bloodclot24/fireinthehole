@@ -206,7 +206,7 @@ cat <<EOF > "$grupo"/recibidos/00000002.20100215
 EOF
 
 cat <<EOF > "$grupo"/recibidos/00000003.20100415
-000001;0000000003;1;3;01347.1;20100103;Algun_lugar;Desconocido;00000000003;Aseguradora
+000001;0000000003;1;3;01347.1;20100103;Algun_lugar;Desconocido;00000000002;Aseguradora
 EOF
 
 cat <<EOF > "$grupo"/recibidos/00000004.20100215
