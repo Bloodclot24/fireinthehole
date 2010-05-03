@@ -4,24 +4,24 @@ grupo=`pwd`/Pruebas
 
 
 #Elimino todo
-rm -rf $grupo
+rm -rf "$grupo"
 
 #Creo la estructura de directorios
 
-mkdir -p $grupo/arribos
-mkdir -p $grupo/arribos/Prueba\ Individual\ Invonio
-mkdir -p $grupo/oc
-mkdir -p $grupo/recibidos
-mkdir -p $grupo/rechazados
-mkdir -p $grupo/yarecibidos
-mkdir -p $grupo/aceptados
-mkdir -p $grupo/comandos/log
+mkdir -p "$grupo"/arribos
+mkdir -p "$grupo"/arribos/Prueba\ Individual\ Invonio
+mkdir -p "$grupo"/oc
+mkdir -p "$grupo"/recibidos
+mkdir -p "$grupo"/rechazados
+mkdir -p "$grupo"/yarecibidos
+mkdir -p "$grupo"/aceptados
+mkdir -p "$grupo"/comandos/log
 
 #Copio los scripts al lugar correcto
 
 for i in invini modulo_mover modulo_glog remioc invonio borrar ejecutar_pruebas_invonio invreci startinvonio stopinvonio occtrl.pl
 do
-    cp $i $grupo/comandos/$i
+    cp $i "$grupo"/comandos/$i
 done
 
 #generacion de archivos de prueba
@@ -35,7 +35,7 @@ done
 #Formato : NumeroOrdenCompra;FechaOrdenCOmpra;CUITProveedor;EstadoOrdenCompra;UsuarioGrabacion;FechaYHoraGrabacion
 
 
-cat <<EOF > $grupo/oc/ocgob.01
+cat <<EOF > "$grupo"/oc/ocgob.01
 000000;20100101;00000000001;ABIERTA;LuCaS;01/01/2010 15:20:00
 000001;20100102;00000000002;ABIERTA;VeRoNiCa;03/01/2010 08:15:01
 000002;20100205;00000000003;ABIERTA;LuCiA;07/03/2010 03:33:33
@@ -54,7 +54,7 @@ EOF
 #Formato : NumeroOrdenCompra;NroItem;CodigoProducto;CantidadTotal;CantidadRemanente;EstadodelItem;UsuarioGrabacion;FechaYHoraGrabacion
 
 
-cat <<EOF > $grupo/oc/ocdet.01
+cat <<EOF > "$grupo"/oc/ocdet.01
 000000;1;0000000001;2;2;ABIERTO;LuCaS;01/01/2010 15:20:00
 000000;2;0000000002;4;4;ABIERTO;LuCaS;01/01/2010 15:20:00
 000001;1;0000000003;5;5;ABIERTO;VeRoNiCa;03/01/2010 08:15:01
@@ -77,56 +77,56 @@ EOF							     #del remanente del detalle de la oc. Notar que el producto 00A190
 #############################################################
 
 ##Correctas
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/11111111.19860919
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/11111111.19860919
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/22222222.19870706
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/22222222.19870706
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/33333333.19871014
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/33333333.19871014
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/44444444.19871024
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/44444444.19871024
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/55555555.19871205
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/55555555.19871205
 EOF
 
 #Incorrectas
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/11.20100123
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/11.20100123
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/"12345678 20020721"
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/"12345678 20020721"
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/12222221.20101224
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/12222221.20101224
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/13434341.20100525
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/13434341.20100525
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/74187438.20200202
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/74187438.20200202
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/9999999999999999999.20050821
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/9999999999999999999.20050821
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/90487548.20060721000000000
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/90487548.20060721000000000
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/abcdefgh.20031104
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/abcdefgh.20031104
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/83273892.zzzzzzzz
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/83273892.zzzzzzzz
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/74187839z18100503
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/74187839z18100503
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/88888888-20100229
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/88888888-20100229
 EOF
 
-cat <<EOF > $grupo/arribos/"Prueba Individual Invonio"/77777777-20080230
+cat <<EOF > "$grupo"/arribos/"Prueba Individual Invonio"/77777777-20080230
 EOF
 
 #############################################################
@@ -139,32 +139,32 @@ EOF
 #Nombre : <nro remito>.<nro oc>
 #Contenido : FechaRemito,CodigoDeProducto,CantidadAEntregar,TiempoDescarga,Volumen,FechaEntrega,LugarEntrega,Transportista,Cuit,CompaniaAseguradora
 
-cat <<EOF > $grupo/aceptados/00000001.000000.aproc
+cat <<EOF > "$grupo"/aceptados/00000001.000000.aproc
 20100101;0000000001;2;10;12345.6;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
 20100101;0000000002;3;7;98452.12;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
 20100101;0000000002;1;2;01236.21;20100101;Algun lugar;Desconocido;00000000001;Aseguradora
 EOF
 
-cat <<EOF > $grupo/aceptados/00000002.000001.aproc
+cat <<EOF > "$grupo"/aceptados/00000002.000001.aproc
 20100103;0000000003;4;7;12345.6;20100103;Algun lugar;Desconocido;00000000001;Aseguradora
 EOF
 
-cat <<EOF > $grupo/aceptados/00000003.000001.aproc
+cat <<EOF > "$grupo"/aceptados/00000003.000001.aproc
 20100103;0000000003;1;3;01347.1;20100103;Algun lugar;Desconocido;00000000001;Aseguradora
 EOF
 
 #Agregados
-cat <<EOF > $grupo/aceptados/00000004.123456.aproc
+cat <<EOF > "$grupo"/aceptados/00000004.123456.aproc
 20100103;F1A0900022;1;3;01347.1;20100103;Algun lugar;Desconocido;30324567820;Aseguradora #Este caso no deberia pasar nada porque el estado del producto es cerrado.
 20100103;CCC1900022;15;3;01347.1;20100103;Algun lugar;Desconocido;30324567820;Aseguradora #Este caso deberia dar una advertencia que recibo mas que el remanente.
 EOF
 
-cat <<EOF > $grupo/aceptados/00000004.123460.aproc
+cat <<EOF > "$grupo"/aceptados/00000004.123460.aproc
 20100103;ABC1900022;2;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #ESte producto lo deberia cerrar porque entre 2 y faltaban 2.
 20100103;00A1900014;4;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #Este producto lo deberia cerrar porqu entrego 4 y faltaban 4.
 EOF #Como consecuencia de lo anterior se deberia cambiar el estado de la Orden de Compra a CERRADA.
 
-cat <<EOF > $grupo/aceptados/00000005.123461.aproc
+cat <<EOF > "$grupo"/aceptados/00000005.123461.aproc
 20100103;00A1900FG5;3;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #Deberia quedar con 1 remanente.
 20100103;00A1900123;10;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #Deberia cerrarse el producto
 20100103;00A19006LN;12;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #Entrego mas productos que el remanente del primer detalle de la OC, deberia tener en cuenta la segunda aparicion del item en el detalle.
@@ -184,7 +184,7 @@ EOF
 #6 Procesar bien
 #7 Cuit invalido, orden cerrada, formato inadecuado, orden de compra inexiste.
 
-cat <<EOF > $grupo/recibidos/1.20100426
+cat <<EOF > "$grupo"/recibidos/1.20100426
 123456;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
 123457;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
 123458;HHHHabcd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
