@@ -54,9 +54,9 @@ sub elegirRemitos(){
     my $FILAS;
     my %ARCHIVOS;
     foreach (@_){
-	(my $CODIGO) = $_ =~ /(.*)\..+\.aproc$/;
+	(my $CODIGO) = $_;
 	if($CODIGO){
-	    $FILAS .= "$CODIGO $_ dummy ";
+	    $FILAS .= "$CODIGO - dummy ";
 	    $ARCHIVOS{$CODIGO} = $_;
 	}
     }
@@ -113,7 +113,6 @@ sub procesarOrden{
     # extraigo la información de todos los productos de los remitos
     my %PRODUCTOS = ();
     for my $origen (@REMITOS){
-	print "Nombre: $grupo/aceptados/$origen\n";
     	open(archivo, '<', "$grupo/aceptados/$origen") or die $!;
     	while(<archivo>){
     	    my $CODPROD = $_;
@@ -276,7 +275,7 @@ sub main{
 	}
 	else{
 	    print "Error: '$PARAMETRO', no identifica una orden de compra o remito.\n";
-	    exit -1;
+	    return -1;
 	}
     }
 
