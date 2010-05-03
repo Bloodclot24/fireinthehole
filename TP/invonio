@@ -5,7 +5,6 @@
 # Constantes
 MAX_REMITO=99999999
 MIN_REMITO=00000000
-LOCK_INVONIO_CORRIENDO=".lock_invonio_corriendo"
 TIEMPO=2
 
 PRIMERA=1
@@ -31,7 +30,14 @@ echo Corriendo proceso $$ invonio...
 echo ===========================================================
 
 # Creo un archivo lock oculto con el numero de pid del proceso
-echo PID=$$ > $LOCK_INVONIO_CORRIENDO
+bloquearProceso "$0"
+if [ $? -ne 0 ]
+then
+    echo Ya existe un proceso invonio corriendo, se termina la ejecucion.
+    Glog invreci "Ya existe un proceso invonio corriendo, se termina la ejecucion." W
+    exit 1
+
+fi
 
 # Almaceno la fecha actual
 aaaa=`date +%Y`
@@ -224,7 +230,7 @@ fi
 done
 
 # Elimino el archivo lock oculto
-rm -f $LOCK_INVONIO_CORRIENDO > /dev/null 2> /dev/null	
+desbloquearProceso "$0"
 
 echo ===========================================================
 echo Fin del proceso invonio $$

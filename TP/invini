@@ -13,9 +13,10 @@ getUsuario(){
 }
 
 bloquearProceso(){
+    echo "llamada a bloquear $@"
     if [ $# -ne 1 ]
     then
-	return -1;
+	return 1
     fi
     mkdir -p "$grupo/locks"
 
@@ -23,7 +24,7 @@ bloquearProceso(){
 
     if [ -e "$ARCHIVO_LOCK" ]
     then
-	return -2;
+	return 2
     fi
 
     # Creo un archivo lock oculto con el numero de pid del proceso
@@ -35,7 +36,7 @@ bloquearProceso(){
 desbloquearProceso(){
     if [ $# -ne 1 ]
     then
-	return -1;
+	return 1
     fi
     local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
 
@@ -46,16 +47,16 @@ desbloquearProceso(){
 estaCorriendo(){
     if [ $# -ne 1 ]
     then
-	return -1;
+	return 1
     fi
     local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
     
     if [ -e "$ARCHIVO_LOCK" ]
     then
-	return 0;
+	return 0
     fi
 
-    return -2;
+    return 2
 }
 
 
