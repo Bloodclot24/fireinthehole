@@ -101,7 +101,7 @@ then
 	exit 1
 fi
 
-for i in "$grupo/recibidos/*"
+for i in "$grupo/recibidos/"*
 do  
 
 	archivo=`basename "$i"`
