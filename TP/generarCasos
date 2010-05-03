@@ -19,9 +19,10 @@ mkdir -p "$grupo"/comandos/log
 
 #Copio los scripts al lugar correcto
 
-for i in invini modulo_mover modulo_glog remioc invonio borrar ejecutar_pruebas_invonio invreci startinvonio stopinvonio occtrl.pl
+for i in invini modulo_mover modulo_glog remioc invonio borrar ejecutar_pruebas_invonio invreci startinvonio stopinvonio occtrl
 do
     cp $i "$grupo"/comandos/$i
+    chmod +x "$grupo"/comandos/$i
 done
 
 #generacion de archivos de prueba
@@ -69,7 +70,8 @@ cat <<EOF > "$grupo"/oc/ocdet.01
 123461;2;00A1900123;10;10;ABIERTO;Matias;07/03/2010 03:33:33
 123461;3;00A19006LN;15;10;ABIERTO;Matias;07/03/2010 03:33:33
 123461;4;00A19006LN;15;10;ABIERTO;Matias;07/03/2010 03:33:33 #Este caso esta para probar lo que sucede cuando las unidades entregadas superan la cantidad
-EOF							     #del remanente del detalle de la oc. Notar que el producto 00A19006LN esta duplicado porque 
+EOF
+							     #del remanente del detalle de la oc. Notar que el producto 00A19006LN esta duplicado porque 
 							     #el remito indicara que se entregan mas unidades que el remanente de la primera aparicion del item en el detalle.
 
 #############################################################
@@ -159,12 +161,14 @@ cat <<EOF > "$grupo"/aceptados/00000004.123456.aproc
 20100103;CCC1900022;15;3;01347.1;20100103;Algun lugar;Desconocido;30324567820;Aseguradora #Este caso deberia dar una advertencia que recibo mas que el remanente.
 EOF
 
-cat <<EOF > "$grupo"/aceptados/00000004.123460.aproc
+cat <<EOF > "$grupo"/aceptados/00000005.123460.aproc
 20100103;ABC1900022;2;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #ESte producto lo deberia cerrar porque entre 2 y faltaban 2.
 20100103;00A1900014;4;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #Este producto lo deberia cerrar porqu entrego 4 y faltaban 4.
-EOF #Como consecuencia de lo anterior se deberia cambiar el estado de la Orden de Compra a CERRADA.
+EOF
 
-cat <<EOF > "$grupo"/aceptados/00000005.123461.aproc
+#Como consecuencia de lo anterior se deberia cambiar el estado de la Orden de Compra a CERRADA.
+
+cat <<EOF > "$grupo"/aceptados/00000006.123461.aproc
 20100103;00A1900FG5;3;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #Deberia quedar con 1 remanente.
 20100103;00A1900123;10;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #Deberia cerrarse el producto
 20100103;00A19006LN;12;3;01347.1;20100103;Algun lugar;Desconocido;30324567891;Aseguradora #Entrego mas productos que el remanente del primer detalle de la OC, deberia tener en cuenta la segunda aparicion del item en el detalle.

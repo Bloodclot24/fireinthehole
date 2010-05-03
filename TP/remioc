@@ -113,6 +113,7 @@ sub procesarOrden{
     # extraigo la información de todos los productos de los remitos
     my %PRODUCTOS = ();
     for my $origen (@REMITOS){
+	print "Nombre: $grupo/aceptados/$origen\n";
     	open(archivo, '<', "$grupo/aceptados/$origen") or die $!;
     	while(<archivo>){
     	    my $CODPROD = $_;
@@ -138,7 +139,6 @@ sub procesarOrden{
     }
 
     #ahora, genero un nuevo OCDET y voy procesando los productos
-    #TODO: cerrar ordenes en OCGOB
     my %DEBOCERRAR;
     @DEBOCERRAR{@NUMEROORDEN} = ();
 
@@ -221,7 +221,7 @@ sub procesarOrden{
 		my $usuario=`/bin/bash -c getUsuario`;
 		my $fecha=`/bin/bash -c getFechaYHora`;
 
-		$linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;.*$/$1;CERRADO;$usuario;$fecha/;
+		$linea =~ s/^([^;]*;[^;]*;[^;]*);[^;]*;.*$/$1;CERRADA;$usuario;$fecha/;
 		print archivo2 $linea;
 	    }
 	    else{
