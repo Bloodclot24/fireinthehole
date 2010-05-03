@@ -48,7 +48,7 @@ my $NUMEROARCHIVO = &buscarUltimaOC("ocgob");
 my $TOTAL = 0;
 my $REMANENTE = 0;
 
-open (ARCHIVO,'<',"$grupo/oc/ocgob.$NUMEROARCHIVO");
+open (ARCHIVO,'<',"$grupo/oc/ocgob.$NUMEROARCHIVO") or die $!;
 
 
 
@@ -99,7 +99,7 @@ while (my $LINEA = <ARCHIVO>){
 	if ($ESTADO eq "ABIERTA") {
 	    #Obtener las sumas totales de las cantidades de la orden de compra detallada.
 	    $NUMEROARCHIVO = &buscarUltimaOC("ocdet");
-	    open(ARCHIVO2, '<',"$grupo/oc/ocdet.$NUMEROARCHIVO");
+	    open(ARCHIVO2, '<',"$grupo/oc/ocdet.$NUMEROARCHIVO") or die $!;
 	    while (my $LINEA2 = <ARCHIVO2>){
 		(my $NUMEROOCDETALLE) = $LINEA2 =~ "^([^;]*);";
 		if ( $NUMEROOC == $NUMEROOCDETALLE ) {
