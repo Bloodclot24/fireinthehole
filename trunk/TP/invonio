@@ -8,7 +8,7 @@ MIN_REMITO=00000000
 LOCK_INVONIO_CORRIENDO=".lock_invonio_corriendo"
 TIEMPO=2
 
-primera=1
+PRIMERA=1
 
 # Funciones
 function handler_sigterm(){
@@ -180,26 +180,29 @@ fi
 
   for archivo in $grupo/recibidos/*
   do
-      if [ -f "$archivo" ]
-      then
+     if [ -e "$archivo" ]
+     then
 	# Ejecutar invreci
 	# Validar que no este corriendo ya el invreci siempre q haya archivos en recibidos
 	# e invreci no este corriendo.
-	if [ ! -z $primera  ]
+	if [ $PRIMERA -ne 0  ]
 	then
-	      ./invreci&
-	      PIDINVRECI=$!
-	      primera=0
-	fi
-
-	ps -eo pid | grep "$PIDINVRECI" -q 
-	if [ $? -ne "0" ]
-	then 
+	      echo "Procesando invreci primera vez..."
 	      ./invreci&
 	      PIDINVRECI=$!
 	      echo El PID del comando invreci es: $PIDINVRECI
+	      PRIMERA=0
 	else
-	      echo Error: ya se esta ejecutando el comando invreci en este momento
+	      ps -eo pid | grep "$PIDINVRECI" -q 
+	      if [ $? -ne 0 ]
+	      then
+		  echo "Procesando invreci..." 
+		  ./invreci&
+		   PIDINVRECI=$!
+		   echo El PID del comando invreci es: $PIDINVRECI
+	      else
+		   echo Error: ya se esta ejecutando el comando invreci en este momento
+	      fi
 	fi
 	# Si se ejecuto correctamente, muestro el PID de invreci
 	#echo El PID del comando invreci es: $!
