@@ -20,7 +20,8 @@ bloquearProceso(){
     fi
     mkdir -p "$grupo/locks"
 
-    local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
+    local nombre=`basename "$1"`
+    local ARCHIVO_LOCK="$grupo/locks/.lock_$nombre_corriendo"
 
     if [ -e "$ARCHIVO_LOCK" ]
     then
@@ -38,7 +39,8 @@ desbloquearProceso(){
     then
 	return 1
     fi
-    local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
+    local nombre=`basename "$1"`
+    local ARCHIVO_LOCK="$grupo/locks/.lock_$nombre_corriendo"
 
     rm -rf "$ARCHIVO_LOCK" > /dev/null
     return $?
@@ -49,7 +51,9 @@ estaCorriendo(){
     then
 	return 1
     fi
-    local ARCHIVO_LOCK="$grupo/locks/.lock_$1_corriendo"
+
+    local nombre=`basename "$1"`
+    local ARCHIVO_LOCK="$grupo/locks/.lock_$nombre_corriendo"
     
     if [ -e "$ARCHIVO_LOCK" ]
     then
