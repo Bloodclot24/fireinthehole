@@ -148,7 +148,7 @@ do
 		fecha=${archivo##*.}
 		numeroordencompra=` echo $registro | cut -d ';' -f 1`
 		cantidadRegistrosAceptados=$(($cantidadRegistrosAceptados + 1))
-		echo $registro > $grupo/aceptados/${numeroremito}.${numeroordencompra}.aproc
+		echo $registro >> $grupo/aceptados/${numeroremito}.${numeroordencompra}.aproc
 		
  		sed -i "s/^[^;]*;/${fecha}/" $grupo/aceptados/${numeroremito}.${numeroordencompra}.aproc;
 	    fi 
