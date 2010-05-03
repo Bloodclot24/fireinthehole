@@ -150,11 +150,11 @@ cat <<EOF > "$grupo"/aceptados/00000001.000000.aproc
 EOF
 
 cat <<EOF > "$grupo"/aceptados/00000002.000001.aproc
-20100103;0000000003;4;7;12345.6;20100103;Algun_lugar;Desconocido;00000000001;Aseguradora
+20100103;0000000003;4;7;12345.6;20100103;Algun_lugar;Desconocido;00000000002;Aseguradora
 EOF
 
 cat <<EOF > "$grupo"/aceptados/00000003.000001.aproc
-20100103;0000000003;1;3;01347.1;20100103;Algun_lugar;Desconocido;00000000001;Aseguradora
+20100103;0000000003;1;3;01347.1;20100103;Algun_lugar;Desconocido;00000000002;Aseguradora
 EOF
 
 #Agregados
