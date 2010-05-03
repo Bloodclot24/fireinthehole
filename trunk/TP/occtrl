@@ -3,7 +3,7 @@
 use strict;
 use Switch;
 
-$0 = "occtrl"
+$0 = "occtrl";
 
 my $SISTEMA_INICIALIZADO = $ENV{'SISTEMA_INICIALIZADO'};
 my $grupo = $ENV{'grupo'};
@@ -41,7 +41,7 @@ if ( $? == 0 ){
     exit 1;
 }
 
-bloquearProceso occtrl;
+`/bin/bash -c "bloquearProceso occtrl"`;
 #=============================================================
 
 my $NUMEROARCHIVO = &buscarUltimaOC("ocgob");
@@ -90,7 +90,8 @@ while (my $LINEA = <ARCHIVO>){
     (my $NUMEROOC) = $LINEA =~ "^([^;]*);";
     (my $FECHAOC) = $LINEA =~ "^[^;]*;([^;]*);";
     (my $CUIT) = $LINEA =~ "^[^;]*;[^;]*;([^;]*);";
-    (my $FECHAGRABACION) = $LINEA =~ "^[^;]*;[^;]*;[^;]*;[^;]*;[^;]*;([^;]*);";
+    (my $FECHAGRABACION) = $LINEA =~ "^[^;]*;[^;]*;[^;]*;[^;]*;[^;]*;([^;]*)";
+    chomp $FECHAGRABACION;
     if ( $NUMEROOC >= $RANGOMINIMO && $NUMEROOC <= $RANGOMAXIMO ) { 
 	$TOTAL=0;
 	$REMANENTE=0;
@@ -109,7 +110,7 @@ while (my $LINEA = <ARCHIVO>){
 		    $REMANENTE += $auxiliar;
 		}
 		if ( $TOTAL != 0){
-		    $CUMPLIMIENTO = (($REMANENTE) / $TOTAL) * 100;
+		    $CUMPLIMIENTO = 100 - (($REMANENTE) / $TOTAL) * 100;
 		}
 		$PENDIENTE = $TOTAL - $REMANENTE;
 		
