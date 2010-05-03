@@ -1,6 +1,5 @@
 #!/bin/bash
 
-LOCK_INVRECI_CORRIENDO=.lock_invreci_corriendo
 cantidadRegistrosLeidos=0
 cantidadRegistrosAceptados=0
 cantidadRegistrosRechazadosPorOCompCerrada=0
@@ -18,16 +17,13 @@ then
 fi
 
 # Verifico que no exista un proceso invreci corriendo
-if [ -e $LOCK_INVRECI_CORRIENDO ]
+bloquearProceso "$0"
+if [ $? -ne 0 ]
 then
-	echo Ya existe un proceso invreci corriendo, se termina la ejecucion.
-	Glog invreci "Ya existe un proceso invreci corriendo, se termina la ejecucion " W
-	exit 1	
+    echo Ya existe un proceso invreci corriendo, se termina la ejecucion.
+    Glog invreci "Ya existe un proceso invreci corriendo, se termina la ejecucion." W
+    exit 1
 fi
-
-
-# Creo un archivo lock oculto con el numero de pid del proceso
-echo PID=$$ > $LOCK_INVRECI_CORRIENDO
 
 rechazarRegistro(){
 
@@ -154,6 +150,5 @@ done
 
 Glog invreci "Fin de Invreci" i
 
-# Elimino el archivo lock oculto
-rm -f $LOCK_INVRECI_CORRIENDO > /dev/null 2> /dev/null
-echo se borra el archivo lock invreci	
+# Elimino el lockl
+desbloquearProceso "$0"

@@ -3,6 +3,8 @@
 use strict;
 use Switch;
 
+$0 = "occtrl"
+
 my $SISTEMA_INICIALIZADO = $ENV{'SISTEMA_INICIALIZADO'};
 my $grupo = $ENV{'grupo'};
 
@@ -10,7 +12,6 @@ if(!$SISTEMA_INICIALIZADO){
     print "El sistema no esta inicializado.\n";
     exit 1;
 }
-
 
 sub buscarUltimaOC(){
     #$_[0] -> ocgob o ocdet
@@ -32,10 +33,12 @@ sub buscarUltimaOC(){
 
 #============================================================
 #Si el proceso ya se encuentra corriendo suspender la ejecucion
-if ( estaCorriendo occtrl = 0 ){
-	print "Ya se encuentra corriendo un proceso occtrl.\n";
-        exit 1;
- 
+
+`/bin/bash -c "estaCorriendo occtrl"`;
+
+if ( $? == 0 ){
+    print "Ya se encuentra corriendo un proceso occtrl.\n";
+    exit 1;
 }
 
 bloquearProceso occtrl;
@@ -143,5 +146,5 @@ close ARCHIVOSALIDA if ($ARCH);
 
 #==============================================================
 #Desbloquear proceso.
-desbloquearProceso occtrl;
+`/bin/bash -c "desbloquearProceso occtrl"`;
 #=============================================================

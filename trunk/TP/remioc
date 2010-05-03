@@ -2,6 +2,8 @@
 
 use strict;
 
+$0="remioc";
+
 my $SISTEMA_INICIALIZADO = $ENV{'SISTEMA_INICIALIZADO'};
 my $grupo = $ENV{'grupo'};
 
@@ -10,6 +12,20 @@ if(!$SISTEMA_INICIALIZADO){
     exit 1;
 }
 
+`/bin/bash -c "bloquearProceso $0"`;
+if( $? != 0 ){
+    print "Error: Ya existe un proceso remioc corriendo.\n";
+    `Glog "$0" "Ya existe un proceso remioc corriendo." "SE"`;
+    exit 2;
+}
+
+`/bin/bash -c "estaCorriendo invreci"`;
+if( $? == 0 ){
+    `/bin/bash -c "desbloquearProceso $0"`;
+    print "Error: Ya existe un proceso invreci corriendo.\n";
+    `Glog "$0" "Ya existe un proceso invreci corriendo." "SE"`;
+    exit 2;
+}
 
 #busca todos los remitos que tienen el numero de orden de compra
 #especificado
@@ -108,6 +124,7 @@ sub procesarOrden{
 	    (my $CLAVE) = $origen =~ /^[^.]*\.([^.]*)\..*$/;
 	    $CLAVE .= $CODPROD;
     	    $PRODUCTOS{$CLAVE} += $CANTIDAD;
+
     	}
 	
     	close archivo;
@@ -175,8 +192,8 @@ sub procesarOrden{
 
     for my $clave (keys %PRODUCTOS){
     	if($PRODUCTOS{$clave} > 0){
-	    (my $CODIGOORDEN) = $clave =~ /^....../;
-	    (my $CODIGOPROD) = $clave =~ /..........$/;
+	    (my $CODIGOORDEN) = $clave =~ /^(......)/;
+	    (my $CODIGOPROD) = $clave =~ /(..........)$/;
     	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, en la orden de compra $CODIGOORDEN\n";
     	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, cuando se intentaba conciliar la orden de compra $CODIGOORDEN" "E"`;
     	}
@@ -220,122 +237,134 @@ sub procesarOrden{
 
 }
 
+sub main{
+
 #Inicializar el log
-`Glog "$0" "Inicio de $0: @ARGV" I`;
+    `Glog "$0" "Inicio de $0: @ARGV" I`;
 
-my $PARAMETRO = "$ARGV[0]";
-my $NUMERO;
-my @OC;
-my $OCDET;
-my $OCGOB;
-my $ULTIMO;
-my @REMITOS;
+    my $PARAMETRO = "$ARGV[0]";
+    my $NUMERO;
+    my @OC;
+    my $OCDET;
+    my $OCGOB;
+    my $ULTIMO;
+    my @REMITOS;
 
-$ULTIMO=&buscarUltimaOC("ocgob");
-$NUMERO=$PARAMETRO;
+    $ULTIMO=&buscarUltimaOC("ocgob");
+    $NUMERO=$PARAMETRO;
 
 #Por cada parametro, miro si tiene 6 u 8 caracteres. Si tiene 6, me
 #guardo el numero como una orden de compra a procesar. Si tiene 8, lo
 #tomo como un numero de remito y busco si existe. Si existe, me guardo
 #el numero de remito y el numero de orden de compra asociada.
 
-foreach $PARAMETRO (@ARGV){
+    foreach $PARAMETRO (@ARGV){
 
-    if(length($PARAMETRO) == 6){
-	push (@OC, $PARAMETRO);
-    }
-    elsif(length($PARAMETRO) == 8){
-
-	my $archivo = <$grupo/aceptados/$NUMERO.*.aproc>;
-
-	if( -e $archivo ){
-	    ($NUMERO) = $archivo =~ /$NUMERO\.([0-9]{6})\.aproc$/;
-	    push (@OC, $NUMERO);
+	if(length($PARAMETRO) == 6){
+	    push (@OC, $PARAMETRO);
 	}
+	elsif(length($PARAMETRO) == 8){
 
-	push(@REMITOS , "$grupo/aceptados/$archivo");
-    }
-    else{
-	print "Error: '$PARAMETRO', no identifica una orden de compra o remito.\n";
-	exit -1;
-    }
-}
+	    my $archivo = <$grupo/aceptados/$NUMERO.*.aproc>;
 
-$OCGOB="$grupo/oc/ocgob.$ULTIMO";
+	    if( -e $archivo ){
+		($NUMERO) = $archivo =~ /$NUMERO\.([0-9]{6})\.aproc$/;
+		push (@OC, $NUMERO);
+	    }
+
+	    push(@REMITOS , "$grupo/aceptados/$archivo");
+	}
+	else{
+	    print "Error: '$PARAMETRO', no identifica una orden de compra o remito.\n";
+	    exit -1;
+	}
+    }
+
+    $OCGOB="$grupo/oc/ocgob.$ULTIMO";
 
 #Si es orden de compra
-if( $OCGOB && @OC ){
-    #Verifico que esté abierta
+    if( $OCGOB && @OC ){
+	#Verifico que esté abierta
 
-    my @aux=@OC;
-    @OC = ();
-    #verifico que las ordenes de compra elegidas esten abiertas.
-    foreach (@aux){
-	`grep "^$_;[0-9]\\{8\\};[0-9]\\{11\\};ABIERTA;.*" "$OCGOB"`;
-	if( $? == 0 ){
-	    push(@OC, $_);
+	my @aux=@OC;
+	@OC = ();
+	#verifico que las ordenes de compra elegidas esten abiertas.
+	foreach (@aux){
+	    `grep "^$_;[0-9]\\{8\\};[0-9]\\{11\\};ABIERTA;.*" "$OCGOB"`;
+	    if( $? == 0 ){
+		push(@OC, $_);
+	    }
+	    else{
+		print "Error: La orden de compra $_, no está abierta.\n";
+		`Glog "$0" "La orden de compra $_, no está abierta." E`;
+	    }
 	}
-	else{
-	    print "Error: La orden de compra $_, no está abierta.\n";
-	    `Glog "$0" "La orden de compra $_, no está abierta." E`;
+
+	if(!@OC){
+	    print "Todas las ordenes de compra especificadas estan cerradas.\n";
+	    `Glog "$0" "Todas las ordenes de compra especificadas estan cerradas." I`;
+	    return -2;
 	}
-    }
 
-    if(!@OC){
-	print "Todas las ordenes de compra especificadas estan cerradas.\n";
-	`Glog "$0" "Todas las ordenes de compra especificadas estan cerradas." I`;
-	exit -2;
-    }
-
-    foreach (@OC){
-	#Busco los remitos que se corresponden a cada orden de compra
-	my @RDISPONIBLES = &buscarRemitos($_);
-	if( ! @RDISPONIBLES){
-	    print "No hay remitos disponibles para la orden de compra $NUMERO\n";
-	    `Glog "$0" "No hay remitos disponibles para la orden de compra $NUMERO." I`;
+	foreach (@OC){
+	    #Busco los remitos que se corresponden a cada orden de compra
+	    my @RDISPONIBLES = &buscarRemitos($_);
+	    if( ! @RDISPONIBLES){
+		print "No hay remitos disponibles para la orden de compra $NUMERO\n";
+		`Glog "$0" "No hay remitos disponibles para la orden de compra $NUMERO." I`;
+	    }
+	    else{
+		push(@REMITOS, @RDISPONIBLES);
+	    }
 	}
-	else{
-	    push(@REMITOS, @RDISPONIBLES);
+
+	my %auxiliar;
+	@auxiliar{@REMITOS} = ();
+
+	@REMITOS = keys %auxiliar;
+
+	if( ! @REMITOS ) {
+	    print "No hay remitos disponibles para las ordenes de compra solicitadas (@OC).\n";
+	    `Glog "$0" "No hay remitos disponibles para las ordenes de compra solicitadas (@OC)." I`;
+	    return -3;
 	}
-    }
 
-    my %auxiliar;
-    @auxiliar{@REMITOS} = ();
+	`Glog "$0" "Conciliación de la orden de compra @OC." I`;
 
-    @REMITOS = keys %auxiliar;
-
-    if( ! @REMITOS ) {
-	print "No hay remitos disponibles para las ordenes de compra solicitadas (@OC).\n";
-	`Glog "$0" "No hay remitos disponibles para las ordenes de compra solicitadas (@OC)." I`;
-	exit -3;
-    }
-
-    `Glog "$0" "Conciliación de la orden de compra @OC." I`;
-
-    #Dejo al usuario elegir los remitos a procesar
-    @REMITOS = &elegirRemitos(@REMITOS);
+	#Dejo al usuario elegir los remitos a procesar
+	@REMITOS = &elegirRemitos(@REMITOS);
 
 
-    if( ! @REMITOS){
-	print "No se eligió ningun remito.\n";
-	exit -4;
-    }
+	if( ! @REMITOS){
+	    print "No se eligió ningun remito.\n";
+	    return -4;
+	}
 
-    #Busco el ultimo archivo de descripción de ordenes de compra
-    $ULTIMO = &buscarUltimaOC("ocdet");
-    my $OCDET = "$grupo/oc/ocdet.$ULTIMO";
+	#Busco el ultimo archivo de descripción de ordenes de compra
+	$ULTIMO = &buscarUltimaOC("ocdet");
+	my $OCDET = "$grupo/oc/ocdet.$ULTIMO";
 	
-    if( ! $OCDET ){
-	print "Error: No se encontro el archivo de descripción de ordenes de compra.";
-	`Glog "$0" "No se encontro el archivo de descripción de ordenes de compra." SE`;
-	exit -5;
-    }
+	if( ! $OCDET ){
+	    print "Error: No se encontro el archivo de descripción de ordenes de compra.";
+	    `Glog "$0" "No se encontro el archivo de descripción de ordenes de compra." SE`;
+	    return -5;
+	}
 
-    #Procesa cada detalle de orden de compra utilizando los
-    #remitos elegidos
-    &procesarOrden($OCDET, \@OC, \@REMITOS);
+	#Procesa cada detalle de orden de compra utilizando los
+	#remitos elegidos
+	&procesarOrden($OCDET, \@OC, \@REMITOS);
+    }
+    else{
+	print "Error: No existe el archivo global de ordenes de compra.\n";
+	`Glog "$0" "No existe el archivo global de ordenes de compra." E`;
+    }
 }
-else{
-    print "Error: No existe el archivo global de ordenes de compra.\n";
-    `Glog "$0" "No existe el archivo global de ordenes de compra." E`;
-}
+
+
+my $retorno = &main;
+
+`/bin/bash -c "desbloquearProceso $0"`;
+
+exit $retorno;
+
+
