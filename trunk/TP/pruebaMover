@@ -11,10 +11,15 @@ cd $directorio
 
 grupo=`pwd`
 
+echo "Probando mover..."
+
 i=0
 while [ $i -lt 30 ]
 do
     touch $archivo
+    echo "Moviendo $archivo a movido/$archivo"
     Mover "$archivo" "movido/$archivo"
     i=$(( $i + 1 ))
 done
+
+echo "Fin de la prueba"

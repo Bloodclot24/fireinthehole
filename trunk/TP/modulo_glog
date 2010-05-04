@@ -32,7 +32,10 @@ Glog(){
     mkdir -p "$DIRECTORIO"
 
     local FECHA=`getFechaYHora`
-    echo "$FECHA <$TIPO> $2" >> "$NOMBRE_LOG"
+    
+    local LINEA= "$FECHA <$TIPO> $2"
+    LINEA=`echo $LINEA | cut -c1-132` #limito la linea a 132 caracteres
+    echo  $LINEA >> "$NOMBRE_LOG"
 
     return 0
 }
