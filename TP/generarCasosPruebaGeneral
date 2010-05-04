@@ -1,0 +1,82 @@
+#!/bin/bash
+
+sh prepararPruebas
+
+#############################################################
+##############  ORDENES DE COMPRA  ##########################
+#############################################################
+#Es el archivo global de OC
+#Nombre: ocgob.nn
+#Formato : NumeroOrdenCompra;FechaOrdenCOmpra;CUITProveedor;EstadoOrdenCompra;UsuarioGrabacion;FechaYHoraGrabacion
+
+
+cat <<EOF > "$grupo"/oc/ocgob.01
+000000;20100101;00000000001;ABIERTA;LuCaS;01/01/2010 15:20:00
+000001;20100102;00000000002;ABIERTA;VeRoNiCa;03/01/2010 08:15:01
+000002;20100205;00000000003;ABIERTA;LuCiA;07/03/2010 03:33:33
+123456;20100210;30324567820;ABIERTA;Matias;07/03/2010 03:38:35
+123460;20100210;30324567891;ABIERTA;Matias;07/03/2010 03:38:35
+123461;20100210;30324567891;ABIERTA;Matias;07/03/2010 03:38:35
+EOF
+
+
+#############################################################
+#######  DESCRIPCIONES DE  ORDENES DE COMPRA  ###############
+#############################################################
+
+#Es el archivo de detalle de OC
+#Nombre: ocdet.nn
+#Formato : NumeroOrdenCompra;NroItem;CodigoProducto;CantidadTotal;CantidadRemanente;EstadodelItem;UsuarioGrabacion;FechaYHoraGrabacion
+
+
+cat <<EOF > "$grupo"/oc/ocdet.01
+000000;1;0000000001;2;2;ABIERTO;LuCaS;01/01/2010 15:20:00
+000000;2;0000000002;4;4;ABIERTO;LuCaS;01/01/2010 15:20:00
+000001;1;0000000003;5;5;ABIERTO;VeRoNiCa;03/01/2010 08:15:01
+000002;1;0000000001;4;4;ABIERTO;LuCiA;07/03/2010 03:33:33
+000002;2;0000000005;1;1;ABIERTO;LuCiA;07/03/2010 03:33:33
+000002;3;0000000002;3;3;ABIERTO;LuCiA;07/03/2010 03:33:33
+123456;1;F1A0900022;5;0;CERRADO;Matias;07/03/2010 03:33:33  
+123456;2;CCC1900022;9;8;ABIERTO;Matias;07/03/2010 03:33:33  
+123460;1;ABC1900022;2;2;ABIERTO;Matias;07/03/2010 03:33:33
+123460;2;00A1900014;6;4;ABIERTO;Matias;07/03/2010 03:33:33
+123461;1;00A1900FG5;4;4;ABIERTO;Matias;07/03/2010 03:33:33
+123461;2;00A1900123;10;10;ABIERTO;Matias;07/03/2010 03:33:33
+123461;3;00A19006LN;15;10;ABIERTO;Matias;07/03/2010 03:33:33
+123461;4;00A19006LN;15;10;ABIERTO;Matias;07/03/2010 03:33:33 
+EOF
+	
+#############################################################
+##############  REMITOS EN ARRIBOS  #########################
+#############################################################
+#Nombre <nro remito><fecha de remito>
+#Formato: NumeroOC,CodigoDeProductosaEntregar;CantidadAEntregar;TiempoDescarga;VolumenM3;FechaEntrega,LugarEntrega,Transportista;CUITProveedor;CompañiaAseguradora.
+
+cat <<EOF > "$grupo"/arribos/00000001.20100101
+000000;0000000001;2;10;12345.6;20100101;Algun_lugar;Desconocido;00000000001;Aseguradora
+000000;0000000002;3;7;98452.12;20100101;Algun_lugar;Desconocido;00000000001;Aseguradora
+000000;0000000002;1;2;01236.21;20100101;Algun_lugar;Desconocido;00000000001;Aseguradora
+EOF
+
+cat <<EOF > "$grupo"/arribos/00000002.20100215
+000001;0000000003;4;7;12345.6;20100103;Algun_lugar;Desconocido;00000000002;Aseguradora
+EOF
+
+cat <<EOF > "$grupo"/arribos/00000003.20100415
+000001;0000000003;1;3;01347.1;20100103;Algun_lugar;Desconocido;00000000002;Aseguradora
+EOF
+
+cat <<EOF > "$grupo"/arribos/00000004.20100215
+123456;F1A0900022;1;3;01347.1;20100103;Algun_lugar;Desconocido;30324567820;Aseguradora
+123456;CCC1900022;15;3;01347.1;20100103;Algun_lugar;Desconocido;30324567820;Aseguradora
+123460;ABC1900022;2;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+123460;00A1900014;4;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+EOF
+
+
+cat <<EOF > "$grupo"/arribos/00000005.20100202
+123461;00A1900FG5;3;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+123461;00A1900123;10;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+123461;00A19006LN;12;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+EOF
+
