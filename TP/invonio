@@ -26,7 +26,7 @@ then
 fi
 
 # ++ Programa INVONIO ++ #
-echo Demonio corriendo bajo el N°.: <$$>
+echo Demonio corriendo bajo el N°.: \< $$ \>
 echo ===========================================================
 
 # Creo un archivo lock oculto con el numero de pid del proceso
@@ -144,14 +144,14 @@ do
 		  # sino /grupo/aceptados
 		  if [ $error_remito -eq "1" ] || [ $error_fecha -eq "1" ]
 		  then
-			  Mover "$grupo/arribos/$archivo" $grupo/rechazados
+			  Mover "$grupo/arribos/$archivo" $grupo/rechazados invonio
 			  echo El archivo se coloco en la carpeta de rechazados
 		  else
-			  Mover "$grupo/arribos/$archivo" $grupo/recibidos	
+			  Mover "$grupo/arribos/$archivo" $grupo/recibidos invonio	
 			  echo El archivo se coloco en la carpeta de recibidos		
 		  fi
 	  else
-		      Mover "$grupo/arribos/$archivo" $grupo/rechazados
+		      Mover "$grupo/arribos/$archivo" $grupo/rechazados invonio
 		      echo El formato del nombre del archivo es invalido
 	  fi
 

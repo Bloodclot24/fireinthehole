@@ -16,7 +16,7 @@ then
     exit 1
 fi
 
-# Verifico que no exista un proceso invreci corriendo
+# Verifica que no exista un proceso invreci corriendo
 bloquearProceso "$0"
 if [ $? -ne 0 ]
 then
@@ -47,7 +47,6 @@ validarRegistro(){
     echo "--------------------------------------"
 
 
-
     local archivosAProcesar2=`ls $grupo/oc/ -1 | wc -l`
     if [ $archivosAProcesar2 -eq 0 ]
     then
@@ -55,36 +54,41 @@ validarRegistro(){
 	exit 1
     fi
     
-    for archivoOrdenCompra in "$grupo/oc/ocgob.*"
+    ultimoArchivo=0
+    for archivoOrdenCompra in "$grupo/oc/ocgob."*
     do
-	local registroOrdenDeCompra=`grep -h "^$ordendecompra" $archivoOrdenCompra` #Esto devuelve una lista o nada.
-	if [ "$registroOrdenDeCompra" != "" ] 
+	actual=${archivoOrdenCompra##*.}
+	if [ $ultimoArchivo -lt $actual ]
 	then
-
-	    echo "El registro de orden de compra es: $registroOrdenDeCompra"
-
-	    if [  "`echo $registroOrdenDeCompra | cut -d ';' -f 4`" = "CERRADA" ]
-	    then
-		echo la orden de compra $ordendecompra se rechaza por estar cerrado  
-		Glog invreci "La orden de compra $ordendecompra se esta cerrada, se rechaza el registro $registroAValidar" e			
-		rechazarRegistro "$registroAValidar" "$nombreArchivo"
-		local cantidadRegistrosRechazadosPorOCompCerrada=$(( $cantidadRegistrosRechazadosPorOCompCerrada + 1))
-		return 1
-
-	    elif [ "$cuitProveedor" != "`echo $registroOrdenDeCompra | cut -d ';' -f 3`" ] 
-	    then
-		echo la orden de compra $ordendecompra se rechaza por CUIT invalido: "`echo $registroOrdenDeCompra | cut -d ';' -f 3`", se esperaba $cuitProveedor
-		Glog invreci "La orden de compra $ordendecompra tiene un CUIT invalido, se rechaza el registro $registroAValidar" e
-		rechazarRegistro "$registroAValidar" "$nombreArchivo"
-		cantidadRegistrosRechazadosPorOtrosMotivos=$(($cantidadRegistrosRechazadosPorOtrosMotivos + 1))
-		return 3
-	    else
-				#Validacion correcta
-		return 0
-	    fi		
+	    ultimoArchivo=$actual
 	fi
     done
 
+    local registroOrdenDeCompra=`grep -h "^$ordendecompra" "$grupo/oc/ocgob.$ultimoArchivo"` #Esto devuelve una lista o nada.
+    echo Ruta de la orden de compra global : "$grupo/oc/ocgob.$ultimoArchivo"
+    if [ "$registroOrdenDeCompra" != "" ] 
+    then
+	echo "El registro de orden de compra es: $registroOrdenDeCompra"
+	if [  "`echo $registroOrdenDeCompra | cut -d ';' -f 4`" = "CERRADA" ]
+	then
+	  echo la orden de compra $ordendecompra se rechaza por estar cerrado  
+	  Glog invreci "La orden de compra $ordendecompra se esta cerrada, se rechaza el registro $registroAValidar" e			
+	  rechazarRegistro "$registroAValidar" "$nombreArchivo"
+	  local cantidadRegistrosRechazadosPorOCompCerrada=$(( $cantidadRegistrosRechazadosPorOCompCerrada + 1))
+	  return 1
+	elif [ "$cuitProveedor" != "`echo $registroOrdenDeCompra | cut -d ';' -f 3`" ] 
+	then
+	    echo la orden de compra $ordendecompra se rechaza por CUIT invalido: "`echo $registroOrdenDeCompra | cut -d ';' -f 3`", se esperaba $cuitProveedor
+	    Glog invreci "La orden de compra $ordendecompra tiene un CUIT invalido, se rechaza el registro $registroAValidar" e
+	    rechazarRegistro "$registroAValidar" "$nombreArchivo"
+	    cantidadRegistrosRechazadosPorOtrosMotivos=$(($cantidadRegistrosRechazadosPorOtrosMotivos + 1))
+	    return 3
+	else
+	  #Validacion correcta
+	  return 0
+	fi		
+     fi
+    
     echo "La orden de compra $ordendecompra no existe, el registro perteneciente al remito $nombreArchivo se rechazara"
     Glog invreci "La orden de compra #$ordendecompra no existe, se rechaza el registro $registroAValidar"	e
     rechazarRegistro "$registroAValidar" "$nombreArchivo" 
@@ -95,7 +99,7 @@ validarRegistro(){
 
 
 #Comienzo :
-#Guardo en el log "Inicio de Invreci: <cantidad de archivos a procesar>
+#Guarda en el log "Inicio de Invreci: <cantidad de archivos a procesar>
 
 archivosAProcesar=`ls $grupo/recibidos/ -1 | wc -l`
 Glog invreci "Inicio de Invreci: Archivos a procesar : <$archivosAProcesar> " i
@@ -119,7 +123,7 @@ do
 	mv $i $grupo/rechazados/
 
     else
-		#Rechazar un registro porque el formato es invalido!
+	#Rechaza un registro porque el formato es invalido
         grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$" $i >> $grupo/rechazados/${archivo}.rech  
 	
 	cantidadRegistrosLeidos=0
@@ -155,7 +159,7 @@ do
 
 	    fi 
 	done
-	mv $i $grupo/yarecibidos/ #DEberiamos usar mover!
+	Mover $i $grupo/yarecibidos/ invreci 
     fi
     
     Glog invreci "
