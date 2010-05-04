@@ -1,4 +1,4 @@
-#!/bin/env perl 
+#!/usr/bin/perl 
 
 use strict;
 use Switch;
@@ -19,7 +19,11 @@ sub buscarUltimaOC(){
     my $NUMERO;
     my @CANDIDATOS = <$grupo/oc/$_[0].*>;
 
+
+
     foreach (@CANDIDATOS){
+
+
 
 	($NUMERO) = $_ =~ /\.([0-9]*)$/;
 	
@@ -48,7 +52,7 @@ my $NUMEROARCHIVO = &buscarUltimaOC("ocgob");
 my $TOTAL = 0;
 my $REMANENTE = 0;
 
-open (ARCHIVO,'<',"$grupo/oc/ocgob.$NUMEROARCHIVO") or die $!;
+open (ARCHIVO,'<',"$grupo/oc/ocgob.$NUMEROARCHIVO") or die "$grupo/oc/ocgob.$NUMEROARCHIVO: $!";
 
 
 
@@ -119,6 +123,8 @@ while (my $LINEA = <ARCHIVO>){
 	}
 	
 	if ( $STD ) {
+	    printf ( "\n" );
+	    printf ( " Estado de la orden     : %s \n",$ESTADO);
 	    printf ( " Orden de compra numero : %i \n",$NUMEROOC);
 	    printf ( " Grado de cumplimiento  : %.2f \n",$CUMPLIMIENTO);
 	    printf ( " Fecha de OC            : %s \n",$FECHAOC);

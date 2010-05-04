@@ -1,0 +1,28 @@
+#!/bin/bash
+
+grupo="`pwd`/Pruebas"
+
+#Elimino todo
+rm -rf "$grupo"
+
+#Creo la estructura de directorios
+
+mkdir -p "$grupo"/arribos
+mkdir -p "$grupo"/arribos/Prueba\ Individual\ Invonio
+mkdir -p "$grupo"/oc
+mkdir -p "$grupo"/recibidos
+mkdir -p "$grupo"/rechazados
+mkdir -p "$grupo"/yarecibidos
+mkdir -p "$grupo"/aceptados
+mkdir -p "$grupo"/comandos/log
+
+#Copio los scripts al lugar correcto
+
+for i in invini modulo_mover modulo_glog remioc invonio borrar ejecutar_pruebas_invonio invreci startinvonio stopinvonio occtrl
+do
+    cp $i "$grupo"/comandos/$i
+    chmod +x "$grupo"/comandos/$i
+done
+
+export grupo
+

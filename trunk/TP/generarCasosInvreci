@@ -1,0 +1,35 @@
+#!/bin/bash
+
+sh prepararPruebas
+
+#Es el archivo global de OC
+#Nombre: ocgob.nn
+#Formato : NumeroOrdenCompra;FechaOrdenCOmpra;CUITProveedor;EstadoOrdenCompra;UsuarioGrabacion;FechaYHoraGrabacion
+
+
+cat <<EOF > "$grupo"/oc/ocgob.01
+123457;20100101;00000000001;ABIERTA;LuCaS;01/01/2010 15:20:00
+000001;20100102;00000000002;ABIERTA;VeRoNiCa;03/01/2010 08:15:01
+123462;20100205;00000000003;ABIERTA;LuCiA;07/03/2010 03:33:33
+123456;20100210;30324567820;CERRADA;Matias;07/03/2010 03:38:35
+123460;20100210;30324567891;ABIERTA;Matias;07/03/2010 03:38:35
+123461;20100210;30324567891;ABIERTA;Matias;07/03/2010 03:38:35
+EOF
+
+#1 Orden cerrada
+#2 CUIT invalido
+#3 Orden de compra inexistente
+#4 formato inadecuado de registro
+#5 Procesar bien
+#6 Procesar bien
+#7 Cuit invalido, orden cerrada, formato inadecuado, orden de compra inexiste.
+
+cat <<EOF > "$grupo"/recibidos/00000001.20100426
+123456;HHHHabcddd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+123457;HHHHabcddd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+123458;HHHHabcddd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+1234;HHHHabcddd;15;30;10.5201015;CapitalFed.;TODOMUNDOSA324567891;Estafadores
+123460;HHHHabcddd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+123461;HHHHabcddd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafadores
+123462;HHHHabcddd;15;30;10.5;20101225;CapitalFed.;TODOMUNDOSA;30324567891;Estafad
+EOF

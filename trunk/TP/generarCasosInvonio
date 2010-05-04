@@ -1,0 +1,61 @@
+#!/bin/bash
+
+sh prepararPruebas
+
+##Correctas
+cat <<EOF > "$grupo"/arribos/11111111.19860919
+EOF
+
+cat <<EOF > "$grupo"/arribos/22222222.19870706
+EOF
+
+cat <<EOF > "$grupo"/arribos/33333333.19871014
+EOF
+
+cat <<EOF > "$grupo"/arribos/44444444.19871024
+EOF
+
+cat <<EOF > "$grupo"/arribos/55555555.19871205
+EOF
+
+#Incorrectas
+cat <<EOF > "$grupo"/arribos/11.20100123
+EOF
+
+cat <<EOF > "$grupo"/arribos/"12345678 20020721"
+EOF
+
+cat <<EOF > "$grupo"/arribos/12222221.20101224
+EOF
+
+cat <<EOF > "$grupo"/arribos/13434341.20100525
+EOF
+
+cat <<EOF > "$grupo"/arribos/74187438.20200202
+EOF
+
+cat <<EOF > "$grupo"/arribos/9999999999999999999.20050821
+EOF
+
+cat <<EOF > "$grupo"/arribos/90487548.20060721000000000
+EOF
+
+cat <<EOF > "$grupo"/arribos/abcdefgh.20031104
+EOF
+
+cat <<EOF > "$grupo"/arribos/83273892.zzzzzzzz
+EOF
+
+cat <<EOF > "$grupo"/arribos/74187839z18100503
+EOF
+
+cat <<EOF > "$grupo"/arribos/88888888-20100229
+EOF
+
+cat <<EOF > "$grupo"/arribos/77777777-20080230
+EOF
+
+#Duplicados
+#Este deberia quedar con extension .001
+cat <<EOF > "$grupo"/arribos/55555555.19871205
+EOF
