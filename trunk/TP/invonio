@@ -50,7 +50,7 @@ terminar=0
 
 while [ $terminar -eq 0 ]
 do 
-  for path_archivo in $grupo/arribos/*
+  for path_archivo in "$grupo/arribos/"*
   do
     if [ -f "$path_archivo" ] 
     then	  
@@ -162,7 +162,7 @@ do
     fi
   done
 
-  for archivo in $grupo/recibidos/*
+  for archivo in "$grupo/recibidos/"*
   do
      if [ -e "$archivo" ]
      then

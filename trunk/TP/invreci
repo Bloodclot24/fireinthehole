@@ -27,7 +27,7 @@ fi
 
 rechazarRegistro(){
 
-    echo $1 >> $grupo/rechazados/$2.rech
+    echo $1 >> "$grupo"/rechazados/$2.rech
 
 }
 
@@ -47,7 +47,7 @@ validarRegistro(){
     echo "--------------------------------------"
 
 
-    local archivosAProcesar2=`ls $grupo/oc/ -1 | wc -l`
+    local archivosAProcesar2=`ls "$grupo"/oc/ -1 | wc -l`
     if [ $archivosAProcesar2 -eq 0 ]
     then
 	Glog invreci "No existen archivos de orden de compra para procesar, se suspende la ejecucion de invreci" e
@@ -101,7 +101,7 @@ validarRegistro(){
 #Comienzo :
 #Guarda en el log "Inicio de Invreci: <cantidad de archivos a procesar>
 
-archivosAProcesar=`ls $grupo/recibidos/ -1 | wc -l`
+archivosAProcesar=`ls "$grupo"/recibidos/ -1 | wc -l`
 Glog invreci "Inicio de Invreci: Archivos a procesar : <$archivosAProcesar> " i
 if [ $archivosAProcesar -eq 0 ]
 then
@@ -116,22 +116,22 @@ do
 
     Glog invreci "Archivo a procesar: <$archivo>" i
 
-    if [ -e $grupo/yarecibidos/$archivo ]
+    if [ -e "$grupo"/yarecibidos/$archivo ]
     then 
 	
 	Glog invreci "Remito Duplicado: <$archivo>" w
-	mv $i $grupo/rechazados/
+	Mover $i "$grupo"/rechazados/ invreci
 
     else
 	#Rechaza un registro porque el formato es invalido
-        grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$" $i >> $grupo/rechazados/${archivo}.rech  
+        grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$" $i >> "$grupo"/rechazados/${archivo}.rech  
 	
 	cantidadRegistrosLeidos=0
 	cantidadRegistrosAceptados=0
 	cantidadRegistrosRechazadosPorOCompCerrada=0
 	cantidadRegistrosRechazadosPorOCompInexistente=0
 	cantidadRegistrosRechazadosPorOtrosMotivos=0
-        cantidadRegistrosRechazadosPorOtrosMotivos=`wc -l $grupo/rechazados/${archivo}.rech | cut -d ' ' -f 1`
+        cantidadRegistrosRechazadosPorOtrosMotivos=`wc -l "$grupo"/rechazados/${archivo}.rech | cut -d ' ' -f 1`
 	cantidadRegistrosLeidos=$cantidadRegistrosRechazadosPorOtrosMotivos
 	
 	
@@ -155,11 +155,11 @@ do
 
 		registro=`echo $registro | sed "s/^[^;]*;/${fecha};/"`
 
-		echo "$registro" >> $grupo/aceptados/${numeroremito}.${numeroordencompra}.aproc
+		echo "$registro" >> "$grupo"/aceptados/${numeroremito}.${numeroordencompra}.aproc
 
 	    fi 
 	done
-	Mover $i $grupo/yarecibidos/ invreci 
+	Mover $i "$grupo"/yarecibidos/ invreci 
     fi
     
     Glog invreci "
