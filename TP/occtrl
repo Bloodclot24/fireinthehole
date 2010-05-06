@@ -17,13 +17,9 @@ sub buscarUltimaOC(){
     #$_[0] -> ocgob o ocdet
     my $INICIAL=1;
     my $NUMERO;
-    my @CANDIDATOS = <$grupo/oc/$_[0].*>;
-
-
+    my @CANDIDATOS = <"$grupo/oc/$_[0].*">;
 
     foreach (@CANDIDATOS){
-
-
 
 	($NUMERO) = $_ =~ /\.([0-9]*)$/;
 	
