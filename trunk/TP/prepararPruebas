@@ -1,6 +1,6 @@
 #!/bin/bash
 
-grupo="`pwd`/Pruebas"
+grupo="`pwd`/Prue bas"
 
 #Elimino todo
 rm -rf "$grupo"
