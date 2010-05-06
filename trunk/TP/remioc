@@ -294,6 +294,30 @@ sub main{
 	}
     }
 
+    if( $#ARGV == -1 ){
+	#busco todos los remitos
+	$FLAGREMITOS=1;
+
+	opendir my $directorio,"$grupo/aceptados/";
+
+	my @archivos = readdir($directorio);
+	closedir($directorio);
+
+	foreach (@archivos){
+
+	    next if !( $_ =~ /[0-9]{8}\.[0-9]{6}\.aproc/);
+	    
+	    ($NUMERO) = $_ =~ /[0-9]{8}\.([0-9]{6})\.aproc$/;
+	    push (@OC, $NUMERO);
+	    push(@REMITOS , "$_");
+	}
+
+	if(@REMITOS){
+	    print "Se procesarán los siguientes remitos: @REMITOS\n";
+	}
+	
+    }
+
     $OCGOB="$grupo/oc/ocgob.$ULTIMO";
 
 #Si tenemos alguna orden de compra
