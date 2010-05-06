@@ -1,8 +1,18 @@
 
+* Invreci
+
+    - Todos los registros invalidos de un remito generan un archivo
+      .rech en $grupo/rechazados
+    - Existen varios archivos globales de ordenes de compra, sin
+      embargo, para realizar el proceso se utilizara en todo momento,
+      la version mas reciente de los mismos.
+    - El archivo de ordenes de compra global tiene formato valido.
+
+
 * Mover
 
 ** Archivo origen
-   El comando admite un directorio como primer parámetro.
+   - El comando admite un directorio como primer parámetro.
 
 ** Archivos duplicados
    - Si el segundo parámetro es un directorio, verificamos que el

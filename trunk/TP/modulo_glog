@@ -7,7 +7,7 @@ then
 fi
 
 Glog(){
-
+    return 0
     if [ $# -ne 3 ]
     then
 	#Se requieren exactamente 3 parametros
