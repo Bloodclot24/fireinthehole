@@ -119,7 +119,8 @@ do
     if [ -e "$grupo"/yarecibidos/$archivo ]
     then 
 	
-	Glog invreci "Remito Duplicado: <$archivo>" w
+	Glog invreci "Remito Rechazado Por Duplicado: <$archivo>" w
+	echo "Remito Rechazado Por Duplicado: <$archivo>"
 	Mover $i "$grupo"/rechazados/ invreci
 
     else
@@ -162,20 +163,29 @@ do
 	Mover $i "$grupo"/yarecibidos/ invreci 
     fi
     
-    Glog invreci "
-    -Remito Aceptado:<$archivo> 
-    -Cantidad de Registros Leidos: $cantidadRegistrosLeidos 
-    -Cantidad de Registros Aceptados: $cantidadRegistrosAceptados 
-    -Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada 
-    -Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
-    -Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " i
-    echo "
-    -Remito Aceptado:<$archivo> 
-    -Cantidad de Registros Leidos: $cantidadRegistrosLeidos 
-    -Cantidad de Registros Aceptados: $cantidadRegistrosAceptados 
-    -Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada 
-    -Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
-    -Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos "
+    if [ -s "$archivo" ]
+    then
+	Glog invreci " -Remito Rechazado Por Archivo Vacio: <$archivo> " i
+	echo "-Remito Rechazado Por Archivo Vacio:<$archivo> "
+    
+    else
+	Glog invreci "
+	-Remito Aceptado:<$archivo> 
+	-Cantidad de Registros Leidos: $cantidadRegistrosLeidos 
+	-Cantidad de Registros Aceptados: $cantidadRegistrosAceptados 
+	-Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada 
+	-Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
+	-Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " i
+	echo "
+	 -Remito Aceptado:<$archivo> 
+	 -Cantidad de Registros Leidos: $cantidadRegistrosLeidos 
+         -Cantidad de Registros Aceptados: $cantidadRegistrosAceptados 
+         -Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada 
+         -Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
+         -Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " 
+    
+    fi
+    
 done
 
 Glog invreci "Fin de Invreci" i
