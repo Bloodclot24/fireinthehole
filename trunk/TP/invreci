@@ -163,12 +163,12 @@ do
 	Mover $i "$grupo"/yarecibidos/ invreci 
     fi
     
-    if [ -s "$archivo" ]
-    then
-	Glog invreci " -Remito Rechazado Por Archivo Vacio: <$archivo> " i
-	echo "-Remito Rechazado Por Archivo Vacio:<$archivo> "
+#    if [ -s "$archivo" ]
+#    then
+#	Glog invreci " -Remito Rechazado Por Archivo Vacio: <$archivo> " i
+#	echo "-Remito Rechazado Por Archivo Vacio:<$archivo> "
     
-    else
+#    else
 	Glog invreci "
 	-Remito Aceptado:<$archivo> 
 	-Cantidad de Registros Leidos: $cantidadRegistrosLeidos 
@@ -184,7 +184,7 @@ do
          -Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
          -Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " 
     
-    fi
+#    fi
     
 done
 
