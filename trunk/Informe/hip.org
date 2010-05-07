@@ -55,4 +55,15 @@
     - Se presupone que todos los archivos (tanto de remitos como de
       ordenes de compra) tienen nombres validos segun corresponda.
 
-    - 
+    - Cuando sobran productos, se guardan los datos en un archivo
+      /$grupo/sobrantes/sobrante.sob/. Los registros tienen el
+      siguiente formato:
+
+      | Campo                         | Descripción                                          |
+      |-------------------------------+------------------------------------------------------|
+      | Número de orden de compra     | 6 caracteres                                         |
+      | Código de Producto a entregar | 10 caracteres                                        |
+      | Cantidad sobrante             | Numérico, mayor que cero                             |
+      | Usuario de grabación          | N caracteres. Usuario que graba el registro          |
+      | Fecha y hora de grabación     | N caracteres. Fecha y hora de grabación del registro |
+      |-------------------------------+------------------------------------------------------|
