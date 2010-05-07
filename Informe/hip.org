@@ -1,22 +1,58 @@
 
+
+* Registros
+    - Los diferentes registros terminan con la linea. No se espera
+      encontrar un separador *;* al final.
+
+* Ordenes de compra
+    - Existen multiples archivos de ordenes de compra, tanto local
+      como global. Siempre se utiliza el de numero mayor (de extension
+      de archivo). Los demas quedan como registros historicos pero no
+      se utilizan en ningun proceso.
+
+* Modulo Glog
+    - Cuando se invoca incorrectamente, sale con un codigo de error,
+      pero no emite ningun tipo de error nigraba ningun log.
+
 * Invreci
 
     - Todos los registros invalidos de un remito generan un archivo
       .rech en $grupo/rechazados
+
     - Existen varios archivos globales de ordenes de compra, sin
       embargo, para realizar el proceso se utilizara en todo momento,
       la version mas reciente de los mismos.
+
     - El archivo de ordenes de compra global tiene formato valido.
 
+    - Solo se procesan los archivos dentro de el directorio
+      /recibidos/. Si existen subdirectorios dentro de /recibidos/, se
+      ignoran.
 
+    - No se valida el nombre de los archivos en el directorio
+      /recibidos/, ya que solo quedan en este ultimo los archivos ya
+      validados por /invonio/.
+      
 * Mover
 
-** Archivo origen
    - El comando admite un directorio como primer parámetro.
 
-** Archivos duplicados
    - Si el segundo parámetro es un directorio, verificamos que el
      archivo indicado en el parámetro 1 no resida en ese directorio. Si
      está en el mismo directorio no lo consideramos como archivo
      duplicado, sino que se trata del mismo archivo.
    
+* Invonio
+
+    - Solo se procesan los archivos dentro de el directorio
+      /arribos/. Si existen subdirectorios dentro de /arribos/, se
+      ignoran.
+
+
+
+* Remioc
+
+    - Se presupone que todos los archivos (tanto de remitos como de
+      ordenes de compra) tienen nombres validos segun corresponda.
+
+    - 
