@@ -1,5 +1,9 @@
 #!/usr/bin/perl 
 
+# Salidas:  0 - OK
+#           1 - Sistema no inicializado
+#           2 - Ya se encuentra corriendo otra instancia de occtrl
+
 use strict;
 use Switch;
 
@@ -38,7 +42,7 @@ sub buscarUltimaOC(){
 
 if ( $? == 0 ){
     print "Ya se encuentra corriendo un proceso occtrl.\n";
-    exit 1;
+    exit 2;
 }
 
 `/bin/bash -c "bloquearProceso occtrl"`;
@@ -98,6 +102,7 @@ while (my $LINEA = <ARCHIVO>){
 	my $CUMPLIMIENTO=100;
 	my $PENDIENTE=0;
 	if ($ESTADO eq "ABIERTA") {
+	    print "Orden de compra $NUMEROOC esta abierta.\n";
 	    #Obtener las sumas totales de las cantidades de la orden de compra detallada.
 	    $NUMEROARCHIVO = &buscarUltimaOC("ocdet");
 	    open(ARCHIVO2, '<',"$grupo/oc/ocdet.$NUMEROARCHIVO") or die $!;
@@ -105,14 +110,16 @@ while (my $LINEA = <ARCHIVO>){
 		(my $NUMEROOCDETALLE) = $LINEA2 =~ "^([^;]*);";
 		if ( $NUMEROOC == $NUMEROOCDETALLE ) {
 		    (my $auxiliar) = $LINEA2 =~ "^[^;]*;[^;]*;[^;]*;([^;]*);";
+		    print "Acumulo $auxiliar (total).\n";
 		    $TOTAL+=$auxiliar;
 		    ($auxiliar) = $LINEA2 =~ "^[^;]*;[^;]*;[^;]*;[^;]*;([^;]*);";
+		    print "Acumulo $auxiliar (remanente).\n";
 		    $REMANENTE += $auxiliar;
 		}
 		if ( $TOTAL != 0){
 		    $CUMPLIMIENTO = 100 - (($REMANENTE) / $TOTAL) * 100;
 		}
-		$PENDIENTE = $TOTAL - $REMANENTE;
+		$PENDIENTE = $REMANENTE;
 		
 	    }
 	    close ARCHIVO2;
@@ -121,7 +128,7 @@ while (my $LINEA = <ARCHIVO>){
 	if ( $STD ) {
 	    printf ( "\n" );
 	    printf ( " Estado de la orden     : %s \n",$ESTADO);
-	    printf ( " Orden de compra numero : %i \n",$NUMEROOC);
+	    printf ( " Orden de compra numero : %s \n",$NUMEROOC);
 	    printf ( " Grado de cumplimiento  : %.2f \n",$CUMPLIMIENTO);
 	    printf ( " Fecha de OC            : %s \n",$FECHAOC);
 	    if ($ESTADO eq "CERRADA"){
@@ -131,7 +138,7 @@ while (my $LINEA = <ARCHIVO>){
 	    
 	}
 	if ( $ARCH ) {
-	    printf (ARCHIVOSALIDA " Orden de compra numero : %i \n",$NUMEROOC);
+	    printf (ARCHIVOSALIDA " Orden de compra numero : %s \n",$NUMEROOC);
 	    printf (ARCHIVOSALIDA " Grado de cumplimiento  : %.2f \n",$CUMPLIMIENTO);
 	    printf (ARCHIVOSALIDA " Fecha de OC            : %s \n",$FECHAOC);
 	    if ($ESTADO eq "CERRADA"){
@@ -147,7 +154,11 @@ while (my $LINEA = <ARCHIVO>){
 close ARCHIVO;
 close ARCHIVOSALIDA if ($ARCH);
 
-#==============================================================
-#Desbloquear proceso.
-`/bin/bash -c "desbloquearProceso occtrl"`;
-#=============================================================
+exit 0;
+
+END{
+    #==============================================================
+    #Desbloquear proceso.
+    `/bin/bash -c "desbloquearProceso occtrl"`;
+    #==============================================================
+}
