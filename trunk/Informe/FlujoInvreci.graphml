@@ -13,7 +13,7 @@
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="52.0" width="80.0" x="247.340873015873" y="0.0"/>
+          <y:Geometry height="52.0" width="80.0" x="378.9924603174603" y="0.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="47.6640625" x="16.16796875" y="17.015625">invonio</y:NodeLabel>
@@ -24,7 +24,7 @@
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.terminator">
-          <y:Geometry height="40.0" width="90.060546875" x="377.34115513392857" y="6.0"/>
+          <y:Geometry height="40.0" width="90.060546875" x="508.9927424355159" y="6.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="80.060546875" x="5.0" y="11.015625">Inicio Invreci</y:NodeLabel>
@@ -35,7 +35,7 @@
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
-          <y:Geometry height="81.25" width="173.1572265625" x="335.79281529017857" y="67.0"/>
+          <y:Geometry height="81.25" width="173.1572265625" x="467.4444025917659" y="67.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="122.78125" x="25.18798828125" y="24.65625">¿Existe otro invreci 
@@ -47,7 +47,7 @@ en ejecución?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
-          <y:Geometry height="81.25" width="158.8294921875" x="299.66739676339284" y="178.25"/>
+          <y:Geometry height="81.25" width="158.8294921875" x="431.31898406498016" y="178.25"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="111.677734375" x="23.57587890625001" y="24.65625">¿El ambiente está
@@ -59,7 +59,7 @@ inicializado?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="40.0" width="111.0078125" x="216.7226810515873" y="289.5"/>
+          <y:Geometry height="40.0" width="111.0078125" x="415.10403025793653" y="289.5"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="101.0078125" x="5.0" y="11.015625">Inicializar el Log</y:NodeLabel>
@@ -70,7 +70,7 @@ inicializado?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
-          <y:Geometry height="109.60931142410016" width="188.31458455594682" x="178.0692950236139" y="349.5"/>
+          <y:Geometry height="109.60931142410016" width="188.31458455594682" x="376.45064422996313" y="349.5"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="45.90625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="112.48046875" x="37.9170579029734" y="31.851530712050078">¿Existen archivos 
@@ -83,7 +83,7 @@ $grupo/recibidos?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.terminator">
-          <y:Geometry height="40.0" width="76.150390625" x="416.38432849702383" y="384.3046557120501"/>
+          <y:Geometry height="40.0" width="76.150390625" x="541.6902808779762" y="759.5389671361502"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="66.150390625" x="5.0" y="11.015625">Fin Invreci</y:NodeLabel>
@@ -94,7 +94,7 @@ $grupo/recibidos?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
-          <y:Geometry height="81.25" width="158.935546875" x="192.7588138640873" y="489.10931142410016"/>
+          <y:Geometry height="81.25" width="158.935546875" x="296.6723059275794" y="489.10931142410016"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="81.935546875" x="38.5" y="24.65625">¿El remito es
@@ -106,7 +106,7 @@ duplicado?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="40.0" width="125.462890625" x="401.69474516369047" y="509.73431142410016"/>
+          <y:Geometry height="40.0" width="125.462890625" x="376.5106181795635" y="627.0389671361502"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="115.462890625" x="5.0" y="4.03125">Mover remito a 
@@ -118,10 +118,10 @@ $grupo/duplicados</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
-          <y:Geometry height="109.60931142410016" width="174.1904296875" x="97.98276134672619" y="600.3593114241"/>
+          <y:Geometry height="109.60931142410016" width="174.1904296875" x="72.48176928323412" y="474.9296557120501"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="139.31640625" x="17.43701171875" y="38.835905712050135">¿Quedan registros sin
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="139.31640625" x="17.43701171875" y="38.83590571205008">¿Quedan registros sin
 procesar en el remito?</y:NodeLabel>
         </y:GenericNode>
       </data>
@@ -130,7 +130,7 @@ procesar en el remito?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
-          <y:Geometry height="65.0" width="199.064453125" x="85.54574962797619" y="739.9686228482003"/>
+          <y:Geometry height="65.0" width="199.064453125" x="60.044757564484115" y="614.5389671361502"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="135.314453125" x="31.875" y="23.515625">¿El registro es válido?</y:NodeLabel>
@@ -141,7 +141,7 @@ procesar en el remito?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="40.0" width="111.11328125" x="216.27570064484127" y="834.9686228482003"/>
+          <y:Geometry height="40.0" width="111.11328125" x="190.77470858134922" y="709.5389671361502"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="101.11328125" x="5.0" y="11.015625">Aceptar registro</y:NodeLabel>
@@ -152,7 +152,7 @@ procesar en el remito?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="40.0" width="120.177734375" x="40.50101376488095" y="834.9686228482003"/>
+          <y:Geometry height="40.0" width="120.177734375" x="15.000021701388889" y="709.5389671361502"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="110.177734375" x="5.0" y="11.015625">Rechazar registro</y:NodeLabel>
@@ -163,7 +163,7 @@ procesar en el remito?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="40.0" width="129.658203125" x="33.100263516865084" y="509.73431142410016"/>
+          <y:Geometry height="40.0" width="129.658203125" x="94.74788256448412" y="384.3046557120501"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="119.658203125" x="5.0" y="4.03125">Mover el remito a
@@ -200,7 +200,7 @@ $grupo/yarecibidos</y:NodeLabel>
           <y:Path sx="-43.28932083129877" sy="20.281250000004945" tx="0.0" ty="-40.625"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.0000158582414542" y="26.310211181640625">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.0000223492819487" y="26.310211181640625">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -209,13 +209,10 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="-39.70737304687498" sy="20.28125" tx="0.0" ty="-20.0">
-            <y:Point x="339.3747698102679" y="274.5"/>
-            <y:Point x="272.2265873015873" y="274.5"/>
-          </y:Path>
+          <y:Path sx="-39.42627404319512" sy="20.470710198257308" tx="0.0" ty="-20.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="-41.04966324094744" y="37.309234619140625">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="1.634990464064174" y="26.169921875">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -235,10 +232,13 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="94.15729227797341" sy="0.0" tx="-38.0751953125" ty="0.0"/>
+          <y:Path sx="62.77152818531556" sy="18.273405712050078" tx="-25.383464183174794" ty="-18.59375">
+            <y:Point x="533.3794646932521" y="474.10931142410016"/>
+            <y:Point x="554.3821428571429" y="474.10931142410016"/>
+          </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="14.84104373555789" y="1.999998729628203">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="23.00262836643242" y="180.69920031528136">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -247,10 +247,13 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="54.80465571205008" tx="0.0" ty="-40.625"/>
+          <y:Path sx="-62.77152818531562" sy="18.273405712050078" tx="0.0" ty="-40.625">
+            <y:Point x="407.8364083226209" y="474.10931142410016"/>
+            <y:Point x="376.1400793650794" y="474.10931142410016"/>
+          </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="1.9999942840091762" y="6.015622459256406">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="-23.32373735732176" y="53.531247459256406">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -259,10 +262,13 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="79.4677734375" sy="0.0" tx="-62.7314453125" ty="0.0"/>
+          <y:Path sx="0.0" sy="40.625" tx="-31.36572265625" ty="-20.0">
+            <y:Point x="376.1400793650794" y="585.3593114241002"/>
+            <y:Point x="407.8763408358135" y="585.3593114241002"/>
+          </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="17.47577243381079" y="1.9999974592564058">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="8.392548479352683" y="16.970700584256406">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -271,13 +277,10 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="40.625" tx="43.547607421875" ty="-27.398405712050135">
-            <y:Point x="272.2265873015873" y="585.3593114241002"/>
-            <y:Point x="228.6255836123512" y="585.3593114241002"/>
-          </y:Path>
+          <y:Path sx="-79.4677734375" sy="0.0" tx="87.09521484375" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="-31.959687248108878" y="16.999997459256406">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="-35.15922948443699" y="1.9999974592564058">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -289,7 +292,7 @@ $grupo/yarecibidos</y:NodeLabel>
           <y:Path sx="0.0" sy="54.80465571205008" tx="0.0" ty="-32.5"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="15.15625" x="2.0000037783668176" y="5.986323043512812">SI</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="15.15625" x="2.0000035361638027" y="6.015651706462677">SI</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -298,13 +301,13 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="-49.76611328125" sy="16.28125" tx="30.04443359375" ty="-20.0">
-            <y:Point x="135.3118629092262" y="819.9686228482003"/>
-            <y:Point x="130.63431454613095" y="819.9686228482003"/>
+          <y:Path sx="-49.76611328125" sy="16.21875" tx="30.04443359375" ty="-20.0">
+            <y:Point x="109.81087084573412" y="694.5389671361502"/>
+            <y:Point x="105.13332248263889" y="694.5389671361502"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.0000037783668176" y="19.29686991851281">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.0000035361638027" y="19.328823093181427">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -313,13 +316,13 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="49.76611328125" sy="16.28125" tx="-27.7783203125" ty="-20.0">
-            <y:Point x="234.8440894717262" y="819.9686228482003"/>
-            <y:Point x="244.05402095734127" y="819.9686228482003"/>
+          <y:Path sx="49.766113281250014" sy="16.21875" tx="-27.7783203125" ty="-20.0">
+            <y:Point x="209.34309740823412" y="694.5389671361502"/>
+            <y:Point x="218.55302889384922" y="694.5389671361502"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="shead" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="-16.951168096633182" y="19.29686991851281">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="shead" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="-16.951168338836197" y="19.328823093181427">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -328,8 +331,8 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:ArcEdge>
-          <y:Path sx="-30.04443359375" sy="-20.0" tx="-58.0634765625" ty="18.273405712050135">
-            <y:Point x="58.39715576171875" y="740.0857543945312"/>
+          <y:Path sx="-30.04443359375" sy="-20.0" tx="-58.0634765625" ty="18.27340571205002">
+            <y:Point x="32.89616394042969" y="614.6560668945312"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -341,8 +344,8 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:ArcEdge>
-          <y:Path sx="27.7783203125" sy="-20.0" tx="58.0634765625" ty="18.273405712050135">
-            <y:Point x="331.5501708984375" y="733.1669311523438"/>
+          <y:Path sx="27.7783203125" sy="-20.0" tx="58.063476562500014" ty="18.27340571205002">
+            <y:Point x="306.0491943359375" y="607.7372436523438"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -354,13 +357,13 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="39.70737304687498" sy="20.34375" tx="-19.03759765625" ty="-20.0">
-            <y:Point x="418.78951590401783" y="274.5"/>
-            <y:Point x="435.4218253968254" y="274.5"/>
+          <y:Path sx="39.70737304687498" sy="20.28125" tx="0.0" ty="-20.0">
+            <y:Point x="550.4411032056051" y="274.5"/>
+            <y:Point x="579.7654761904762" y="274.5"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="18.63235956887803" y="76.63670285602507">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="31.324375116257443" y="264.2818431872157">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -369,13 +372,13 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="43.289306640625" sy="20.34375" tx="19.03759765625" ty="-20.0">
-            <y:Point x="465.66073521205357" y="163.25"/>
-            <y:Point x="473.4972222222222" y="163.25"/>
+          <y:Path sx="43.289306640625" sy="20.34375" tx="25.383463848741712" ty="-18.59375">
+            <y:Point x="597.3123225136409" y="163.25"/>
+            <y:Point x="605.1488095238095" y="163.25"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="9.836441934663128" y="132.26170285602507">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="9.836558699025431" y="319.8788585680751">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -384,12 +387,12 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:ArcEdge>
-          <y:Path sx="0.0" sy="-20.0" tx="62.77152818531562" ty="18.273405712050078">
-            <y:Point x="400.4781188964844" y="465.0187072753906"/>
+          <y:Path sx="31.36572265625" sy="-20.0" tx="0.0" ty="54.80465571205008">
+            <y:Point x="472.08367919921875" y="543.0740966796875"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:Arc height="-1.3713271617889404" ratio="-0.03515368700027466" type="fixedRatio"/>
+          <y:Arc height="-1.4758363962173462" ratio="-0.03515368700027466" type="fixedRatio"/>
         </y:ArcEdge>
       </data>
     </edge>
@@ -397,13 +400,10 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="-43.547607421875" sy="-27.398405712050135" tx="0.0" ty="20.0">
-            <y:Point x="141.5303687686012" y="564.7343114241002"/>
-            <y:Point x="97.92936507936508" y="564.7343114241002"/>
-          </y:Path>
+          <y:Path sx="0.0" sy="-54.80465571205008" tx="0.0" ty="20.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="-31.959677753751237" y="-61.000490821993594">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.0000035361638027" y="-34.2968762703718">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -412,10 +412,7 @@ $grupo/yarecibidos</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-20.0" tx="-62.77152818531562" ty="18.273405712050078">
-            <y:Point x="97.92936507936508" y="474.10931142410016"/>
-            <y:Point x="209.45505911627168" y="474.10931142410016"/>
-          </y:Path>
+          <y:Path sx="64.8291015625" sy="0.0" tx="-94.15729227797341" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>
