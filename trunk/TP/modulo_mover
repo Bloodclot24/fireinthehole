@@ -45,7 +45,6 @@ Mover(){
     if [ "$1" = "$2" ]
     then
 	Glog "$0" "Origen y destino son iguales" "I"
-
 	return 0
     fi
 
@@ -65,13 +64,11 @@ Mover(){
 	fi
     fi
 
-
     directorio="${2%/*}"
     if [ ! -d  "$directorio" ]
     then
 	echo "Error: El directorio $2 no existe."
 	Glog "$0" "Error: El directorio $2 no existe." "E"
-
 	return 3
     fi
 
@@ -100,7 +97,7 @@ Mover(){
 	    local actual="${i##*.}"
 	    if [ "$actual" != "*" ] 
 	    then
-		if [ $((10#$actual)) -ge $((10#$numero)) ]
+		if [ $((10#$actual)) -ge $((10#$numero)) ]	
 		then
 		    numero=$(( 10#$actual + 1 ))
 		fi

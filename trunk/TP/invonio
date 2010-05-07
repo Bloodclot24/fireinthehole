@@ -6,12 +6,14 @@
 MAX_REMITO=99999999
 MIN_REMITO=00000000
 TIEMPO=2
-
 PRIMERA=1
 
 # Funciones
 function handler_sigterm(){
-	echo ++ Se√±al SIGTERM ++
+	echo
+	echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+	echo " ++ Se√±al SIGTERM para Invonio ++ "
+	echo \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 	terminar=1
 }
 
@@ -26,7 +28,8 @@ then
 fi
 
 # ++ Programa INVONIO ++ #
-echo Demonio corriendo bajo el N∞.: \< $$ \>
+echo
+echo "==> Demonio corriendo bajo el N∞.:"\<$$\>
 echo ===========================================================
 
 # Creo un archivo lock oculto con el numero de pid del proceso
@@ -36,7 +39,6 @@ then
     echo Ya existe un proceso invonio corriendo, se termina la ejecucion.
     Glog invreci "Ya existe un proceso invonio corriendo, se termina la ejecucion." W
     exit 1
-
 fi
 
 # Almaceno la fecha actual
@@ -55,18 +57,16 @@ do
     if [ -f "$path_archivo" ] 
     then	  
 	  archivo=${path_archivo##*/}
-	  echo El nombre del archivo es: $archivo
+	  echo "- El nombre del archivo es: $archivo"
 	  
 	  #Verifico el formato del nombre del archivo
-	  echo $archivo | grep "^[0-9]\{8\}\.[0-9]\{8\}$" -q
-	  
+	  echo $archivo | grep "^[0-9]\{8\}\.[0-9]\{8\}$" -q  
 	 
 	  if [ $? = 0 ]
 	  then	
 		  error_remito=0	
 		  remito=${archivo%.*}
 		  # Verifico el remito
-		  echo El numero del remito es: $remito
 		  if [ $remito -ge $MAX_REMITO ] || [ $remito -le $MIN_REMITO ]
 		  then
 			  error_remito=1
@@ -79,7 +79,6 @@ do
 		  anio=${fecha:0:4}
 		  mes=${fecha:4:2}
 		  dia=${fecha:6:2}
-		  echo La fecha es: $fecha
 		  if [ $anio -lt "0000" ] || [ $anio -gt "9999" ]
 		  then 
 			  error_fecha=1
@@ -144,14 +143,14 @@ do
 		  # sino /grupo/aceptados
 		  if [ $error_remito -eq "1" ] || [ $error_fecha -eq "1" ]
 		  then
-			  Mover "$grupo/arribos/$archivo" $grupo/rechazados invonio
+			  Mover "$grupo/arribos/$archivo" $grupo/rechazados/ invonio
 			  echo El archivo se coloco en la carpeta de rechazados
 		  else
-			  Mover "$grupo/arribos/$archivo" $grupo/recibidos invonio	
+			  Mover "$grupo/arribos/$archivo" $grupo/recibidos/ invonio	
 			  echo El archivo se coloco en la carpeta de recibidos		
 		  fi
 	  else
-		      Mover "$grupo/arribos/$archivo" $grupo/rechazados invonio
+		      Mover "$grupo/arribos/$archivo" $grupo/rechazados/ invonio
 		      echo El formato del nombre del archivo es invalido
 	  fi
 
@@ -202,4 +201,4 @@ done
 desbloquearProceso "$0"
 
 echo ===========================================================
-echo Fin del proceso invonio $$
+echo "Fin del proceso invonio N∞.:"\<$$\>
