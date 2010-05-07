@@ -3,6 +3,9 @@
 # Salidas:  0 - OK
 #           1 - Sistema no inicializado
 #           2 - Ya se encuentra corriendo otra instancia de occtrl
+#           3 - No se encontró el archivo de ordenes de compra global
+#           4 - No se encontró el archivo de detalles de ordenes de compra
+
 
 use strict;
 use Switch;
@@ -17,11 +20,24 @@ if(!$SISTEMA_INICIALIZADO){
     exit 1;
 }
 
+sub salir{
+    #==============================================================
+    #Desbloquear proceso.
+    `/bin/bash -c "desbloquearProceso occtrl"`;
+    #==============================================================
+
+    exit $_;
+}
+
+
+#Busca el ultimo archivo de ordenes de compra 
 sub buscarUltimaOC(){
     #$_[0] -> ocgob o ocdet
-    my $INICIAL=1;
-    my $NUMERO;
-    my @CANDIDATOS = <"$grupo/oc/$_[0].*">;
+    my $INICIAL=01;
+    my $NUMERO=0;
+    my $otrogrupo = $grupo;
+    $otrogrupo =~ s/ /\\ /g;
+    my @CANDIDATOS = <$otrogrupo/oc/$_[0].*>;
 
     foreach (@CANDIDATOS){
 
@@ -34,6 +50,7 @@ sub buscarUltimaOC(){
 
     return $NUMERO;
 }
+
 
 #============================================================
 #Si el proceso ya se encuentra corriendo suspender la ejecucion
@@ -52,7 +69,7 @@ my $NUMEROARCHIVO = &buscarUltimaOC("ocgob");
 my $TOTAL = 0;
 my $REMANENTE = 0;
 
-open (ARCHIVO,'<',"$grupo/oc/ocgob.$NUMEROARCHIVO") or die "$grupo/oc/ocgob.$NUMEROARCHIVO: $!";
+open (ARCHIVO,'<',"$grupo/oc/ocgob.$NUMEROARCHIVO") or &salir(3);
 
 
 
@@ -102,18 +119,15 @@ while (my $LINEA = <ARCHIVO>){
 	my $CUMPLIMIENTO=100;
 	my $PENDIENTE=0;
 	if ($ESTADO eq "ABIERTA") {
-	    print "Orden de compra $NUMEROOC esta abierta.\n";
 	    #Obtener las sumas totales de las cantidades de la orden de compra detallada.
 	    $NUMEROARCHIVO = &buscarUltimaOC("ocdet");
-	    open(ARCHIVO2, '<',"$grupo/oc/ocdet.$NUMEROARCHIVO") or die $!;
+	    open(ARCHIVO2, '<',"$grupo/oc/ocdet.$NUMEROARCHIVO") or &salir(4);
 	    while (my $LINEA2 = <ARCHIVO2>){
 		(my $NUMEROOCDETALLE) = $LINEA2 =~ "^([^;]*);";
 		if ( $NUMEROOC == $NUMEROOCDETALLE ) {
 		    (my $auxiliar) = $LINEA2 =~ "^[^;]*;[^;]*;[^;]*;([^;]*);";
-		    print "Acumulo $auxiliar (total).\n";
 		    $TOTAL+=$auxiliar;
 		    ($auxiliar) = $LINEA2 =~ "^[^;]*;[^;]*;[^;]*;[^;]*;([^;]*);";
-		    print "Acumulo $auxiliar (remanente).\n";
 		    $REMANENTE += $auxiliar;
 		}
 		if ( $TOTAL != 0){
@@ -154,11 +168,4 @@ while (my $LINEA = <ARCHIVO>){
 close ARCHIVO;
 close ARCHIVOSALIDA if ($ARCH);
 
-exit 0;
-
-END{
-    #==============================================================
-    #Desbloquear proceso.
-    `/bin/bash -c "desbloquearProceso occtrl"`;
-    #==============================================================
-}
+&salir(0);

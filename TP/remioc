@@ -97,7 +97,9 @@ sub buscarUltimaOC(){
     #$_[0] -> ocgob o ocdet
     my $INICIAL=01;
     my $NUMERO=0;
-    my @CANDIDATOS = <"$grupo/oc/$_[0].*">;
+    my $otrogrupo = $grupo;
+    $otrogrupo =~ s/ /\\ /g;
+    my @CANDIDATOS = <$otrogrupo/oc/$_[0].*>;
 
     foreach (@CANDIDATOS){
 
@@ -273,7 +275,7 @@ sub main{
 
     $ULTIMO=&buscarUltimaOC("ocgob");
     if (! $ULTIMO){
-	print "Error: No existe el archivo global de ordenes de compra.\n";
+	print "Error: No existe el archivo global de ordenes de compra $ULTIMO.\n";
 	`Glog "$0" "No existe el archivo global de ordenes de compra." E`;
 	return 4;
     }
