@@ -141,7 +141,7 @@ compra por procesar?</y:NodeLabel>
       <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.terminator">
-          <y:Geometry height="40.0" width="107.990234375" x="75.13662884424605" y="712.8873239436622"/>
+          <y:Geometry height="40.0" width="107.990234375" x="75.13662884424602" y="693.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="97.990234375" x="5.0" y="11.015625">Terminar Occtrl</y:NodeLabel>
@@ -152,7 +152,7 @@ compra por procesar?</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="49.15673828125003" sy="17.53125" tx="0.0" ty="-20.0">
+          <y:Path sx="49.15673828125" sy="17.53125" tx="0.0" ty="-20.0">
             <y:Point x="263.62459542410716" y="145.0"/>
             <y:Point x="315.6222222222222" y="145.0"/>
           </y:Path>
@@ -167,13 +167,13 @@ compra por procesar?</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="-49.15673828125" sy="17.46875" tx="0.0" ty="-37.5">
+          <y:Path sx="-49.15673828125" sy="17.53125" tx="0.0" ty="-37.5">
             <y:Point x="165.31111886160716" y="145.0"/>
             <y:Point x="113.31349206349206" y="145.0"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="-36.15798567514571" y="34.499481201171875">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="-36.15798567514571" y="34.46875">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -245,7 +245,7 @@ compra por procesar?</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="-35.31647914341518" sy="15.968750000165755" tx="0.0" ty="-20.0"/>
+          <y:Path sx="-35.31647914341514" sy="15.968750000165755" tx="0.0" ty="-20.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="2.0001879172350243" y="22.001922607421875">Si</y:EdgeLabel>
@@ -325,10 +325,10 @@ compra por procesar?</y:NodeLabel>
       <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:Path sx="0.0" sy="32.0" tx="0.0" ty="-20.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.000001646980394" y="10.969235702299784">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.000001646980394" y="1.015625">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
