@@ -4,7 +4,13 @@
 #           1 - Error de parámetros
 #           2 - Archivo inexistente
 #           3 - Directorio inexistente
+#           4 - Sistema no inicializado
 
+if [ -z "$SISTEMA_INICIALIZADO" ]
+then
+    echo "Error, no esta inicializado el sistema."
+    return 4
+fi
 
 Mover(){
     local DUP="dup"
@@ -15,7 +21,7 @@ Mover(){
     then
 	echo "Error: el comando necesita al menos 2 (dos) parametros"
 	Glog "$0" "Error: el comando necesita al menos 2 (dos) parametros" "E"
-    #mostrar_invocacion()
+        #mostrar_invocacion()
 	return 1
     fi
 
@@ -38,7 +44,6 @@ Mover(){
 #Verificamos que origen y destino no sean iguales
     if [ "$1" = "$2" ]
     then
-	echo "Origen y destino son iguales"
 	Glog "$0" "Origen y destino son iguales" "I"
 
 	return 0
@@ -56,7 +61,6 @@ Mover(){
 
 	if [ "$directorio" = "$2" ]
 	then
-	    echo "Origen y destino son iguales"
 	    Glog "$0" "Origen y destino son iguales" "I"
 	    return 0
 	fi

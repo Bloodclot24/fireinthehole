@@ -1,5 +1,18 @@
 #!/bin/env perl
 
+# Salidas:  0 - OK
+#           1 - Sistema no inicializado
+#           2 - Ya existe otro proceso remioc
+#           3 - Existe un proceso invreci corriendo
+#           4 - No se encuentra el archivo de ordenes de compra global
+#           5 - Error de parámetros. Se espera un numero de orden de compra (6 caracteres) o de remito (8 caracteres).
+#           6 - Todas las ordenes de compra a procesar estan cerradas.
+#           7 - No existen remitos disponibles para las ordenes de compra especificadas.
+#           8 - No se eligió ningún remito.
+#           9 - No se encontró el archivo de descripción de ordenes de compra.
+#           10 - No se especifico ningun remito u orden de compra.
+
+
 use strict;
 use warnings;
 
@@ -25,7 +38,7 @@ if( $? == 0 ){
     `/bin/bash -c "desbloquearProceso $0"`;
     print "Error: Ya existe un proceso invreci corriendo.\n";
     `Glog "$0" "Ya existe un proceso invreci corriendo." "SE"`;
-    exit 2;
+    exit 3;
 }
 
 #busca todos los remitos que tienen el numero de orden de compra
@@ -132,8 +145,8 @@ sub procesarOrden{
     	$destino .= ".proc";
     	`Glog $0 "Renombrando aceptados/$origen a aceptados/$destino" I`;
     	if (! rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino"){
+	    #TODO: revertir el proceso
     	    `Glog $0 "No se puede renombrar aceptados/$origen a aceptados/$destino" SE`;
-    	    return -1;
     	}
     }
 
@@ -233,7 +246,6 @@ sub procesarOrden{
 	close $archivo;
 	close $archivo2;
     }
-
 }
 
 sub main{
@@ -254,7 +266,7 @@ sub main{
     if (! $ULTIMO){
 	print "Error: No existe el archivo global de ordenes de compra.\n";
 	`Glog "$0" "No existe el archivo global de ordenes de compra." E`;
-	return -6;       
+	return 4;
     }
     $NUMERO=$PARAMETRO;
 
@@ -270,7 +282,8 @@ sub main{
 	}
 	elsif(length($PARAMETRO) == 8){
 
-	    my $otrogrupo = $grupo;
+	    my $otrogrupo = $grupo; #Escapeo los espacios para no
+				    #tener problemas
 	    $otrogrupo =~ s/ /\\ /g;
 
 	    my $archivo = <$otrogrupo/aceptados/$PARAMETRO.*.aproc>;
@@ -290,7 +303,7 @@ sub main{
 	}
 	else{
 	    print "Error: '$PARAMETRO', no identifica una orden de compra o remito.\n";
-	    return -1;
+	    return 5;
 	}
     }
 
@@ -341,7 +354,7 @@ sub main{
 	if(!@OC){
 	    print "Todas las ordenes de compra especificadas estan cerradas.\n";
 	    `Glog "$0" "Todas las ordenes de compra especificadas estan cerradas." I`;
-	    return -2;
+	    return 6;
 	}
 
 	if(! $FLAGREMITOS){ #Si la invocacion del programa no incluyó remitos
@@ -366,7 +379,7 @@ sub main{
 	if( ! @REMITOS ) {
 	    print "No hay remitos disponibles para las ordenes de compra solicitadas (@OC).\n";
 	    `Glog "$0" "No hay remitos disponibles para las ordenes de compra solicitadas (@OC)." I`;
-	    return -3;
+	    return 7;
 	}
 
 	`Glog "$0" "Conciliación de la orden de compra @OC." I`;
@@ -379,7 +392,7 @@ sub main{
 
 	if( ! @REMITOS){
 	    print "No se eligió ningun remito.\n";
-	    return -4;
+	    return 8;
 	}
 
 	#Busco el ultimo archivo de descripción de ordenes de compra
@@ -389,7 +402,7 @@ sub main{
 	if( ! $OCDET ){
 	    print "Error: No se encontro el archivo de descripción de ordenes de compra.";
 	    `Glog "$0" "No se encontro el archivo de descripción de ordenes de compra." SE`;
-	    return -5;
+	    return 9;
 	}
 
 	#Procesa cada detalle de orden de compra utilizando los
@@ -399,7 +412,7 @@ sub main{
     else{
 	print "Error: No se especifico nungun remito/orden de compra.\n";
 	`Glog "$0" "No se especifico nungun remito/orden de compra." E`;
-	return -6;
+	return 10;
     }
 }
 

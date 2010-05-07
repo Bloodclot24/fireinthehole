@@ -1,18 +1,22 @@
 #!/bin/bash
 
-if [ -z "$grupo" ]
+# Salidas:  0 - OK
+#           1 - Error de parámetros
+#           2 - Sistema no inicializado
+
+
+if [ -z "$SISTEMA_INICIALIZADO" ]
 then
     echo "Error, no esta inicializado el sistema."
-    return 0
+    return 2
 fi
 
 Glog(){
-    return 0
+
     if [ $# -ne 3 ]
     then
 	#Se requieren exactamente 3 parametros
-	#TODO: ¿Grabar un log?
-	return -1
+	return 1
     fi
 
     local TIPO=""
