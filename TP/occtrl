@@ -97,7 +97,7 @@ if ($ARGC != 0){
     switch ($ARGV[$PROXIMOARG]){
 	case -all { $RANGOMINIMO = 0; $RANGOMAXIMO = 999999;}
 	case -range { $RANGOMINIMO = $ARGV[$PROXIMOARG+1]; $RANGOMAXIMO = $ARGV[$PROXIMOARG+2];}
-	case -single { $RANGOMINIMO = $ARGV[2]; $RANGOMAXIMO = $ARGV[2];}
+	case -single { $RANGOMINIMO = $ARGV[$PROXIMOARG+1]; $RANGOMAXIMO = $ARGV[$PROXIMOARG+1];}
 	else { print "El parametro correspondiente al rango de ordenes de compra es invalido, se procesa con el parametro por defecto";
 	      $RANGOMINIMO = 0; $RANGOMAXIMO = 999999;}
     }
