@@ -43,6 +43,8 @@ validarRegistro(){
     local cuitProveedor=` echo $registroAValidar | cut -d ';' -f 9`
     echo "Se procesa la orden de compra # $ordendecompra"
     echo "--------------------------------------"
+    Glog invreci "Se procesa la orden de compra # $ordendecompra" i
+    Glog invreci "-------------------------------" i
     echo "$registroAValidar" 
     echo "--------------------------------------"
 
@@ -65,9 +67,11 @@ validarRegistro(){
     done
 
     local registroOrdenDeCompra=`grep -h "^$ordendecompra" "$grupo/oc/ocgob.$ultimoArchivo"` #Esto devuelve una lista o nada.
+    #TODO sacar este echo------------> mensaje de debug
     echo Ruta de la orden de compra global : "$grupo/oc/ocgob.$ultimoArchivo"
     if [ "$registroOrdenDeCompra" != "" ] 
     then
+#TODO Sacar este echo ------------> mensaje de debug
 	echo "El registro de orden de compra es: $registroOrdenDeCompra"
 	if [  "`echo $registroOrdenDeCompra | cut -d ';' -f 4`" = "CERRADA" ]
 	then
