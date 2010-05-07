@@ -11,6 +11,10 @@
 #           8 - No se eligió ningún remito.
 #           9 - No se encontró el archivo de descripción de ordenes de compra.
 #           10 - No se especifico ningun remito u orden de compra.
+#           11 - No se pudo abrir el archivo de detalle. Las operaciones no se terminaron.
+#           12 - No se pudo crear un nuevo archivo de detalle. Las operaciones no se terminaron.
+#           13 - No se pudo abrir el archivo global de orden de compra. Las operaciones no se terminaron.
+#           14 - No se pudo crear un nuevo archivo global de orden de compra. Las operaciones no se terminaron.
 
 
 use strict;
@@ -137,21 +141,28 @@ sub procesarOrden{
 	    next; #salteo el remito (no lo proceso)
     	}
 
-    	open(my $archivo, '<', "$grupo/aceptados/$destino") or die "$grupo/aceptados/$destino: $!";
-    	while(<$archivo>){
-    	    my $CODPROD = $_;
-    	    ($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
-    	    my $CANTIDAD = $_;
-    	    ($CANTIDAD) = $CANTIDAD =~ /^[^;]*;[^;]*;([^;]*);/;
+    	if(open(my $archivo, '<', "$grupo/aceptados/$destino")){
+	    while(<$archivo>){
+		my $CODPROD = $_;
+		($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
+		my $CANTIDAD = $_;
+		($CANTIDAD) = $CANTIDAD =~ /^[^;]*;[^;]*;([^;]*);/;
 
-	    #para el hash, uso la clave: NumeroOrdenDeCompra+CodigoProducto
-	    (my $CLAVE) = $destino =~ /^[^.]*\.([^.]*)\..*$/;
-	    $CLAVE .= $CODPROD;
-    	    $PRODUCTOS{$CLAVE} += $CANTIDAD;
+		#para el hash, uso la clave: NumeroOrdenDeCompra+CodigoProducto
+		(my $CLAVE) = $destino =~ /^[^.]*\.([^.]*)\..*$/;
+		$CLAVE .= $CODPROD;
+		$PRODUCTOS{$CLAVE} += $CANTIDAD;
 
-    	}
+	    }
+
+	    close $archivo;
+
+	}
+	else{
+	    print "Error: No se puede abrir $grupo/aceptados/$destino, se saltea.\n";
+	    `Glog $0 "No se puede abrir $grupo/aceptados/$destino, se saltea." SE`;
+	}
 	
-    	close $archivo;
     }
 
     #ahora, genero un nuevo OCDET y voy procesando los productos
@@ -165,8 +176,18 @@ sub procesarOrden{
     $NUMERO = sprintf "%.2i",($NUMERO);
     $OCDET2 .= ".$NUMERO";
 
-    open my $archivo, '<', $OCDET or die $!;
-    open my $archivo2, '>', $OCDET2 or die $!;
+    my ($archivo,$archivo2);
+
+    if (! open $archivo, '<', $OCDET){
+	print "Error: No se pudo abrir el archivo de detalle. Las operaciones no se terminaron.\n";
+	`Glog $0 "No se pudo abrir el archivo de detalle. Las operaciones no se terminaron." SE`;
+	return 11;
+    }
+    if (! open $archivo2, '>', $OCDET2){
+	print "Error: No se pudo crear un nuevo archivo de detalle. Las operaciones no se terminaron.\n";
+	`Glog $0 "No se pudo crear un nuevo archivo de detalle. Las operaciones no se terminaron." SE`;
+	return 12;
+    }
 
     while(my $linea = <$archivo>){
 	
@@ -232,8 +253,20 @@ sub procesarOrden{
 	$NUMERO = sprintf "%.2i",($NUMERO);
 	my $OCGOB2 = "$grupo/oc/ocgob.$NUMERO";
 	
-	open my $archivo, '<', $OCGOB or die $!;
-	open my $archivo2, '>', $OCGOB2 or die $!;
+	my ($archivo,$archivo2);
+
+	if (!open $archivo, '<', $OCGOB){
+	    print "Error: No se pudo abrir el archivo global de orden de compra. Las operaciones no se terminaron.\n";
+	    `Glog $0 "No se pudo abrir el archivo global de orden de compra. Las operaciones no se terminaron." SE`;
+	    return 13;
+	}
+
+	if (!open $archivo2, '>', $OCGOB2){
+	    print "Error: No se pudo crear un nuevo archivo global de orden de compra. Las operaciones no se terminaron.\n";
+	    `Glog $0 "No se pudo crear un nuevo global de orden de compra. Las operaciones no se terminaron." SE`;
+	    return 14;
+	}
+
 
 	while(my $linea = <$archivo>){
 	    (my $CODIGOORDEN) = $linea =~ "^([^;]*);";
@@ -430,9 +463,7 @@ sub main{
 
 my $retorno = &main;
 
-exit $retorno;
+`/bin/bash -c "desbloquearProceso $0"`;
 
-END{
-    `/bin/bash -c "desbloquearProceso $0"`;
-}
+exit $retorno;
 
