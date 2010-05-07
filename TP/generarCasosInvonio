@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sh prepararPruebas
+. prepararPruebas
 
 ##Correctas
 cat <<EOF > "$grupo"/arribos/11111111.19860919

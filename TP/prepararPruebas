@@ -8,7 +8,6 @@ rm -rf "$grupo"
 #Creo la estructura de directorios
 
 mkdir -p "$grupo"/arribos
-mkdir -p "$grupo"/arribos/Prueba\ Individual\ Invonio
 mkdir -p "$grupo"/oc
 mkdir -p "$grupo"/recibidos
 mkdir -p "$grupo"/rechazados
