@@ -126,7 +126,16 @@ sub procesarOrden{
     # extraigo la información de todos los productos de los remitos
     my %PRODUCTOS = ();
     for my $origen (@REMITOS){
-    	open(my $archivo, '<', "$grupo/aceptados/$origen") or die "$grupo/aceptados/$origen: $!";
+
+    	(my $destino) = $origen =~ /^(.*)\.aproc$/;
+    	$destino .= ".proc";
+    	`Glog $0 "Renombrando aceptados/$origen a aceptados/$destino" I`;
+    	if (! rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino"){
+    	    `Glog $0 "No se puede renombrar aceptados/$origen a aceptados/$destino" SE`;
+	    next; #salteo el remito (no lo proceso)
+    	}
+
+    	open(my $archivo, '<', "$grupo/aceptados/$destino") or die "$grupo/aceptados/$destino: $!";
     	while(<$archivo>){
     	    my $CODPROD = $_;
     	    ($CODPROD) = $CODPROD =~ /^[^;]*;([^;]*);/;
@@ -134,20 +143,13 @@ sub procesarOrden{
     	    ($CANTIDAD) = $CANTIDAD =~ /^[^;]*;[^;]*;([^;]*);/;
 
 	    #para el hash, uso la clave: NumeroOrdenDeCompra+CodigoProducto
-	    (my $CLAVE) = $origen =~ /^[^.]*\.([^.]*)\..*$/;
+	    (my $CLAVE) = $destino =~ /^[^.]*\.([^.]*)\..*$/;
 	    $CLAVE .= $CODPROD;
     	    $PRODUCTOS{$CLAVE} += $CANTIDAD;
 
     	}
 	
     	close $archivo;
-    	(my $destino) = $origen =~ /^(.*)\.aproc$/;
-    	$destino .= ".proc";
-    	`Glog $0 "Renombrando aceptados/$origen a aceptados/$destino" I`;
-    	if (! rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino"){
-	    #TODO: revertir el proceso
-    	    `Glog $0 "No se puede renombrar aceptados/$origen a aceptados/$destino" SE`;
-    	}
     }
 
     #ahora, genero un nuevo OCDET y voy procesando los productos
