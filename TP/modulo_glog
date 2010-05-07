@@ -37,7 +37,7 @@ Glog(){
 
     local FECHA=`getFechaYHora`
     
-    local LINEA= "$FECHA <$TIPO> $2"
+    local LINEA="$FECHA <$TIPO> $2"
     LINEA=`echo $LINEA | cut -c1-132` #limito la linea a 132 caracteres
     echo  $LINEA >> "$NOMBRE_LOG"
 
