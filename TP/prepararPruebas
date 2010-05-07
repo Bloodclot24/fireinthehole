@@ -1,6 +1,6 @@
 #!/bin/bash
 
-grupo="`pwd`/Prue bas"
+grupo="`pwd`/Pruebas"
 
 #Elimino todo
 rm -rf "$grupo"
@@ -24,4 +24,3 @@ do
 done
 
 export grupo
-
