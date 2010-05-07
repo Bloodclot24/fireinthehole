@@ -1,4 +1,4 @@
-#!/bin/env perl
+#!/usr/bin/perl
 
 # Salidas:  0 - OK
 #           1 - Sistema no inicializado
@@ -203,13 +203,20 @@ sub procesarOrden{
 
     close $archivo;
     close $archivo2;
-
+    
+    mkdir "$grupo/sobrantes/";
+    my $abierto = open my $archivoSobrante, ">>", "$grupo/sobrantes/sobrante.sob";
     for my $clave (keys %PRODUCTOS){
     	if($PRODUCTOS{$clave} > 0){
 	    (my $CODIGOORDEN) = $clave =~ /^(......)/;
 	    (my $CODIGOPROD) = $clave =~ /(..........)$/;
     	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, en la orden de compra $CODIGOORDEN\n";
     	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, cuando se intentaba conciliar la orden de compra $CODIGOORDEN" "E"`;
+	    if($abierto){
+		my $usuario=`/bin/bash -c getUsuario`;
+		my $fecha=`/bin/bash -c getFechaYHora`;
+		print $archivoSobrante "$CODIGOORDEN;$CODIGOPROD;$PRODUCTOS{$clave};$usuario;$fecha\n";
+	    }
     	}
     }
 
