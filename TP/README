@@ -1,0 +1,9 @@
+Para la instalación de la aplicación se deben seguir los siguientes pasos:
+
+    1. Insertar el dispositivo de almacenamiento con el contenido del tp (pen drive, cd, etc).
+
+    2. Copie el archivo grupo08.tgz a algún dispositivo local.
+
+    3. Ejecute el comando: tar xzf grupo08.tgz
+
+    4. El programa ya está listo para usarse. Si así lo desea, puede eliminar el archivo grupo08.tgz.
