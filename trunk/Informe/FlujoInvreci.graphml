@@ -10,10 +10,9 @@
   <key for="edge" id="d6" yfiles.type="edgegraphics"/>
   <graph edgedefault="directed" id="G">
     <node id="n0">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.start2">
-          <y:Geometry height="52.0" width="80.0" x="378.9924603174603" y="0.0"/>
+          <y:Geometry height="52.0" width="80.0" x="431.1380952380952" y="0.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="47.6640625" x="16.16796875" y="17.015625">invonio</y:NodeLabel>
@@ -21,10 +20,9 @@
       </data>
     </node>
     <node id="n1">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.terminator">
-          <y:Geometry height="40.0" width="90.060546875" x="508.9927424355159" y="6.0"/>
+          <y:Geometry height="40.0" width="90.060546875" x="561.1383773561508" y="6.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="80.060546875" x="5.0" y="11.015625">Inicio Invreci</y:NodeLabel>
@@ -32,10 +30,9 @@
       </data>
     </node>
     <node id="n2">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
-          <y:Geometry height="81.25" width="173.1572265625" x="467.4444025917659" y="67.0"/>
+          <y:Geometry height="81.25" width="173.1572265625" x="519.5900375124008" y="67.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="122.78125" x="25.18798828125" y="24.65625">¿Existe otro invreci 
@@ -44,10 +41,9 @@ en ejecución?</y:NodeLabel>
       </data>
     </node>
     <node id="n3">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
-          <y:Geometry height="81.25" width="158.8294921875" x="431.31898406498016" y="178.25"/>
+          <y:Geometry height="81.25" width="158.8294921875" x="460.64319041418645" y="178.25"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="111.677734375" x="23.57587890625001" y="24.65625">¿El ambiente está
@@ -56,7 +52,6 @@ inicializado?</y:NodeLabel>
       </data>
     </node>
     <node id="n4">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="111.0078125" x="415.10403025793653" y="289.5"/>
@@ -67,7 +62,6 @@ inicializado?</y:NodeLabel>
       </data>
     </node>
     <node id="n5">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
           <y:Geometry height="109.60931142410016" width="188.31458455594682" x="376.45064422996313" y="349.5"/>
@@ -80,7 +74,6 @@ $grupo/recibidos?</y:NodeLabel>
       </data>
     </node>
     <node id="n6">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.terminator">
           <y:Geometry height="40.0" width="76.150390625" x="541.6902808779762" y="759.5389671361502"/>
@@ -91,7 +84,6 @@ $grupo/recibidos?</y:NodeLabel>
       </data>
     </node>
     <node id="n7">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
           <y:Geometry height="81.25" width="158.935546875" x="296.6723059275794" y="489.10931142410016"/>
@@ -103,7 +95,6 @@ duplicado?</y:NodeLabel>
       </data>
     </node>
     <node id="n8">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="125.462890625" x="376.5106181795635" y="627.0389671361502"/>
@@ -115,7 +106,6 @@ $grupo/duplicados</y:NodeLabel>
       </data>
     </node>
     <node id="n9">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
           <y:Geometry height="109.60931142410016" width="174.1904296875" x="72.48176928323412" y="474.9296557120501"/>
@@ -127,7 +117,6 @@ procesar en el remito?</y:NodeLabel>
       </data>
     </node>
     <node id="n10">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
           <y:Geometry height="65.0" width="199.064453125" x="60.044757564484115" y="614.5389671361502"/>
@@ -138,7 +127,6 @@ procesar en el remito?</y:NodeLabel>
       </data>
     </node>
     <node id="n11">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="111.11328125" x="190.77470858134922" y="709.5389671361502"/>
@@ -149,7 +137,6 @@ procesar en el remito?</y:NodeLabel>
       </data>
     </node>
     <node id="n12">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="120.177734375" x="15.000021701388889" y="709.5389671361502"/>
@@ -160,7 +147,6 @@ procesar en el remito?</y:NodeLabel>
       </data>
     </node>
     <node id="n13">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="129.658203125" x="94.74788256448412" y="384.3046557120501"/>
@@ -171,8 +157,18 @@ $grupo/yarecibidos</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
+    <node id="n14">
+      <data key="d2"/>
+      <data key="d3">
+        <y:GenericNode configuration="com.yworks.flowchart.document">
+          <y:Geometry height="40.0" width="35.64453125" x="433.94479786706347" y="87.625"/>
+          <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="25.64453125" x="5.0" y="11.015625">Log</y:NodeLabel>
+        </y:GenericNode>
+      </data>
+    </node>
     <edge id="e0" source="n0" target="n1">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="25.96875" sy="0.0" tx="-45.0302734375" ty="0.0"/>
@@ -183,7 +179,6 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e1" source="n1" target="n2">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="20.0" tx="0.0" ty="-40.625"/>
@@ -194,31 +189,34 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e2" source="n2" target="n3">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="-43.28932083129877" sy="20.281250000004945" tx="0.0" ty="-40.625"/>
+          <y:Path sx="-43.289306640625" sy="20.34375" tx="39.70737304687498" ty="-20.34375">
+            <y:Point x="562.8793441530258" y="163.25"/>
+            <y:Point x="579.7653095548114" y="163.25"/>
+          </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.0000223492819487" y="26.310211181640625">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="-1.7161863296751108" y="37.28125">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="e3" source="n3" target="n4">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="-39.42627404319512" sy="20.470710198257308" tx="0.0" ty="-20.0"/>
+          <y:Path sx="-39.70737304687498" sy="20.34375" tx="27.751953125" ty="-20.0">
+            <y:Point x="500.3505634610615" y="274.5"/>
+            <y:Point x="498.35988963293653" y="274.5"/>
+          </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="1.634990464064174" y="26.169921875">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="2.0000080411396084" y="23.359375">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="e4" source="n4" target="n5">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="20.0" tx="0.0" ty="-54.80465571205008"/>
@@ -229,10 +227,9 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e5" source="n5" target="n6">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="62.77152818531556" sy="18.273405712050078" tx="-25.383464183174794" ty="-18.59375">
+          <y:Path sx="62.77152818531556" sy="18.273405712050078" tx="-25.38346418317485" ty="-18.59375">
             <y:Point x="533.3794646932521" y="474.10931142410016"/>
             <y:Point x="554.3821428571429" y="474.10931142410016"/>
           </y:Path>
@@ -244,7 +241,6 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e6" source="n5" target="n7">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="-62.77152818531562" sy="18.273405712050078" tx="0.0" ty="-40.625">
@@ -259,7 +255,6 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e7" source="n7" target="n8">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="40.625" tx="-31.36572265625" ty="-20.0">
@@ -274,7 +269,6 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e8" source="n7" target="n9">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="-79.4677734375" sy="0.0" tx="87.09521484375" ty="0.0"/>
@@ -286,7 +280,6 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e9" source="n9" target="n10">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="54.80465571205008" tx="0.0" ty="-32.5"/>
@@ -298,7 +291,6 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e10" source="n10" target="n12">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="-49.76611328125" sy="16.21875" tx="30.04443359375" ty="-20.0">
@@ -313,10 +305,9 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e11" source="n10" target="n11">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="49.766113281250014" sy="16.21875" tx="-27.7783203125" ty="-20.0">
+          <y:Path sx="49.76611328125" sy="16.21875" tx="-27.7783203125" ty="-20.0">
             <y:Point x="209.34309740823412" y="694.5389671361502"/>
             <y:Point x="218.55302889384922" y="694.5389671361502"/>
           </y:Path>
@@ -328,7 +319,6 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e12" source="n12" target="n9">
-      <data key="d5"/>
       <data key="d6">
         <y:ArcEdge>
           <y:Path sx="-30.04443359375" sy="-20.0" tx="-58.0634765625" ty="18.27340571205002">
@@ -341,10 +331,9 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e13" source="n11" target="n9">
-      <data key="d5"/>
       <data key="d6">
         <y:ArcEdge>
-          <y:Path sx="27.7783203125" sy="-20.0" tx="58.063476562500014" ty="18.27340571205002">
+          <y:Path sx="27.7783203125" sy="-20.0" tx="58.0634765625" ty="18.27340571205002">
             <y:Point x="306.0491943359375" y="607.7372436523438"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
@@ -354,37 +343,31 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e14" source="n3" target="n6">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="39.70737304687498" sy="20.28125" tx="0.0" ty="-20.0">
-            <y:Point x="550.4411032056051" y="274.5"/>
-            <y:Point x="579.7654761904762" y="274.5"/>
-          </y:Path>
+          <y:Path sx="39.707366288242724" sy="20.343750000001137" tx="0.0" ty="-20.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="31.324375116257443" y="264.2818431872157">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.0000760424263717" y="261.3163585680751">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="e15" source="n2" target="n6">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="43.289306640625" sy="20.34375" tx="25.383463848741712" ty="-18.59375">
-            <y:Point x="597.3123225136409" y="163.25"/>
-            <y:Point x="605.1488095238095" y="163.25"/>
+          <y:Path sx="43.28930735457459" sy="20.28125000000003" tx="25.38346354166663" ty="-18.59375">
+            <y:Point x="649.4579365079366" y="744.5389671361502"/>
+            <y:Point x="605.1489397321428" y="744.5389671361502"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="9.836558699025431" y="319.8788585680751">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="2.0000003489450364" y="314.02872276485243">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="e16" source="n8" target="n5">
-      <data key="d5"/>
       <data key="d6">
         <y:ArcEdge>
           <y:Path sx="31.36572265625" sy="-20.0" tx="0.0" ty="54.80465571205008">
@@ -397,7 +380,6 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e17" source="n9" target="n13">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-54.80465571205008" tx="0.0" ty="20.0"/>
@@ -409,12 +391,47 @@ $grupo/yarecibidos</y:NodeLabel>
       </data>
     </edge>
     <edge id="e18" source="n13" target="n5">
-      <data key="d5"/>
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="64.8291015625" sy="0.0" tx="-94.15729227797341" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e19" source="n2" target="n14">
+      <data key="d6">
+        <y:PolyLineEdge>
+          <y:Path sx="-86.57861328125" sy="0.0" tx="17.822265625" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-26.951515415736594" y="2.0"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e20" source="n3" target="n14">
+      <data key="d6">
+        <y:PolyLineEdge>
+          <y:Path sx="-39.70737304687498" sy="-20.34375" tx="8.9111328125" ty="11.09375">
+            <y:Point x="500.3505634610615" y="142.625"/>
+            <y:Point x="460.67819630456347" y="142.625"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-21.836175537109398" y="-53.90625"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e21" source="n4" target="n14">
+      <data key="d6">
+        <y:PolyLineEdge>
+          <y:Path sx="-27.751953125" sy="-20.0" tx="-8.9111328125" ty="20.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="1.999970133583247" y="-82.89797973632812"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
