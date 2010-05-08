@@ -5,7 +5,7 @@
 #           2 - Ya se encuentra corriendo otra instancia de occtrl
 #           3 - No se encontró el archivo de ordenes de compra global
 #           4 - No se encontró el archivo de detalles de ordenes de compra
-
+#	    5 - Se encuentra corriendo remioc
 
 use strict;
 use Switch;
@@ -49,6 +49,16 @@ sub buscarUltimaOC(){
     }
 
     return $NUMERO;
+}
+
+#============================================================
+#Si se encuentra corriendo el proceso remioc suspender la ejecucion
+
+`/bin/bash -c "estaCorriendo remioc"`;
+
+if ( $? == 0 ){
+    print "Se esta ejecutando el comando remioc en este momento, se suspende la ejecucion.\n";
+    exit 5;
 }
 
 
