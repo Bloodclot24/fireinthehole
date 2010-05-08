@@ -42,8 +42,7 @@ validarRegistro(){
     local ordendecompra=` echo $registroAValidar | cut -d ';' -f 1`
     local cuitProveedor=` echo $registroAValidar | cut -d ';' -f 9`
 
-    echo "$registroAValidar" 
-    echo "Se procesa la orden de compra # $ordendecompra"
+    echo Se valida el siguiente registro : "$registroAValidar" 
     Glog invreci "$registroAValidar" i
     Glog invreci "Se procesa la orden de compra # $ordendecompra" i
 
@@ -68,7 +67,7 @@ validarRegistro(){
 
     #Validacion del formato del registro
     local registroOrdenDeCompra=`grep -h "^$ordendecompra" "$grupo/oc/ocgob.$ultimoArchivo"` #Esto devuelve una lista o nada.
-    echo Ruta de la orden de compra global : "$grupo/oc/ocgob.$ultimoArchivo"
+    
     if [ "$registroOrdenDeCompra" != "" ] 
     then
 	echo "El registro de orden de compra es: $registroOrdenDeCompra"
@@ -107,6 +106,9 @@ validarRegistro(){
 
 archivosAProcesar=`ls "$grupo"/recibidos/ -1 | wc -l`
 Glog invreci "Inicio de Invreci: Archivos a procesar : <$archivosAProcesar> " i
+echo
+echo "Inicio de Invreci: Archivos a procesar : <$archivosAProcesar> "
+echo
 
 if [ $archivosAProcesar -eq 0 ]
 then
@@ -115,41 +117,51 @@ then
     exit 1
 fi
 
-for i in "$grupo/recibidos/"*
+for archivoRecibido in "$grupo/recibidos/"*
 do  
-    archivo=`basename "$i"`
+    archivo=`basename "$archivoRecibido"`
 
     Glog invreci "Archivo a procesar: <$archivo>" i
     Glog invreci "-------------------------------" i
-    echo "--------------------------------------"
+    echo "================================================"
+    echo "Archivo a procesar: <$archivo>"
+    echo
+	
+    
 
     if [ -e "$grupo"/yarecibidos/$archivo ]
     then 
 	
 	Glog invreci "Remito Rechazado Por Duplicado: <$archivo>" w
 	echo "Remito Rechazado Por Duplicado: <$archivo>"
-	Mover $i "$grupo"/rechazados/ invreci
+	Mover $archivoRecibido "$grupo"/rechazados/ invreci
 
     else
-	#Rechaza un registro porque el formato es invalido
-        grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$" $i >> "$grupo"/rechazados/${archivo}.rech  
-	
 	cantidadRegistrosLeidos=0
 	cantidadRegistrosAceptados=0
 	cantidadRegistrosRechazadosPorOCompCerrada=0
 	cantidadRegistrosRechazadosPorOCompInexistente=0
 	cantidadRegistrosRechazadosPorOtrosMotivos=0
-        cantidadRegistrosRechazadosPorOtrosMotivos=`wc -l "$grupo"/rechazados/${archivo}.rech | cut -d ' ' -f 1`
-	cantidadRegistrosLeidos=$cantidadRegistrosRechazadosPorOtrosMotivos
+ 	cantidadRegistrosLeidos=$cantidadRegistrosRechazadosPorOtrosMotivos
+
+	#Rechaza un registro porque el formato es invalido
+        RechazadosFormato=`grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$" $archivoRecibido`
+
+	if [ $? -eq 0 ] && [ ! -z $RechazadosFormato ]
+	then
+           echo "Los registros rechazados por formato inválido son :"
+           echo $RechazadosFormato
+	   echo $RechazadosFormato >> "$grupo"/rechazados/${archivo}.rech 
+           cantidadRegistrosRechazadosPorOtrosMotivos=`wc -l "$grupo"/rechazados/${archivo}.rech | cut -d ' ' -f 1` 
+	fi
 	
-	
-     	for registro in `grep '^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$' $i | sed 's/ /_/g'`
+     	for registro in `grep '^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$' $archivoRecibido | sed 's/ /_/g'`
 	do
 
 	    cantidadRegistrosLeidos=$(($cantidadRegistrosLeidos + 1))
+	    echo "--------------------------------------"
 	    validarRegistro "$registro" "$archivo"
 	    Glog invreci "-------------------------------" i
-	    echo "--------------------------------------"
 	    
 	    if [ "$?" -eq 0 ]
 	    then 
@@ -164,7 +176,7 @@ do
 
 	    fi 
 	done
-	Mover $i "$grupo"/yarecibidos/ invreci 
+	Mover $archivoRecibido "$grupo"/yarecibidos/ invreci 
     fi
     
     if [ $cantidadRegistrosLeidos -eq 0 ]
@@ -178,13 +190,18 @@ do
 	Glog invreci "-Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada " i
 	Glog invreci "-Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente " i
 	Glog invreci "-Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " i
-	echo "
+	echo "--------------------------------------
+
+
+Resumen del procesamiento del remito:
+
 	 -Remito Aceptado:<$archivo> 
 	 -Cantidad de Registros Leidos: $cantidadRegistrosLeidos 
          -Cantidad de Registros Aceptados: $cantidadRegistrosAceptados 
          -Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada 
          -Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
-         -Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " 
+         -Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos 
+	" 
     fi
 done
 

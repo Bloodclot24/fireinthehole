@@ -57,7 +57,7 @@ do
     if [ -f "$path_archivo" ] 
     then	  
 	  archivo=${path_archivo##*/}
-	  echo "- El nombre del archivo es: $archivo"
+	  echo "El nombre del archivo es: $archivo"
 	  
 	  #Verifico el formato del nombre del archivo
 	  echo $archivo | grep "^[0-9]\{8\}\.[0-9]\{8\}$" -q  
@@ -161,39 +161,43 @@ do
     fi
   done
 
-  for archivo in "$grupo/recibidos/"*
-  do
-     if [ -e "$archivo" ]
-     then
-	# Ejecutar invreci
-	# Validar que no este corriendo ya el invreci siempre q haya archivos en recibidos
-	# e invreci no este corriendo.
+  AUXILIARNOMBRE=`ls -A "$grupo/recibidos/"`
+  if [ !  -z "$AUXILIARNOMBRE" ];
+  then
+     # Ejecutar invreci
+     # Validar que no este corriendo ya el invreci siempre q haya archivos en recibidos
+     # e invreci no este corriendo.
 	
-	if [ $PRIMERA -ne 0  ]
-	then
+     if [ $PRIMERA -ne 0  ]
+     then
 	      ./invreci&
 	      PIDINVRECI=$!
 	      # Si se ejecuto correctamente, muestro el PID de invreci
 	      echo El PID del comando invreci es: $PIDINVRECI
 	      PRIMERA=0
-	else
+     else
 	      # grep devuelve 0 si encontro las lineas, y 1 en otro caso.		      
 	      ps -eo pid | grep "$PIDINVRECI" -q 
 	      if [ $? -ne 0 ]
 	      then
-		  ./invreci&
-		   PIDINVRECI=$!
-		   # Si se ejecuto correctamente, muestro el PID de invreci
-		   echo El PID del comando invreci es: $PIDINVRECI
+		      
+		       ./invreci&
+		       PIDINVRECI=$!
+		       # Si se ejecuto correctamente, muestro el PID de invreci
+		       echo 
+		       echo Se ejecuta el comando invreci. Su PID es : $PIDINVRECI
+		       echo
 	      else
-		   echo Error: ya se esta ejecutando el comando invreci en este momento
+		      echo Error: ya se esta ejecutando el comando invreci en este momento.
 	      fi
-	fi
+     fi
 	
-      fi
-  done
+      
+  fi
 
-  sleep $TIEMPO
+
+
+ sleep $TIEMPO
 
 done
 
