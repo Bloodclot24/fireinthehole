@@ -1,6 +1,8 @@
 #!/bin/bash
 export grupo=`pwd`/..
 
+export PATH=`pwd`:$PATH
+
 error_inicializacion(){
     echo "Inicialización de Ambiente No fue exitosa. $@"
 
@@ -141,7 +143,8 @@ then
     then
 
 	echo "Inicialización de Ambiente Concluida."
-	echo "Ambiente: grupo=$grupo" 
+	echo "Ambiente: grupo=$grupo"
+	echo "          PATH=$PATH"
 	echo "Demonio corriendo bajo el no.: $PID_INVONIO"
     else
 	SISTEMA_INICIALIZADO=""
