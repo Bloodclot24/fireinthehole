@@ -29,10 +29,19 @@ if(!$SISTEMA_INICIALIZADO){
     exit 1;
 }
 
+
+sub Glog{
+    my $mensaje=shift(@_);
+    my $tipo=shift(@_);
+    $mensaje =~ s/ /\\ /g;
+    `/bin/bash -c "Glog $0 $mensaje $tipo"`;
+}
+
+
 `/bin/bash -c "bloquearProceso $0"`;
 if( $? != 0 ){
     print "Error: Ya existe un proceso remioc corriendo.\n";
-    `Glog "$0" "Ya existe un proceso remioc corriendo." "SE"`;
+    &Glog("Ya existe un proceso remioc corriendo.", "SE");
     exit 2;
 }
 
@@ -40,7 +49,7 @@ if( $? != 0 ){
 if( $? == 0 ){
     `/bin/bash -c "desbloquearProceso $0"`;
     print "Error: Ya existe un proceso invreci corriendo.\n";
-    `Glog "$0" "Ya existe un proceso invreci corriendo." "SE"`;
+    &Glog("Ya existe un proceso invreci corriendo.", "SE");
     exit 3;
 }
 
@@ -55,7 +64,7 @@ sub buscarRemitos{
     closedir(DIR);
     
     foreach (@RDISPONIBLES) {
-	`Glog "$0" "Remito disponible: $_" I`;
+	&Glog("Remito disponible: $_", "I");
     }
 
     return @RDISPONIBLES;
@@ -90,7 +99,7 @@ sub elegirRemitos(){
 
     foreach (@RELEGIDOS) {
 	
-	`Glog "$0" "Remito elegido: $_" I`;
+	&Glog("Remito elegido: $_", "I");
     }
     return @RELEGIDOS
 }
@@ -134,9 +143,9 @@ sub procesarOrden{
 
     	(my $destino) = $origen =~ /^(.*)\.aproc$/;
     	$destino .= ".proc";
-    	`Glog $0 "Renombrando aceptados/$origen a aceptados/$destino" I`;
+    	&Glog("Renombrando aceptados/$origen a aceptados/$destino", "I");
     	if (! rename "$grupo/aceptados/$origen", "$grupo/aceptados/$destino"){
-    	    `Glog $0 "No se puede renombrar aceptados/$origen a aceptados/$destino" SE`;
+    	    &Glog("No se puede renombrar aceptados/$origen a aceptados/$destino", "SE");
 	    next; #salteo el remito (no lo proceso)
     	}
 
@@ -159,7 +168,7 @@ sub procesarOrden{
 	}
 	else{
 	    print "Error: No se puede abrir $grupo/aceptados/$destino, se saltea.\n";
-	    `Glog $0 "No se puede abrir $grupo/aceptados/$destino, se saltea." SE`;
+	    &Glog("No se puede abrir $grupo/aceptados/$destino, se saltea.", "SE");
 	}
 	
     }
@@ -179,12 +188,12 @@ sub procesarOrden{
 
     if (! open $archivo, '<', $OCDET){
 	print "Error: No se pudo abrir el archivo de detalle. Las operaciones no se terminaron.\n";
-	`Glog $0 "No se pudo abrir el archivo de detalle. Las operaciones no se terminaron." SE`;
+	&Glog("No se pudo abrir el archivo de detalle. Las operaciones no se terminaron.", "SE");
 	return 11;
     }
     if (! open $archivo2, '>', $OCDET2){
 	print "Error: No se pudo crear un nuevo archivo de detalle. Las operaciones no se terminaron.\n";
-	`Glog $0 "No se pudo crear un nuevo archivo de detalle. Las operaciones no se terminaron." SE`;
+	&Glog("No se pudo crear un nuevo archivo de detalle. Las operaciones no se terminaron.", "SE");
 	return 12;
     }
 
@@ -233,7 +242,7 @@ sub procesarOrden{
 	    (my $CODIGOORDEN) = $clave =~ /^(......)/;
 	    (my $CODIGOPROD) = $clave =~ /(..........)$/;
     	    print "Error: sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, en la orden de compra $CODIGOORDEN\n";
-    	    `Glog "$0" "Sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, cuando se intentaba conciliar la orden de compra $CODIGOORDEN" "E"`;
+    	    &Glog("Sobraron $PRODUCTOS{$clave} unidades del producto $CODIGOPROD, cuando se intentaba conciliar la orden de compra $CODIGOORDEN", "E");
 	    if($abierto){
 		my $usuario=`/bin/bash -c getUsuario`;
 		my $fecha=`/bin/bash -c getFechaYHora`;
@@ -256,13 +265,13 @@ sub procesarOrden{
 
 	if (!open $archivo, '<', $OCGOB){
 	    print "Error: No se pudo abrir el archivo global de orden de compra. Las operaciones no se terminaron.\n";
-	    `Glog $0 "No se pudo abrir el archivo global de orden de compra. Las operaciones no se terminaron." SE`;
+	    &Glog("No se pudo abrir el archivo global de orden de compra. Las operaciones no se terminaron.", "SE");
 	    return 13;
 	}
 
 	if (!open $archivo2, '>', $OCGOB2){
 	    print "Error: No se pudo crear un nuevo archivo global de orden de compra. Las operaciones no se terminaron.\n";
-	    `Glog $0 "No se pudo crear un nuevo global de orden de compra. Las operaciones no se terminaron." SE`;
+	    &Glog("No se pudo crear un nuevo global de orden de compra. Las operaciones no se terminaron.", "SE");
 	    return 14;
 	}
 
@@ -294,7 +303,7 @@ sub procesarOrden{
 sub main{
 
 #Inicializar el log
-    `Glog "$0" "Inicio de $0: @ARGV" I`;
+    &Glog("Inicio de $0: @ARGV", "I");
 
     my $PARAMETRO;
     my $NUMERO;
@@ -308,7 +317,7 @@ sub main{
     $ULTIMO=&buscarUltimaOC("ocgob");
     if (! $ULTIMO){
 	print "Error: No existe el archivo global de ordenes de compra $ULTIMO.\n";
-	`Glog "$0" "No existe el archivo global de ordenes de compra." E`;
+	&Glog("No existe el archivo global de ordenes de compra.", "E");
 	return 4;
     }
     $NUMERO=$PARAMETRO;
@@ -389,13 +398,13 @@ sub main{
 	    }
 	    else{
 		print "Error: La orden de compra $_, no está abierta.\n";
-		`Glog "$0" "La orden de compra $_, no está abierta." E`;
+		&Glog("La orden de compra $_, no está abierta.", "E");
 	    }
 	}
 
 	if(!@OC){
 	    print "Todas las ordenes de compra especificadas estan cerradas.\n";
-	    `Glog "$0" "Todas las ordenes de compra especificadas estan cerradas." I`;
+	    &Glog("Todas las ordenes de compra especificadas estan cerradas.", "I");
 	    return 6;
 	}
 
@@ -405,7 +414,7 @@ sub main{
 		my @RDISPONIBLES = &buscarRemitos($_);
 		if( ! @RDISPONIBLES){
 		    print "No hay remitos disponibles para la orden de compra $NUMERO\n";
-		    `Glog "$0" "No hay remitos disponibles para la orden de compra $NUMERO." I`;
+		    &Glog("No hay remitos disponibles para la orden de compra $NUMERO.", "I");
 		}
 		else{
 		    push(@REMITOS, @RDISPONIBLES);
@@ -420,11 +429,11 @@ sub main{
 
 	if( ! @REMITOS ) {
 	    print "No hay remitos disponibles para las ordenes de compra solicitadas (@OC).\n";
-	    `Glog "$0" "No hay remitos disponibles para las ordenes de compra solicitadas (@OC)." I`;
+	    &Glog("No hay remitos disponibles para las ordenes de compra solicitadas (@OC).", "I");
 	    return 7;
 	}
 
-	`Glog "$0" "Conciliación de la orden de compra @OC." I`;
+	&Glog("Conciliación de la orden de compra @OC.", "I");
 
 	if(! $FLAGREMITOS){ #Si la invocacion del programa no incluyó remitos
 	    #Dejo al usuario elegir los remitos a procesar
@@ -443,7 +452,7 @@ sub main{
 	
 	if( ! $OCDET ){
 	    print "Error: No se encontro el archivo de descripción de ordenes de compra.";
-	    `Glog "$0" "No se encontro el archivo de descripción de ordenes de compra." SE`;
+	    &Glog("No se encontro el archivo de descripción de ordenes de compra.", "SE");
 	    return 9;
 	}
 
@@ -453,7 +462,7 @@ sub main{
     }
     else{
 	print "Error: No se especifico nungun remito/orden de compra.\n";
-	`Glog "$0" "No se especifico nungun remito/orden de compra." E`;
+	&Glog("No se especifico nungun remito/orden de compra.", "E");
 	return 10;
     }
 }
