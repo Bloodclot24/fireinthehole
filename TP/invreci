@@ -41,21 +41,21 @@ validarRegistro(){
     local nombreArchivo=$2
     local ordendecompra=` echo $registroAValidar | cut -d ';' -f 1`
     local cuitProveedor=` echo $registroAValidar | cut -d ';' -f 9`
-    echo "Se procesa la orden de compra # $ordendecompra"
-    echo "--------------------------------------"
-    Glog invreci "Se procesa la orden de compra # $ordendecompra" i
-    Glog invreci "-------------------------------" i
-    echo "$registroAValidar" 
-    echo "--------------------------------------"
 
+    echo "$registroAValidar" 
+    echo "Se procesa la orden de compra # $ordendecompra"
+    Glog invreci "$registroAValidar" i
+    Glog invreci "Se procesa la orden de compra # $ordendecompra" i
 
     local archivosAProcesar2=`ls "$grupo"/oc/ -1 | wc -l`
     if [ $archivosAProcesar2 -eq 0 ]
     then
 	Glog invreci "No existen archivos de orden de compra para procesar, se suspende la ejecucion de invreci" e
+	echo "No existen archivos de orden de compra para procesar, se suspende la ejecucion de invreci"
 	exit 1
     fi
     
+    #Se busca la ultima orden de compra global
     ultimoArchivo=0
     for archivoOrdenCompra in "$grupo/oc/ocgob."*
     do
@@ -66,39 +66,39 @@ validarRegistro(){
 	fi
     done
 
+    #Validacion del formato del registro
     local registroOrdenDeCompra=`grep -h "^$ordendecompra" "$grupo/oc/ocgob.$ultimoArchivo"` #Esto devuelve una lista o nada.
-    #TODO sacar este echo------------> mensaje de debug
     echo Ruta de la orden de compra global : "$grupo/oc/ocgob.$ultimoArchivo"
     if [ "$registroOrdenDeCompra" != "" ] 
     then
-#TODO Sacar este echo ------------> mensaje de debug
 	echo "El registro de orden de compra es: $registroOrdenDeCompra"
 	if [  "`echo $registroOrdenDeCompra | cut -d ';' -f 4`" = "CERRADA" ]
 	then
-	  echo la orden de compra $ordendecompra se rechaza por estar cerrado  
-	  Glog invreci "La orden de compra $ordendecompra se esta cerrada, se rechaza el registro $registroAValidar" e			
+	  echo La orden de compra $ordendecompra esta cerrada, se rechaza el registro  
+	  Glog invreci "La orden de compra $ordendecompra esta cerrada, se rechaza el registro" e		
 	  rechazarRegistro "$registroAValidar" "$nombreArchivo"
 	  local cantidadRegistrosRechazadosPorOCompCerrada=$(( $cantidadRegistrosRechazadosPorOCompCerrada + 1))
 	  return 1
 	elif [ "$cuitProveedor" != "`echo $registroOrdenDeCompra | cut -d ';' -f 3`" ] 
 	then
-	    echo la orden de compra $ordendecompra se rechaza por CUIT invalido: "`echo $registroOrdenDeCompra | cut -d ';' -f 3`", se esperaba $cuitProveedor
-	    Glog invreci "La orden de compra $ordendecompra tiene un CUIT invalido, se rechaza el registro $registroAValidar" e
+	    echo "El CUIT "`echo $registroOrdenDeCompra | cut -d ';' -f 3`" es invalido, se rechaza el registro (se esperaba $cuitProveedor)"
+	    Glog invreci "El CUIT es invalido, se rechaza el registro" e
 	    rechazarRegistro "$registroAValidar" "$nombreArchivo"
 	    cantidadRegistrosRechazadosPorOtrosMotivos=$(($cantidadRegistrosRechazadosPorOtrosMotivos + 1))
 	    return 3
 	else
 	  #Validacion correcta
-	  return 0
+	    echo "Se acepta el registro"
+	    Glog invreci "Se acepta el registro" e
+	    return 0
 	fi		
      fi
     
-    echo "La orden de compra $ordendecompra no existe, el registro perteneciente al remito $nombreArchivo se rechazara"
-    Glog invreci "La orden de compra #$ordendecompra no existe, se rechaza el registro $registroAValidar"	e
+    echo "La orden de compra $ordendecompra no existe, se rechaza el registro"
+    Glog invreci "La orden de compra #$ordendecompra no existe, se rechaza el registro"	e
     rechazarRegistro "$registroAValidar" "$nombreArchivo" 
     cantidadRegistrosRechazadosPorOCompInexistente=$(($cantidadRegistrosRechazadosPorOCompInexistente +1))
     return 2
-
 }
 
 
@@ -107,18 +107,21 @@ validarRegistro(){
 
 archivosAProcesar=`ls "$grupo"/recibidos/ -1 | wc -l`
 Glog invreci "Inicio de Invreci: Archivos a procesar : <$archivosAProcesar> " i
+
 if [ $archivosAProcesar -eq 0 ]
 then
     Glog invreci "No existen archivos para procesar, se suspende la ejecucion de invreci" e
+    echo "No existen archivos para procesar, se suspende la ejecucion de invreci"
     exit 1
 fi
 
 for i in "$grupo/recibidos/"*
 do  
-
     archivo=`basename "$i"`
 
     Glog invreci "Archivo a procesar: <$archivo>" i
+    Glog invreci "-------------------------------" i
+    echo "--------------------------------------"
 
     if [ -e "$grupo"/yarecibidos/$archivo ]
     then 
@@ -143,14 +146,11 @@ do
      	for registro in `grep '^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$' $i | sed 's/ /_/g'`
 	do
 
-	    echo "***********************************"
-	    echo "$registro"
-	    echo "***********************************"
-
 	    cantidadRegistrosLeidos=$(($cantidadRegistrosLeidos + 1))
 	    validarRegistro "$registro" "$archivo"
+	    Glog invreci "-------------------------------" i
+	    echo "--------------------------------------"
 	    
-
 	    if [ "$?" -eq 0 ]
 	    then 
 		numeroremito=${archivo%%.*}
@@ -167,19 +167,17 @@ do
 	Mover $i "$grupo"/yarecibidos/ invreci 
     fi
     
-#    if [ -s "$archivo" ]
-#    then
-#	Glog invreci " -Remito Rechazado Por Archivo Vacio: <$archivo> " i
-#	echo "-Remito Rechazado Por Archivo Vacio:<$archivo> "
-    
-#    else
-	Glog invreci "
-	-Remito Aceptado:<$archivo> 
-	-Cantidad de Registros Leidos: $cantidadRegistrosLeidos 
-	-Cantidad de Registros Aceptados: $cantidadRegistrosAceptados 
-	-Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada 
-	-Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
-	-Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " i
+    if [ $cantidadRegistrosLeidos -eq 0 ]
+    then
+	Glog invreci " -Remito Rechazado Por Archivo Vacio: <$archivo> " i
+	echo "-Remito Rechazado Por Archivo Vacio:<$archivo> "
+    else
+	Glog invreci "-Remito Aceptado:<$archivo> " i
+	Glog invreci "-Cantidad de Registros Leidos: $cantidadRegistrosLeidos " i
+	Glog invreci "-Cantidad de Registros Aceptados: $cantidadRegistrosAceptados " i
+	Glog invreci "-Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada " i
+	Glog invreci "-Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente " i
+	Glog invreci "-Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " i
 	echo "
 	 -Remito Aceptado:<$archivo> 
 	 -Cantidad de Registros Leidos: $cantidadRegistrosLeidos 
@@ -187,12 +185,10 @@ do
          -Cantidad Registros Rechazados por Orden de Compra Cerrada: $cantidadRegistrosRechazadosPorOCompCerrada 
          -Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
          -Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos " 
-    
-#    fi
-    
+    fi
 done
 
 Glog invreci "Fin de Invreci" i
 
-# Elimino el lockl
+# Se elimine el archivo de lock
 desbloquearProceso "$0"
