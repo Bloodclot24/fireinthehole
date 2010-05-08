@@ -29,7 +29,7 @@ fi
 
 # ++ Programa INVONIO ++ #
 echo
-echo "==> Demonio corriendo bajo el N°.:"\<$$\>
+echo "==> Demonio corriendo bajo el NÂº.:"\<$$\>
 echo ===========================================================
 
 # Creo un archivo lock oculto con el numero de pid del proceso
@@ -201,4 +201,4 @@ done
 desbloquearProceso "$0"
 
 echo ===========================================================
-echo "Fin del proceso invonio N°.:"\<$$\>
+echo "Fin del proceso invonio NÂº.:"\<$$\>
