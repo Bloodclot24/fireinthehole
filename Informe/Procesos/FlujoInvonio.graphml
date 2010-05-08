@@ -15,7 +15,7 @@
           <y:Geometry height="76.0" width="177.0" x="35.32539682539682" y="0.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="75.818359375" x="50.5908203125" y="29.015625">startInvonio</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="73.404296875" x="51.7978515625" y="28.318222045898438">startInvonio</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
@@ -25,7 +25,7 @@
           <y:Geometry height="64.0" width="136.0" x="55.82539682539682" y="96.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="111.068359375" x="12.4658203125" y="23.015625">Comienza Invonio</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="108.5546875" x="13.72265625" y="22.318222045898438">Comienza Invonio</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
@@ -35,7 +35,7 @@
           <y:Geometry height="102.0" width="165.0" x="82.57539682539684" y="190.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="131.283203125" x="16.8583984375" y="35.03125">¿Existen archivos en 
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.72711181640625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="124.955078125" x="20.0224609375" y="33.636444091796875">¿Existen archivos en 
    $grupo/arribos?</y:NodeLabel>
         </y:GenericNode>
       </data>
@@ -46,7 +46,7 @@
           <y:Geometry height="92.0" width="165.0" x="61.95039682539684" y="337.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="129.015625" x="17.9921875" y="30.03125">¿Es válido el nombre
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.72711181640625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="123.09765625" x="20.951171875" y="28.636444091796875">¿Es válido el nombre
  del archivo?</y:NodeLabel>
         </y:GenericNode>
       </data>
@@ -57,7 +57,7 @@
           <y:Geometry height="57.60000000000002" width="117.60000000000002" x="15.00039682539682" y="459.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="105.203125" x="6.198437500000011" y="12.831250000000011">Mover archivo a
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.72711181640625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="105.91796875" x="5.841015625000011" y="11.436444091796886">Mover archivo a
 $grupo/recibidos</y:NodeLabel>
         </y:GenericNode>
       </data>
@@ -68,7 +68,7 @@ $grupo/recibidos</y:NodeLabel>
           <y:Geometry height="57.60000000000002" width="128.83209169054453" x="162.60062082139441" y="459.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="119.529296875" x="4.651397407772265" y="12.831250000000011">Mover archivo a 
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.72711181640625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="119.0078125" x="4.912139595272265" y="11.436444091796886">Mover archivo a 
 $grupo/rechazados</y:NodeLabel>
         </y:GenericNode>
       </data>
@@ -79,7 +79,7 @@ $grupo/rechazados</y:NodeLabel>
           <y:Geometry height="50.0" width="151.0" x="541.4595238095238" y="216.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="107.833984375" x="21.5830078125" y="9.03125">Invocar comando
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.72711181640625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="103.685546875" x="23.6572265625" y="7.636444091796875">Invocar comando
  invreci</y:NodeLabel>
         </y:GenericNode>
       </data>
@@ -90,7 +90,7 @@ $grupo/rechazados</y:NodeLabel>
           <y:Geometry height="67.5" width="182.33333333333337" x="664.1554223650244" y="207.25"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="44.2890625" x="69.02213541666674" y="24.765625">invreci</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="42.337890625" x="69.99772135416674" y="24.068222045898438">invreci</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
@@ -100,7 +100,7 @@ $grupo/rechazados</y:NodeLabel>
           <y:Geometry height="76.0" width="231.0" x="321.4329365079365" y="449.8"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="73.78515625" x="78.607421875" y="29.015625">stopInvonio</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="72.302734375" x="79.3486328125" y="28.318222045898438">stopInvonio</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
@@ -110,30 +110,28 @@ $grupo/rechazados</y:NodeLabel>
           <y:Geometry height="76.0" width="128.83209169054453" x="602.4331605039341" y="449.8"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="101.3125" x="13.759795845272265" y="29.015625">Termina Invonio</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="98.5" x="15.166045845272265" y="28.318222045898438">Termina Invonio</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
     <node id="n10">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.decision">
           <y:Geometry height="71.0" width="193.88397491349474" x="297.5754728607129" y="205.5"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="127.46875" x="33.20761245674737" y="19.53125">¿Existen archivos en
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.72711181640625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="121.158203125" x="36.36288589424737" y="18.136444091796875">¿Existen archivos en
 $grupo/recibidos?</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
     <node id="n11">
-      <data key="d2"/>
       <data key="d3">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="113.392578125" x="309.4731553819444" y="363.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="103.392578125" x="5.0" y="11.015625">Dormir tiempo X</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="100.7265625" x="6.3330078125" y="10.318222045898438">Dormir tiempo X</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
@@ -163,7 +161,7 @@ $grupo/recibidos?</y:NodeLabel>
           <y:Path sx="-20.625" sy="38.28125" tx="0.0" ty="-46.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="2.000003148639024" y="26.234375">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="13.931640625" x="2.000003148639024" y="25.536972045898438">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -177,7 +175,7 @@ $grupo/recibidos?</y:NodeLabel>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="-5.6050530795441205" y="39.994110107421875">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.236328125" x="11.108250067272735" y="31.249832153320312">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -188,7 +186,7 @@ $grupo/recibidos?</y:NodeLabel>
           <y:Path sx="-41.25" sy="23.03125" tx="29.400000000000006" ty="-28.80000000000001"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="head" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="-16.951168726360976" y="28.984375">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="six_pos" modelPosition="head" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="13.931640625" x="-15.931637476360976" y="28.286972045898438">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -255,7 +253,7 @@ $grupo/recibidos?</y:NodeLabel>
           <y:Path sx="82.5" sy="0.0" tx="-96.94198745674737" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="14.84086147879708" y="2.0">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.236328125" x="14.88187710379708" y="2.0">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -266,7 +264,7 @@ $grupo/recibidos?</y:NodeLabel>
           <y:Path sx="96.94198745674737" sy="0.0" tx="-75.5" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="14.951171875" x="17.52445771569387" y="2.0">Si</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="13.931640625" x="18.03422334069387" y="2.0">Si</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -277,7 +275,7 @@ $grupo/recibidos?</y:NodeLabel>
           <y:Path sx="0.0" sy="35.5" tx="28.34814453125" ty="-20.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.318359375" x="2.000081955055407" y="34.265625">No</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="19.363555908203125" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="20.236328125" x="2.000082992357534" y="33.56822204589844">No</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
