@@ -51,7 +51,7 @@ iniciar_invonio(){
 
     if [ $? -ne 0 ]
     then
-	sh "$grupo/comandos/invonio" &
+	bash "$grupo/comandos/invonio" &
 	PID_INVONIO=$!;
 	return 0
     else
