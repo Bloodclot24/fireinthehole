@@ -1,6 +1,66 @@
 #!/bin/bash
 export grupo=`pwd`/..
-export SISTEMA_INICIALIZADO="OK"
+
+error_inicializacion(){
+    echo "Inicialización de Ambiente No fue exitosa. $@"
+
+}
+
+inicializar(){
+    if [ ! -z "$SISTEMA_INICIALIZADO" ]
+    then
+	error_inicializacion "El sistema ya esta inicializado."
+	return 1
+    fi
+
+    if [ ! -f "$grupo/oc/ocgob."?? ]
+    then
+	error_inicializacion "No existe el archivo global de ordenes de compra."
+	return 1
+    fi
+
+    if [ ! -f "$grupo/oc/ocdet."?? ]
+    then
+	error_inicializacion "No existe el archivo de descripción de ordenes de compra."
+	return 1
+    fi
+
+    for i in modulo_mover modulo_glog invonio invreci startinvonio stopinvonio
+    do
+	if [ ! -e "$grupo/comandos/$i" ]
+	then
+	    error_inicializacion "No existe el archivo $i, necesario para la correcta ejecución del programa."
+	    return 1
+	fi
+    done
+
+    for i in remioc occtrl
+    do
+	if [ ! -e "$grupo/comandos/$i" ]
+	then
+	    error_inicializacion "No existe el archivo $i. Esta funcionalidad no estará disponible."
+	    return 1
+	fi
+    done
+    return 0
+}
+
+iniciar_invonio(){
+    
+    estaCorriendo "invonio"
+
+    if [ $? -ne 0 ]
+    then
+	sh "$grupo/comandos/invonio" &
+	PID_INVONIO=$!;
+	return 0
+    else
+	local LINE_PID=`grep "PID=" "$grupo/locks/.lock_invonio_corriendo"`
+	local PID=${LINE_PID:4}
+	error_inicializacion "Invonio ya esta corriendo bajo el PID $PID."
+	return 1
+    fi
+}
 
 getFechaYHora(){
     echo -n `date +"%Y/%m/%d %H:%M:%S"`
@@ -62,13 +122,29 @@ estaCorriendo(){
     return 2
 }
 
-
 export -f getFechaYHora
 export -f getUsuario
 export -f bloquearProceso
 export -f desbloquearProceso
 export -f estaCorriendo
 
-. "$grupo"/comandos/modulo_glog
-. "$grupo"/comandos/modulo_mover
+inicializar
+
+if [ $? -eq 0 ]
+then
+    export SISTEMA_INICIALIZADO="OK"
+    . "$grupo"/comandos/modulo_glog
+    . "$grupo"/comandos/modulo_mover
+
+    iniciar_invonio
+    if [ $? -eq 0 ]
+    then
+
+	echo "Inicialización de Ambiente Concluida."
+	echo "Ambiente: grupo=$grupo" 
+	echo "Demonio corriendo bajo el no.: $PID_INVONIO"
+    else
+	SISTEMA_INICIALIZADO=""
+    fi
+fi
 
