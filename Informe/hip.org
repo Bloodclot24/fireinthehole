@@ -49,7 +49,12 @@
       ignoran.
 
 
-
+* Invini
+    - Para saber si invonio esta corriendo, utiliza el comando
+      auxiliar /esta_corriendo/. Este le indica si se esta corriendo
+      el comando invonio que se encuentra en /$grupo/comandos/. Si
+      existe otra instalación del sistema en un directorio diferente,
+      no nos interesa, ya que no afecta a la operación del mismo.
 * Remioc
 
     - Se presupone que todos los archivos (tanto de remitos como de
@@ -67,3 +72,9 @@
       | Usuario de grabación          | N caracteres. Usuario que graba el registro          |
       | Fecha y hora de grabación     | N caracteres. Fecha y hora de grabación del registro |
       |-------------------------------+------------------------------------------------------|
+      
+    - Si se pasan por parámetro números de remito, no se dá opción al
+      usuario de elegir los remitos que quiere procesar.
+
+    - Si no se pasan parametros, se toman todos los remitos que falten
+      procesar.
