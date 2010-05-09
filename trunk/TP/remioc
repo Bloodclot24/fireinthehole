@@ -334,24 +334,28 @@ sub main{
 	}
 	elsif(length($PARAMETRO) == 8){
 
-	    my $otrogrupo = $grupo; #Escapeo los espacios para no
-				    #tener problemas
-	    $otrogrupo =~ s/ /\\ /g;
+	    opendir my $DIRECTORIO, "$grupo/aceptados/";
 
-	    my $archivo = <$otrogrupo/aceptados/$PARAMETRO.*.aproc>;
+	    
+	    my @archivos = readdir $DIRECTORIO;
+	    closedir $DIRECTORIO;
+	    @archivos = grep(/$PARAMETRO\..*\.aproc/, @archivos);
 
+	    my $archivo;
 
-	    if( -e $archivo ){
-		($NUMERO) = $archivo =~ /$PARAMETRO\.([0-9]{6})\.aproc$/;
-		print "NUMERO: $NUMERO\n";
-		push (@OC, $NUMERO);
-		$FLAGREMITOS=1;
+	    foreach $archivo (@archivos){
+		if( -e "$grupo/aceptados/$archivo" ){
+		    ($NUMERO) = $archivo =~ /$PARAMETRO\.([0-9]{6})\.aproc$/;
+		    push (@OC, $NUMERO);
+		    $FLAGREMITOS=1;
+		    push(@REMITOS , "$PARAMETRO.$NUMERO.aproc");
+		    
+		}
+		else{
+		    print "Error: no existe el remito $NUMERO (archivo $archivo).\n";
+		}
 	    }
-	    else{
-		print "Error: no existe el remito $NUMERO (archivo $archivo).\n";
-	    }
 
-	    push(@REMITOS , "$PARAMETRO.$NUMERO.aproc");
 	}
 	else{
 	    print "Error: '$PARAMETRO', no identifica una orden de compra o remito.\n";
