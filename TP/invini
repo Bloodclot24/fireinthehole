@@ -151,7 +151,6 @@ then
 	echo "Ambiente: grupo=$grupo"
 	echo "          PATH=$PATH"
 	echo "No se corrió invonio. Ya estaba ejecutandose."
-	SISTEMA_INICIALIZADO=""
     fi
 fi
 
