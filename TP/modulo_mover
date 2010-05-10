@@ -14,13 +14,13 @@ fi
 
 Mover(){
     local DUP="dup"
-    local ESCRIBIR_LOG=0
+    local ESCRIBIR_LOG=""
 
     #Primero verificamos que la cantidad de parametros sea como minimo 2 (dos)
     if [ $# -le 1 ]
     then
 	echo "Error: el comando necesita al menos 2 (dos) parametros"
-	Glog "$0" "Error: el comando necesita al menos 2 (dos) parametros" "E"
+	Glog "Mover" "Error: el comando necesita al menos 2 (dos) parametros" "E"
 	return 1
     fi
 
@@ -36,14 +36,26 @@ Mover(){
     if [ ! -e "$1" ]
     then
 	echo "Error: El archivo $1 no existe."
-	Glog "$0" "Error: El archivo $1 no existe." "E"
+	Glog "Mover" "Error: El archivo $1 no existe." "E"
+
+	if [ ! -z $ESCRIBIR_LOG ]
+	then
+	    Glog "$3" "Error: El archivo $1 no existe." "E"
+	fi
+
 	return 2
     fi
 
     #Verificamos que origen y destino no sean iguales
     if [ "$1" = "$2" ]
     then
-	Glog "$0" "Origen y destino son iguales" "I"
+	Glog "Mover" "Origen y destino son iguales" "I"
+
+	if [ ! -z $ESCRIBIR_LOG ]
+	then
+	    Glog "$3" "Origen y destino son iguales" "I"
+	fi
+
 	return 0
     fi
 
@@ -58,7 +70,12 @@ Mover(){
 
 	if [ "$directorio" = "$2" ]
 	then
-	    Glog "$0" "Origen y destino son iguales" "I"
+	    Glog "Mover" "Origen y destino son iguales" "I"
+
+	    if [ ! -z $ESCRIBIR_LOG ]
+	    then
+		Glog "$3" "Origen y destino son iguales" "I"
+	    fi
 	    return 0
 	fi
     fi
@@ -67,7 +84,11 @@ Mover(){
     if [ ! -d  "$directorio" ]
     then
 	echo "Error: El directorio $2 no existe."
-	Glog "$0" "Error: El directorio $2 no existe." "E"
+	Glog "Mover" "Error: El directorio $2 no existe." "E"
+	if [ ! -z $ESCRIBIR_LOG ]
+	then
+	    Glog "$3" "Error: El directorio $2 no existe." "E"
+	fi
 	return 3
     fi
 
@@ -104,8 +125,20 @@ Mover(){
 	done
 	numero=`printf "%.3i" $numero`
 	mv "$1" "$directorio/$DUP/$archivo.$numero"
+
+	Glog "Mover" "Se mueve el archivo $1 a $directorio/$DUP/$archivo.$numero" "I"
+	if [ ! -z $ESCRIBIR_LOG ]
+	then
+	    Glog "$3" "Se mueve el archivo $1 a $directorio/$DUP/$archivo.$numero" "I"
+	fi
+
     else
 	mv "$1" "$directorio/$archivo"
+	Glog "Mover" "Se mueve el archivo $1 a $directorio/$archivo" "I"
+	if [ ! -z $ESCRIBIR_LOG ]
+	then
+	    Glog "$3" "Se mueve el archivo $1 a $directorio/$archivo" "I"
+	fi
     fi
 
     return 0
