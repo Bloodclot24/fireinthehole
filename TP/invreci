@@ -44,7 +44,7 @@ validarRegistro(){
 
     echo Se valida el siguiente registro : "$registroAValidar" 
     Glog invreci "$registroAValidar" i
-    Glog invreci "Se procesa la orden de compra # $ordendecompra" i
+
 
     local archivosAProcesar2=`ls "$grupo"/oc/ -1 | wc -l`
     if [ $archivosAProcesar2 -eq 0 ]
@@ -142,26 +142,30 @@ do
 	cantidadRegistrosRechazadosPorOCompCerrada=0
 	cantidadRegistrosRechazadosPorOCompInexistente=0
 	cantidadRegistrosRechazadosPorOtrosMotivos=0
- 	cantidadRegistrosLeidos=$cantidadRegistrosRechazadosPorOtrosMotivos
+ 	cantidadRegistrosLeidos=0
 
 	#Rechaza un registro porque el formato es invalido
-        RechazadosFormato=`grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$" $archivoRecibido`
-
-	if [ $? -eq 0 ] && [ ! -z $RechazadosFormato ]
+	hayInvalidos=`grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};[^;]\{11\};[^;]\{11\};[^;]\{11\};[^;]\{11\}$" $archivoRecibido`
+	if [ "$hayInvalidos" != "" ]
+	then        
+		grep -v "^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};[^;]\{11\};[^;]\{11\};[^;]\{11\};[^;]\{11\}$" $archivoRecibido >> "$grupo"/rechazados/${archivo}.rech
+	fi	
+	if [ -e "$grupo"/rechazados/${archivo}.rech ]
 	then
-           echo "Los registros rechazados por formato inválido son :"
-           echo $RechazadosFormato
-	   echo $RechazadosFormato >> "$grupo"/rechazados/${archivo}.rech 
-           cantidadRegistrosRechazadosPorOtrosMotivos=`wc -l "$grupo"/rechazados/${archivo}.rech | cut -d ' ' -f 1` 
+		cantidadRegistrosRechazadosPorOtrosMotivos=`wc -l "$grupo"/rechazados/${archivo}.rech | cut -d ' ' -f 1`
+		echo "Los registros rechazados por formato inválido son :"
+		cat "$grupo"/rechazados/${archivo}.rech
+		cantidadRegistrosLeidos=$(($cantidadRegistrosRechazadosPorOtrosMotivos))
 	fi
-	
-     	for registro in `grep '^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};.\{11\};.\{11\};.\{11\};.\{11\}$' $archivoRecibido | sed 's/ /_/g'`
+
+		
+     	for registro in `grep '^[0-9]\{6\};.\{10\};[0-9]*;[0-9]*;[0-9]*\.\?[0-9]*;[0-9]\{8\};[^;]\{11\};[^;]\{11\};[^;]\{11\};[^;]\{11\}$' $archivoRecibido | sed 's/ /_/g'`
 	do
 
 	    cantidadRegistrosLeidos=$(($cantidadRegistrosLeidos + 1))
 	    echo "--------------------------------------"
 	    validarRegistro "$registro" "$archivo"
-	    Glog invreci "-------------------------------" i
+
 	    
 	    if [ "$?" -eq 0 ]
 	    then 
@@ -175,15 +179,13 @@ do
 		echo "$registro" >> "$grupo"/aceptados/${numeroremito}.${numeroordencompra}.aproc
 
 	    fi 
+		    Glog invreci "-------------------------------" i
 	done
+
 	Mover $archivoRecibido "$grupo"/yarecibidos/ invreci 
+
     fi
     
-    if [ $cantidadRegistrosLeidos -eq 0 ]
-    then
-	Glog invreci " -Remito Rechazado Por Archivo Vacio: <$archivo> " i
-	echo "-Remito Rechazado Por Archivo Vacio:<$archivo> "
-    else
 	Glog invreci "-Remito Aceptado:<$archivo> " i
 	Glog invreci "-Cantidad de Registros Leidos: $cantidadRegistrosLeidos " i
 	Glog invreci "-Cantidad de Registros Aceptados: $cantidadRegistrosAceptados " i
@@ -202,7 +204,7 @@ Resumen del procesamiento del remito:
          -Cantidad De Registros Rechazados por Orden de Compra Inexistente: $cantidadRegistrosRechazadosPorOCompInexistente 
          -Cantidad de Registros Rechazados por Otros Motivos: $cantidadRegistrosRechazadosPorOtrosMotivos 
 	" 
-    fi
+ 
 done
 
 Glog invreci "Fin de Invreci" i

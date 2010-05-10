@@ -17,6 +17,7 @@ cat <<EOF > "$grupo"/oc/ocgob.01
 123456;20100210;30324567820;ABIERTA;Matias;07/03/2010 03:38:35
 123460;20100210;30324567891;ABIERTA;Matias;07/03/2010 03:38:35
 123461;20100210;30324567891;ABIERTA;Matias;07/03/2010 03:38:35
+123462;20100210;30324567891;CERRADA;Matias;07/03/2010 03:38:35
 EOF
 
 
@@ -43,9 +44,28 @@ cat <<EOF > "$grupo"/oc/ocdet.01
 123461;1;00A1900FG5;4;4;ABIERTO;Matias;07/03/2010 03:33:33
 123461;2;00A1900123;10;10;ABIERTO;Matias;07/03/2010 03:33:33
 123461;3;00A19006LN;15;10;ABIERTO;Matias;07/03/2010 03:33:33
-123461;4;00A19006LN;15;10;ABIERTO;Matias;07/03/2010 03:33:33 
+123461;4;00A19006LN;15;10;ABIERTO;Matias;07/03/2010 03:33:33
+123462;4;00A19006MN;15;0;CERRADO;Matias;07/03/2010 03:33:33 
 EOF
 	
+#############################################################
+##############  REMITOS DUPLICADOS     ######################
+#############################################################
+
+
+cat <<EOF > "$grupo"/yarecibidos/00000005.20100202
+123461;00A1900FG5;3;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+123461;00A1900123;10;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+123461;00A19006LN;12;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+EOF
+
+
+cat <<EOF > "$grupo"/aceptados/00000005.20100202
+123461;00A1900FG5;3;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+123461;00A1900123;10;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+123461;00A19006LN;12;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+EOF
+
 #############################################################
 ##############  REMITOS EN ARRIBOS  #########################
 #############################################################
@@ -73,10 +93,41 @@ cat <<EOF > "$grupo"/arribos/00000004.20100215
 123460;00A1900014;4;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
 EOF
 
-
+#Ultimo registro se rechaza por orden cerrada.
 cat <<EOF > "$grupo"/arribos/00000005.20100202
 123461;00A1900FG5;3;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
 123461;00A1900123;10;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
-123461;00A19006LN;12;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
+123461;00A19006LN;12;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora 
+123462;00A19006LN;12;3;01347.1;20100103;Algun_lugar;Desconocido;30324567891;Aseguradora
 EOF
+
+#Agregar remitos con nombre invalido
+cat <<EOF > "$grupo"/arribos/0000000.jorge00415
+000001;0000000003;1;3;01347.1;20100103;Algun_lugar;Desconocido;00000000002;Aseguradora
+EOF
+
+#Remito con fecha invalida.
+cat <<EOF > "$grupo"/arribos/000000.20150202
+000001;0000000003;1;3;01347.1;20100103;Algun_lugar;Desconocido;00000000002;Aseguradora
+EOF
+
+#Agregar remitos con contenido invalido - 1 y 2 por formato, 3 por CUIT invalido
+cat <<EOF > "$grupo"/arribos/00000006.20100415
+000001;0000000003;1;3;01347.1;2010010300000000002;Aseguradora;;;
+000001;0000000003;1;;;;;;;
+000001;0000000003;1;3;01347.1;20100103;Algun_lugar;Desconocido;00120000002;Aseguradora
+EOF
+
+
+#El remito se rechaza por remito vacio.
+cat <<EOF > "$grupo"/arribos/00000007.20100415
+EOF
+
+
+
+
+
+
+
+
 
