@@ -97,10 +97,10 @@ my $PROXIMOARG;
 if ($ARGC != 0){
     
     switch ($ARGV[0]) {
-	case -f { open (ARCHIVOSALIDA , '>>', "$ARGV[1]"); $ARCH = 1; $PROXIMOARG = 2 ;}
+	case "-f" { open (ARCHIVOSALIDA , '>>', "$ARGV[1]"); $ARCH = 1; $PROXIMOARG = 2 ;}
 	case -std { $STD = 1; $PROXIMOARG = 1;}
-	case -b { $STD = 1; $ARCH = 1 ; open (ARCHIVOSALIDA , '>>', "$ARGV[1]") ; $PROXIMOARG = 2;}
-	else  { print "El parametro correspondiente a la salida es invalido, se procesa con el parametro por defecto";
+	case "-b" { $STD = 1; $ARCH = 1 ; open (ARCHIVOSALIDA , '>>', "$ARGV[1]") ; $PROXIMOARG = 2;}
+	else  { print "El parametro correspondiente a la salida es invalido, se procesa con el parametro por defecto.\n";
 		$STD = 1; $PROXIMOARG = 0;}
     }
 
@@ -108,7 +108,7 @@ if ($ARGC != 0){
 	case -all { $RANGOMINIMO = 0; $RANGOMAXIMO = 999999;}
 	case -range { $RANGOMINIMO = $ARGV[$PROXIMOARG+1]; $RANGOMAXIMO = $ARGV[$PROXIMOARG+2];}
 	case -single { $RANGOMINIMO = $ARGV[$PROXIMOARG+1]; $RANGOMAXIMO = $ARGV[$PROXIMOARG+1];}
-	else { print "El parametro correspondiente al rango de ordenes de compra es invalido, se procesa con el parametro por defecto";
+	else { print "El parametro correspondiente al rango de ordenes de compra es invalido, se procesa con el parametro por defecto.\n";
 	      $RANGOMINIMO = 0; $RANGOMAXIMO = 999999;}
     }
     
