@@ -353,12 +353,14 @@ sub main{
 		}
 		else{
 		    print "Error: no existe el remito $NUMERO (archivo $archivo).\n";
+		    &Glog("Error: no existe el remito $NUMERO (archivo $archivo).","E");
 		}
 	    }
 
 	}
 	else{
 	    print "Error: '$PARAMETRO', no identifica una orden de compra o remito.\n";
+	    &Glog("Error: '$PARAMETRO', no identifica una orden de compra o remito.","E");
 	    return 5;
 	}
     }
@@ -447,6 +449,7 @@ sub main{
 
 	if( ! @REMITOS){
 	    print "No se eligió ningun remito.\n";
+	    &Glog("No se eligió ningun remito.","W");
 	    return 8;
 	}
 
