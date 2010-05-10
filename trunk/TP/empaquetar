@@ -1,33 +1,37 @@
-#!/usr/bin/bash
+#!/bin/bash
 
-NOMBREARCHIVO=grupo08.tgz
+grupo=grupo08
+NOMBREARCHIVO=$grupo.tgz
 
 lista=""
 
-TEMPORAL="TEMPORAL$RANDOM$RANDON"
+TEMPORAL="TEMPORAL$RANDOM$RANDOM"
 
-mkdir $TEMPORAL
+DIRECTORIO=$TEMPORAL/$grupo
 
-mkdir -p $TEMPORAL/arribos
-mkdir -p $TEMPORAL/oc
-mkdir -p $TEMPORAL/recibidos
-mkdir -p $TEMPORAL/rechazados
-mkdir -p $TEMPORAL/yarecibidos
-mkdir -p $TEMPORAL/aceptados
-mkdir -p $TEMPORAL/comandos/log
-mkdir -p $TEMPORAL/pruebas
+mkdir -p $DIRECTORIO
+
+
+mkdir -p $DIRECTORIO/arribos
+mkdir -p $DIRECTORIO/oc
+mkdir -p $DIRECTORIO/recibidos
+mkdir -p $DIRECTORIO/rechazados
+mkdir -p $DIRECTORIO/yarecibidos
+mkdir -p $DIRECTORIO/aceptados
+mkdir -p $DIRECTORIO/comandos/log
+mkdir -p $DIRECTORIO/pruebas
 
 for i in invini invonio startinvonio stopinvonio invreci remioc occtrl modulo_mover modulo_glog
 do
-    cp $i $TEMPORAL/comandos/
-    chmod +x $TEMPORAL/comandos/$i
+    cp $i $DIRECTORIO/comandos/
+    chmod +x $DIRECTORIO/comandos/$i
 done
 
 for i in generarCasosInvonio generarCasosInvreci generarCasosOcctrl generarCasosPruebaGeneral generarCasosRemioc
 do
-    cp $i $TEMPORAL/pruebas/
-    chmod +x $TEMPORAL/pruebas/$i
-    sed -i "s/\. prepararPruebas/grupo=\`pwd\`\/\.\./" $TEMPORAL/pruebas/$i
+    cp $i $DIRECTORIO/pruebas/
+    chmod +x $DIRECTORIO/pruebas/$i
+    sed -i "s/\. prepararPruebas/grupo=\`pwd\`\/\.\./" $DIRECTORIO/pruebas/$i
 done
 
 mkdir release
