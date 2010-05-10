@@ -1,0 +1,42 @@
+#!/usr/bin/bash
+
+NOMBREARCHIVO=grupo08.tgz
+
+lista=""
+
+TEMPORAL="TEMPORAL$RANDOM$RANDON"
+
+mkdir $TEMPORAL
+
+mkdir -p $TEMPORAL/arribos
+mkdir -p $TEMPORAL/oc
+mkdir -p $TEMPORAL/recibidos
+mkdir -p $TEMPORAL/rechazados
+mkdir -p $TEMPORAL/yarecibidos
+mkdir -p $TEMPORAL/aceptados
+mkdir -p $TEMPORAL/comandos/log
+mkdir -p $TEMPORAL/pruebas
+
+for i in invini invonio startinvonio stopinvonio invreci remioc occtrl modulo_mover modulo_glog
+do
+    cp $i $TEMPORAL/comandos/
+    chmod +x $TEMPORAL/comandos/$i
+done
+
+for i in generarCasosInvonio generarCasosInvreci generarCasosOcctrl generarCasosPruebaGeneral generarCasosRemioc
+do
+    cp $i $TEMPORAL/pruebas/
+    chmod +x $TEMPORAL/pruebas/$i
+    sed -i "s/\. prepararPruebas/grupo=\`pwd\`\/\.\./" $TEMPORAL/pruebas/$i
+done
+
+mkdir release
+
+cd $TEMPORAL
+
+tar czf ../release/$NOMBREARCHIVO *
+
+cd ..
+
+rm -rf $TEMPORAL
+
