@@ -16,12 +16,11 @@ Mover(){
     local DUP="dup"
     local ESCRIBIR_LOG=0
 
-#Primero verificamos que la cantidad de parametros sea como minimo 2 (dos)
+    #Primero verificamos que la cantidad de parametros sea como minimo 2 (dos)
     if [ $# -le 1 ]
     then
 	echo "Error: el comando necesita al menos 2 (dos) parametros"
 	Glog "$0" "Error: el comando necesita al menos 2 (dos) parametros" "E"
-        #mostrar_invocacion()
 	return 1
     fi
 
@@ -41,14 +40,14 @@ Mover(){
 	return 2
     fi
 
-#Verificamos que origen y destino no sean iguales
+    #Verificamos que origen y destino no sean iguales
     if [ "$1" = "$2" ]
     then
 	Glog "$0" "Origen y destino son iguales" "I"
 	return 0
     fi
 
-#idem, pero para el caso que el segundo parámetro sea un directorio
+    #idem, pero para el caso que el segundo parámetro sea un directorio
     if [ -d "$2" ] 
     then
 	local directorio=`dirname "$1"`
@@ -81,10 +80,10 @@ Mover(){
 
     if [ -e "$directorio/$archivo" ]
     then
-    #si existe, es un archivo duplicado
+	#si existe, es un archivo duplicado
 	if [ ! -d "$directorio/$DUP" ]
 	then
-	#si no existe el directorio de duplicados, lo creo
+	    #si no existe el directorio de duplicados, lo creo
 	    rm -f "$directorio/$DUP" > /dev/null 2> /dev/null
 	    mkdir "$directorio/$DUP"
 	fi
