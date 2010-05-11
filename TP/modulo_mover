@@ -126,18 +126,22 @@ Mover(){
 	numero=`printf "%.3i" $numero`
 	mv "$1" "$directorio/$DUP/$archivo.$numero"
 
-	Glog "Mover" "Se mueve el archivo $1 a $directorio/$DUP/$archivo.$numero" "I"
+	Glog "Mover" "Se mueve el archivo $1"  "I"
+	Glog "Mover" "a $directorio/$DUP/$archivo.$numero" "I"
 	if [ ! -z $ESCRIBIR_LOG ]
 	then
-	    Glog "$3" "Se mueve el archivo $1 a $directorio/$DUP/$archivo.$numero" "I"
+	    Glog "$3" "Se mueve el archivo $1"  "I"
+	    Glog "$3" "a $directorio/$DUP/$archivo.$numero" "I"
 	fi
 
     else
 	mv "$1" "$directorio/$archivo"
-	Glog "Mover" "Se mueve el archivo $1 a $directorio/$archivo" "I"
+	Glog "Mover" "Se mueve el archivo $1" "I"
+	Glog "Mover" "a $directorio/$archivo" "I"
 	if [ ! -z $ESCRIBIR_LOG ]
 	then
-	    Glog "$3" "Se mueve el archivo $1 a $directorio/$archivo" "I"
+	    Glog "$3" "Se mueve el archivo $1" "I"
+	    Glog "$3" "a $directorio/$archivo" "I"
 	fi
     fi
 
