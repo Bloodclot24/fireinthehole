@@ -34,6 +34,8 @@ do
     sed -i "s/\. prepararPruebas/grupo=\`pwd\`\/\.\./" $DIRECTORIO/pruebas/$i
 done
 
+cp README $DIRECTORIO/
+
 mkdir release
 
 cd $TEMPORAL
