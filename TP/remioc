@@ -435,7 +435,7 @@ sub main{
 
 	if( ! @REMITOS ) {
 	    print "No hay remitos disponibles para las ordenes de compra solicitadas (@OC).\n";
-	    &Glog("No hay remitos disponibles para las ordenes de compra solicitadas (@OC).", "I");
+	    &Glog("No hay remitos disponibles para las ordenes de compra solicitadas @OC.", "I");
 	    return 7;
 	}
 
